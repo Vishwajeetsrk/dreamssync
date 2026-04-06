@@ -24,7 +24,12 @@ export function middleware(request: NextRequest) {
       https://*.firebaseio.com 
       https://*.firebase.com 
       https://vitals.vercel-insights.com;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://challenges.cloudflare.com;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' 
+      https://va.vercel-scripts.com 
+      https://challenges.cloudflare.com 
+      https://apis.google.com 
+      https://www.gstatic.com 
+      https://*.firebaseapp.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https://*.googleusercontent.com https://*.vercel.app https://*.gstatic.com;
     font-src 'self' https://fonts.gstatic.com;
@@ -32,7 +37,10 @@ export function middleware(request: NextRequest) {
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
-    frame-src 'self' https://challenges.cloudflare.com https://dreamsync-d153d.firebaseapp.com;
+    frame-src 'self' 
+      https://challenges.cloudflare.com 
+      https://dreamsync-d153d.firebaseapp.com 
+      https://*.firebaseapp.com;
     upgrade-insecure-requests;
   `.replace(/\s{2,}/g, ' ').trim();
 

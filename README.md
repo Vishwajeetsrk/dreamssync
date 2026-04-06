@@ -173,8 +173,8 @@ DreamSync has undergone a comprehensive full-stack security audit and hardening 
 - [x] **Direct Google Sign-In**: Ubiquitous one-tap login architecture integrated into the global Navbar for ultra-fast user onboarding.
 - [x] **Cloudflare Turnstile**: Integrated smart challenges on all auth forms to prevent automated brute-force attacks.
 - [x] **Global AI Safety Guardrails**: Proactive input validation (leetspeak & typo detection) to block harmful, illegal, or unethical career paths (e.g., terrorist, weapon manufacturing).
-- [x] **Global Security Middleware**: Rigorous Content Security Policy (CSP), HSTS, and XSS headers injected into every request. *Updated 2026: Optimized for Firebase Authentication & Google Firestore.*
-- [x] **Firebase/Google Integration**: Whitelisted `identitytoolkit.googleapis.com` and `*.firebaseio.com` in CSP to ensure seamless, secure OAuth and real-time database connections.
+- [x] **Global Security Middleware**: Rigorous Content Security Policy (CSP), HSTS, and XSS headers injected into every request. *Updated 2026: Optimized for Firebase Authentication & Google Firestore (fixed auth/internal-error).*
+- [x] **Firebase/Google Integration**: Whitelisted `identitytoolkit.googleapis.com`, `*.firebaseio.com`, `apis.google.com`, and `www.gstatic.com` in CSP to ensure seamless, secure OAuth and real-time database connections.
 - [x] **Rate Limiting (Upstash)**: All AI routes are protected by distributed sliding-window rate limiting (5-20 req/min/user).
 - [x] **Schema Validation (Zod)**: Strict input validation for all API endpoints to prevent malformed data or buffer overflow attacks.
 - [x] **AI Safety Layer**: Real-time prompt injection detection and input sanitization to prevent jailbreaking or malicious AI hijacking.
