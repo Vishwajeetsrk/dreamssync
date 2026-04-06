@@ -180,6 +180,8 @@ DreamSync has undergone a comprehensive full-stack security audit and hardening 
 - [x] **Schema Validation (Zod)**: Strict input validation for all API endpoints to prevent malformed data or buffer overflow attacks.
 - [x] **AI Safety Layer**: Real-time prompt injection detection and input sanitization to prevent jailbreaking or malicious AI hijacking.
 - [x] **Authentication Guards**: Centralized `ProtectedRoute` component and middleware-level session hints to prevent unauthorized access.
+- [x] **Next.js 16/17 Migration**: Full adoption of the `proxy.ts` convention for edge-ready middleware/routing logic.
+- [x] **Zero-Hardcoded Secrets**: Verified 100% environment-driven configuration for Firebase to resolve GitHub security alerts.
 - [x] **Environment Security**: Zero secrets exposed in the frontend. All AI and Database keys are securely managed via server-side environment variables.
 - [x] **DoS Prevention**: Implemented request body size limits and hashing-based IP fingerprinting for robust abuse detection.
 - [x] **PDF Security**: ATS checker validates MIME types, extensions, and file sizes (max 5MB) before processing.
