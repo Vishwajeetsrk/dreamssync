@@ -1,26 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { handleGoogleSignIn } from '@/lib/auth-utils';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Lock, Mail, Sparkles, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Lock, Mail, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
   const [loading, setLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('verification') === 'sent') {
+      setInfo('Verification email sent! Please check your inbox before logging in.');
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setInfo('');
 
     if (process.env.NODE_ENV === 'production' && !turnstileToken) {
       setError('Please complete the security check to access your account.');
@@ -30,7 +39,14 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      
+      // Optional: Check if email is verified if you want to force it
+      // if (!userCred.user.emailVerified) {
+      //   setError('Please verify your email address before logging in.');
+      //   return;
+      // }
+
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {
@@ -47,6 +63,7 @@ export default function Login() {
 
   const handleGoogleSignInBtn = async () => {
     setError('');
+    setInfo('');
     setLoading(true);
     try {
       await handleGoogleSignIn();
@@ -90,15 +107,30 @@ export default function Login() {
             </p>
           </div>
 
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {error && (
               <motion.div 
+                key="error"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 10 }}
                 className="bg-black text-white p-4 mb-8 text-xs font-black uppercase tracking-wider flex items-center gap-3 border-l-8 border-primary"
               >
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                 {error}
+              </motion.div>
+            )}
+
+            {info && (
+              <motion.div 
+                key="info"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="bg-green-50 border-4 border-green-600 p-4 mb-8 text-[11px] font-black uppercase text-green-900 flex items-center gap-3"
+              >
+                <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
+                {info}
               </motion.div>
             )}
           </AnimatePresence>

@@ -15,7 +15,7 @@ const BANNED_BOTS = [
   'exabot', 'semrushbot', 'yandexbot', 'megaindex', 'blexbot'
 ];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const userAgent = request.headers.get('user-agent')?.toLowerCase() || '';
 
@@ -36,7 +36,8 @@ export function middleware(request: NextRequest) {
       https://*.googleapis.com 
       https://*.firebaseio.com 
       https://*.firebase.com 
-      https://vitals.vercel-insights.com;
+      https://vitals.vercel-insights.com
+      https://challenges.cloudflare.com;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' 
       https://va.vercel-scripts.com 
       https://challenges.cloudflare.com 
