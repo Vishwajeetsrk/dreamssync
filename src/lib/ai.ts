@@ -1,0 +1,229 @@
+/**
+ * DreamSync AI Provider — Groq (primary) → OpenRouter (fallback) → Gemini (backup)
+ * Zero-cost priority: Groq free tier is very generous, then OpenRouter, then Gemini.
+ * v2: Added AbortController timeouts per provider.
+ */
+
+export type AIMessage = {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+};
+
+export type AIOptions = {
+  jsonMode?: boolean;
+  maxTokens?: number;
+  temperature?: number;
+  /** Timeout in ms per provider attempt. Default: 15000 (15s) */
+  timeoutMs?: number;
+};
+
+type ProviderResult = {
+  content: string;
+  provider: string;
+};
+
+// ─── Timeout Fetch Helper ─────────────────────────────────────────
+/**
+ * Wraps fetch() with an AbortController timeout.
+ * Throws if the request takes longer than timeoutMs.
+ */
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number
+): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...init, signal: controller.signal });
+    return res;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ─── GROQ (Primary — Fastest, Free) ──────────────────────────────
+async function callGroq(
+  messages: AIMessage[],
+  opts: AIOptions
+): Promise<ProviderResult> {
+  const key = process.env.GROQ_API_KEY;
+  if (!key) throw new Error('GROQ_API_KEY not configured');
+
+  const body: Record<string, unknown> = {
+    model: 'mixtral-8x7b-32768',
+    messages,
+    temperature: opts.temperature ?? 0.7,
+    max_tokens: opts.maxTokens ?? 2048,
+  };
+
+  if (opts.jsonMode) {
+    body.response_format = { type: 'json_object' };
+  }
+
+  const res = await fetchWithTimeout(
+    'https://api.groq.com/openai/v1/chat/completions',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${key}`,
+      },
+      body: JSON.stringify(body),
+    },
+    opts.timeoutMs ?? 15_000
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Groq ${res.status}: ${err.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+  const content = data.choices?.[0]?.message?.content;
+  if (!content) throw new Error('Groq returned empty content');
+  return { content, provider: 'groq' };
+}
+
+// ─── OPENROUTER (Fallback) ────────────────────────────────────────
+async function callOpenRouter(
+  messages: AIMessage[],
+  opts: AIOptions
+): Promise<ProviderResult> {
+  const key = process.env.OPENROUTER_API_KEY;
+  if (!key) throw new Error('OPENROUTER_API_KEY not configured');
+
+  const body: Record<string, unknown> = {
+    model: 'openai/gpt-4o-mini',
+    messages,
+    temperature: opts.temperature ?? 0.7,
+    max_tokens: opts.maxTokens ?? 2048,
+  };
+
+  if (opts.jsonMode) {
+    body.response_format = { type: 'json_object' };
+  }
+
+  const res = await fetchWithTimeout(
+    'https://openrouter.ai/api/v1/chat/completions',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${key}`,
+        'HTTP-Referer': 'https://dreamsync-ruddy.vercel.app',
+        'X-Title': 'DreamSync AI',
+      },
+      body: JSON.stringify(body),
+    },
+    opts.timeoutMs ?? 15_000
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`OpenRouter ${res.status}: ${err.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+  const content = data.choices?.[0]?.message?.content;
+  if (!content) throw new Error('OpenRouter returned empty content');
+  return { content, provider: 'openrouter' };
+}
+
+// ─── GEMINI (Backup — Free 1.5-flash) ────────────────────────────
+async function callGemini(
+  messages: AIMessage[],
+  opts: AIOptions
+): Promise<ProviderResult> {
+  const key = process.env.GOOGLE_API_KEY;
+  if (!key) throw new Error('GOOGLE_API_KEY not configured');
+
+  const systemMsg = messages.find((m) => m.role === 'system')?.content ?? '';
+  const userMessages = messages.filter((m) => m.role !== 'system');
+
+  const contents = userMessages.map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }));
+
+  const body: Record<string, unknown> = {
+    contents,
+    generationConfig: {
+      temperature: opts.temperature ?? 0.7,
+      maxOutputTokens: opts.maxTokens ?? 2048,
+      ...(opts.jsonMode ? { responseMimeType: 'application/json' } : {}),
+    },
+    ...(systemMsg
+      ? { systemInstruction: { parts: [{ text: systemMsg }] } }
+      : {}),
+  };
+
+  const res = await fetchWithTimeout(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    },
+    opts.timeoutMs ?? 20_000 // Gemini can be slightly slower
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Gemini ${res.status}: ${err.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+  const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!content) throw new Error('Gemini returned empty content');
+  return { content, provider: 'gemini' };
+}
+
+// ─── MAIN: Fallback Chain ─────────────────────────────────────────
+export async function callAI(
+  messages: AIMessage[],
+  opts: AIOptions = {}
+): Promise<ProviderResult> {
+  const errors: string[] = [];
+
+  // 1. Groq — fastest, most generous free tier
+  try {
+    return await callGroq(messages, opts);
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    errors.push(`Groq: ${msg}`);
+    console.warn('[AI] Groq failed →', msg.slice(0, 120));
+  }
+
+  // 2. OpenRouter
+  try {
+    return await callOpenRouter(messages, opts);
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    errors.push(`OpenRouter: ${msg}`);
+    console.warn('[AI] OpenRouter failed →', msg.slice(0, 120));
+  }
+
+  // 3. Gemini — last resort
+  try {
+    return await callGemini(messages, opts);
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    errors.push(`Gemini: ${msg}`);
+    console.warn('[AI] Gemini failed →', msg.slice(0, 120));
+  }
+
+  throw new Error(`All AI providers failed:\n${errors.join('\n')}`);
+}
+
+/**
+ * Safely parse JSON from an AI response.
+ * Strips markdown fences that some models add.
+ */
+export function parseJSON<T>(raw: string): T {
+  let cleaned = raw.trim();
+  if (cleaned.startsWith('```')) {
+    cleaned = cleaned.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '');
+  }
+  return JSON.parse(cleaned) as T;
+}

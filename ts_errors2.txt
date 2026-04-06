@@ -1,0 +1,2 @@
+src/app/ats-check/page.tsx(116,22): error TS2304: Cannot find name 'Sparkles'.
+src/app/team/page.tsx(4,10): error TS2305: Module '"lucide-react"' has no exported member 'Linkedin'.
