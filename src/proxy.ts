@@ -25,7 +25,7 @@ export function proxy(request: NextRequest) {
   }
 
   // 2. Security Headers
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const nonce = btoa(crypto.randomUUID());
   
   // CSP: Production-hardened with Google/Firebase support
   const cspHeader = `
