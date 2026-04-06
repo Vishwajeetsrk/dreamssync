@@ -51,7 +51,7 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 | 🔐 **Secure Authentication** | **Multimodal Auth System** featuring Email/Password, Google OAuth, and secure session management. | Firebase Auth / Supabase |
 | 🛡️ **Bot Protection** | **Cloudflare Turnstile** integrated into all auth flows to prevent brute-force and bot attacks. | Turnstile / Security |
 | 📉 **Interactive News Ticker** | **Live-linked 2026 platform updates** and tool announcements. | Next.js Server Components |
-| ⚡ **Direct Google Auth** | **One-Tap Access** from the global Navbar. Seamless profile creation and sync across all platform pages. | Firebase / Firestore |
+| ⚡ **Direct Google Auth** | **Ubiquitous One-Tap Access** from the global Navbar. Seamless profile creation and sync across all platform pages. | Google Web SDK / Firebase |
 | 🕉️ **IKIGAI Finder** | **Premium Career Purpose Tool** based on the Japanese Ikigai framework. | Claude 3.7 / Gemini 2.0 |
 | 🌿 **Serenity (AI Counselor)** | **Empathetic Mental Health Agent** with native Indian persona. Supports **11 languages** with **Voice Mode (STT/TTS)**. | Groq (Llama-3-70b) / Gemini |
 | 🤖 **AI Career Agent** | **Conversational Career Coach** specialized in the Indian market (2026). Provides Naukri/LinkedIn links. | Groq / Redis |
