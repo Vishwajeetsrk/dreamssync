@@ -170,8 +170,8 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 DreamSync has undergone a comprehensive full-stack security audit and hardening process to ensure it is production-ready for thousands of users:
 
 - [x] **Secure Auth Logic**: Implementation of 2026-standard Login, Signup, and Password Recovery with multi-provider support (Email/Google).
-- [x] **Premium UI/UX Overhaul**: Advanced neo-brutalism + glassmorphism architecture implemented across all authentication gateways for a FAANG-grade user experience.
-- [x] **Direct Google Sign-In**: Ubiquitous one-tap login architecture integrated into the global Navbar for ultra-fast user onboarding.
+- [x] **Premium Neo-Brutalism UI**: High-fidelity, bold interaction design restored and hardened across all authentication gateways for a FAANG-grade user experience.
+- [x] **One-Tap Unified Login**: Single, professional entry point architected for ultra-fast user onboarding without redundant navigation elements.
 - [x] **Cloudflare Turnstile**: Integrated smart challenges on all auth forms to prevent automated brute-force attacks.
 - [x] **Global AI Safety Guardrails**: Proactive input validation (leetspeak & typo detection) to block harmful, illegal, or unethical career paths (e.g., terrorist, weapon manufacturing).
 - [x] **Global Security Middleware**: Rigorous Content Security Policy (CSP), HSTS, and XSS headers injected into every request. *Updated 2026: Optimized for Firebase Authentication & Google Firestore (fixed auth/internal-error).*
