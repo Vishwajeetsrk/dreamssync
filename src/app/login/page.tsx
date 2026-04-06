@@ -7,7 +7,7 @@ import { handleGoogleSignIn } from '@/lib/auth-utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Lock, Mail, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Lock, Mail, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Turnstile } from '@marsidev/react-turnstile';
 
 export default function Login() {
@@ -22,7 +22,7 @@ export default function Login() {
 
   useEffect(() => {
     if (searchParams.get('verification') === 'sent') {
-      setInfo('Verification email sent! Please check your inbox before logging in.');
+      setInfo('Verification email sent! Please check your inbox.');
     }
   }, [searchParams]);
 
@@ -32,29 +32,24 @@ export default function Login() {
     setInfo('');
 
     if (process.env.NODE_ENV === 'production' && !turnstileToken) {
-      setError('Please complete the security check to access your account.');
+      setError('Please complete the security check.');
       return;
     }
 
     setLoading(true);
 
     try {
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
-      
-      // Optional: Check if email is verified if you want to force it
-      // if (!userCred.user.emailVerified) {
-      //   setError('Please verify your email address before logging in.');
-      //   return;
-      // }
-
+      await signInWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {
       console.error('Login error:', err);
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-        setError('Invalid email or password. Please check your credentials.');
+      if (err.code === 'auth/unauthorized-domain') {
+          setError('This domain is not authorized. Please add "localhost" to your Firebase Console settings.');
+      } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        setError('Invalid email or password.');
       } else {
-        setError(err.message || 'Login failed. Please try again later.');
+        setError(err.message || 'Login failed. Please try again.');
       }
     } finally {
       setLoading(false);
@@ -71,164 +66,159 @@ export default function Login() {
       router.refresh();
     } catch (err: any) {
       console.error('Google login error:', err);
-      setError(err.message || 'Google Sign-in failed. Please try again.');
+      if (err.code === 'auth/unauthorized-domain') {
+        setError('This domain is not authorized. Please add "localhost" to your Firebase Console under Authentication > Settings > Authorized Domains.');
+      } else {
+        setError(err.message || 'Google Sign-in failed.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center py-12 px-4 bg-[#fafafa] overflow-hidden">
-      {/* Background Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-        <div className="absolute top-[20%] right-[10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[20%] left-[10%] w-[50%] h-[50%] bg-accent/5 rounded-full blur-[100px]" />
-      </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 sm:p-12">
+      
+      {/* Brand Logo / Link back */}
+      <Link href="/" className="mb-12 flex items-center gap-2 group">
+        <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-all">
+          <Lock className="w-6 h-6 text-white" />
+        </div>
+        <span className="text-2xl font-black text-slate-900">DreamSync.</span>
+      </Link>
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-[460px] z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-[440px]"
       >
-        <div className="bg-white border-[6px] border-black p-8 sm:p-10 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+        <div className="bg-white rounded-3xl shadow-[0px_20px_50px_rgba(0,0,0,0.05)] border border-slate-100 p-8 sm:p-10">
           
-          {/* Brand Header */}
-          <div className="text-center mb-10">
-            <motion.div 
-              whileHover={{ rotate: 3 }}
-              className="w-20 h-20 bg-primary mx-auto border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 flex items-center justify-center"
-            >
-              <Lock className="w-10 h-10 text-white" />
-            </motion.div>
-            <h1 className="text-4xl font-black tracking-tight mb-2">Welcome Back.</h1>
-            <p className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest flex items-center justify-center gap-2">
-              <Sparkles className="w-3 h-3 text-primary" /> Sync your career journey
-            </p>
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Sign in to continue</h1>
+            <p className="text-slate-400 text-sm font-medium italic">Empowering your career with AI</p>
           </div>
 
           <AnimatePresence mode="wait">
             {error && (
               <motion.div 
                 key="error"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                className="bg-black text-white p-4 mb-8 text-xs font-black uppercase tracking-wider flex items-center gap-3 border-l-8 border-primary"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-rose-50 border-2 border-rose-100 text-rose-600 p-4 mb-6 rounded-2xl text-xs font-bold flex items-start gap-3"
               >
-                <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                {error}
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <span>{error}</span>
               </motion.div>
             )}
 
             {info && (
               <motion.div 
                 key="info"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="bg-green-50 border-4 border-green-600 p-4 mb-8 text-[11px] font-black uppercase text-green-900 flex items-center gap-3"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-emerald-50 border-2 border-emerald-100 text-emerald-700 p-4 mb-6 rounded-2xl text-xs font-bold flex items-start gap-3"
               >
-                <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
-                {info}
+                <CheckCircle2 className="w-5 h-5 shrink-0" />
+                <span>{info}</span>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Social Auth */}
-          <div className="space-y-4 mb-10">
+          {/* Social Sign-in */}
+          <div className="mb-8">
             <button
               onClick={handleGoogleSignInBtn}
               disabled={loading}
-              className="w-full py-4 bg-white text-black font-black text-sm uppercase border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 h-14 bg-white border-2 border-slate-100 rounded-2xl text-slate-700 font-extrabold text-sm hover:bg-slate-50 transition-all active:scale-[0.98] disabled:opacity-50 shadow-sm"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-              </svg>
-              Continue with Google
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/smartlock/google.svg" alt="Google" className="w-6 h-6" />
+              Sign in with Google
             </button>
 
-            <div className="relative py-2 flex items-center gap-4">
-              <div className="flex-grow border-t-4 border-black/5"></div>
-              <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest shrink-0">Email Gateway</span>
-              <div className="flex-grow border-t-4 border-black/5"></div>
+            <div className="relative mt-8 mb-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-100"></div>
+              </div>
+              <div className="relative flex justify-center text-xs font-black uppercase text-slate-300 tracking-widest px-4 bg-white">
+                Or continue with email:
+              </div>
             </div>
           </div>
 
-          {/* Standard Auth */}
+          {/* Email / Password Form */}
           <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                <Mail className="w-3 h-3 text-primary" /> Registered Email
-              </label>
+            <div className="space-y-1.5">
               <input
                 type="email"
                 required
-                placeholder="name@example.com"
-                className="w-full bg-gray-50 border-4 border-black p-4 focus:outline-none focus:bg-white focus:border-primary transition-all font-bold"
+                placeholder="Email address"
+                className="w-full h-14 bg-slate-50 border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-2xl px-5 transition-all text-slate-800 font-bold placeholder:text-slate-300 outline-none"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                  <Lock className="w-3 h-3 text-primary" /> Key Phrase
-                </label>
-                <Link href="/forgot-password" title="Recover access" className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">
-                  Forgot?
-                </Link>
-              </div>
+            <div className="space-y-1.5">
               <input
                 type="password"
                 required
-                placeholder="••••••••"
-                className="w-full bg-gray-50 border-4 border-black p-4 focus:outline-none focus:bg-white focus:border-primary transition-all font-bold"
+                placeholder="Password"
+                className="w-full h-14 bg-slate-50 border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-2xl px-5 transition-all text-slate-800 font-bold placeholder:text-slate-300 outline-none"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <div className="flex justify-end p-1">
+                <Link href="/forgot-password" title="Recover access" className="text-xs font-bold text-indigo-600 hover:text-indigo-700">
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
 
             {/* Turnstile Verification */}
-            <div className="pt-4 flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-3 pt-2">
                <Turnstile 
                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'} 
                  onSuccess={(token) => setTurnstileToken(token)}
-                 className="scale-90 opacity-90 hover:opacity-100 transition-opacity"
+                 className="opacity-90 grayscale hover:grayscale-0 transition-all"
                />
-               <div className="flex items-center gap-1.5 text-[8px] font-black uppercase text-gray-400">
-                 <ShieldCheck className="w-3 h-3" /> Encrypted Handshake
-               </div>
+               <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest flex items-center gap-1.5">
+                 <Lock className="w-3 h-3" /> Encrypted Session
+               </p>
             </div>
             
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full py-5 bg-black text-white font-black text-lg uppercase tracking-tight shadow-[8px_8px_0px_0px_var(--primary)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full h-14 bg-indigo-600 text-white font-black text-sm uppercase rounded-2xl shadow-[0px_10px_30px_rgba(79,70,229,0.2)] hover:bg-indigo-700 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3"
             >
-              {loading ? 'Authenticating...' : 'Sign In Now'} <ArrowRight className="w-6 h-6" />
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                  Authenticating...
+                </>
+              ) : (
+                <>Sign In</>
+              )}
             </button>
           </form>
 
-          <div className="mt-10 text-center border-t-4 border-dashed border-gray-200 pt-8">
-            <p className="font-bold text-sm tracking-tight">
-              New to DreamSync?{' '}
-              <Link href="/signup" className="text-primary font-black underline underline-offset-4 hover:bg-primary/5 transition-colors px-1">
-                Establish Identity
+          <div className="mt-10 text-center">
+            <p className="font-bold text-sm text-slate-500">
+              Don&apos;t have an account?{' '}
+              <Link href="/signup" className="text-indigo-600 hover:text-indigo-700 font-black ml-1">
+                Sign up
               </Link>
             </p>
           </div>
         </div>
 
         {/* Global Access Links */}
-        <div className="mt-8 flex justify-center gap-8 text-[10px] font-black uppercase text-gray-400 tracking-widest underline underline-offset-2">
-          <Link href="/" className="hover:text-black transition-colors">Home Base</Link>
-          <Link href="/about" className="hover:text-black transition-colors">Platform Vision</Link>
-          <Link href="/donate" className="hover:text-black transition-colors">Support Development</Link>
+        <div className="mt-10 flex justify-center gap-8 text-[10px] font-black uppercase text-slate-400 tracking-widest underline underline-offset-4 decoration-slate-200">
+          <Link href="/terms" className="hover:text-slate-600">Terms</Link>
+          <Link href="/privacy" className="hover:text-slate-600">Privacy</Link>
+          <Link href="/donate" className="hover:text-slate-600">Donate</Link>
         </div>
       </motion.div>
     </div>
