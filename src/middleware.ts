@@ -5,16 +5,29 @@ import type { NextRequest } from 'next/server';
  * DreamSync Production Middleware
  * - Injects Security Headers (CSP, HSTS, etc.)
  * - Auth Guards for protected routes
+ * - Bot/Crawler Blocking
  */
+
+// Common malicious bot user-agents to block
+const BANNED_BOTS = [
+  'dotbot', 'rogerbot', 'showyoubot', 'baiduspider', 'ahrefsbot',
+  'petalbot', 'mj12bot', 'semanticscholarbot', 'grapeshotcrawler',
+  'exabot', 'semrushbot', 'yandexbot', 'megaindex', 'blexbot'
+];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const userAgent = request.headers.get('user-agent')?.toLowerCase() || '';
 
-  // 1. Security Headers
+  // 1. Bot Blocking
+  if (BANNED_BOTS.some(bot => userAgent.includes(bot))) {
+    return new NextResponse('Crawler protection active.', { status: 403 });
+  }
+
+  // 2. Security Headers
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   
-  // CSP: Strict for production
-  // Allow scripts from self, vercel-analytics, and trusted CDNs
+  // CSP: Production-hardened with Google/Firebase support
   const cspHeader = `
     default-src 'self';
     connect-src 'self' 
@@ -63,18 +76,18 @@ export function middleware(request: NextRequest) {
   response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()');
 
-  // 2. Auth Guard
+  // 3. Auth Guard (Active for Production)
   const protectedPaths = ['/dashboard', '/career-agent', '/roadmap', '/linkedin', '/portfolio', '/ikigai'];
   const isProtected = protectedPaths.some(path => pathname.startsWith(path));
 
-  // Note: Actual session verification happens via Firebase/Supabase in the components.
-  // This middleware check is a first-line defense to redirect unauthenticated users.
-  // We check for common auth cookies or hints.
+  // Firebase/Supabase auth hints
   const hasAuthHint = request.cookies.has('__session') || request.cookies.has('sb-access-token') || request.headers.has('Authorization');
 
-  if (isProtected && !hasAuthHint) {
-    const url = new URL('/', request.url);
-    // return NextResponse.redirect(url); // Disabled for now to prevent accidental lockouts during dev, but ready for PROD
+  // Activate redirect only if we are in production or have been explicitly told to enable full security
+  if (isProtected && !hasAuthHint && process.env.NODE_ENV === 'production') {
+    const url = new URL('/login', request.url);
+    url.searchParams.set('redirect', pathname);
+    return NextResponse.redirect(url);
   }
 
   return response;
@@ -88,6 +101,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - assets (images, logos)
      */
     '/((?!api|_next/static|_next/image|favicon.ico|assets).*)',
   ],
