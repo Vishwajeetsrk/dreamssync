@@ -2,6 +2,11 @@
   "name": "dreamsync",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vishwajeetsrk/DreamSync.git"
+  },
+  "homepage": "https://dreamsync-ruddy.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

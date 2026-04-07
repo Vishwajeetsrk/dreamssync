@@ -3,10 +3,15 @@
 > **The all-in-one AI ecosystem for career growth and mental well-being.**
 > Precision-built for the high-depth Indian job market with a premium **Neo-Brutalist** aesthetic.
 
-- **GitHub:** [Vishwajeetsrk/dreamssync](https://github.com/Vishwajeetsrk/dreamssync)
-- **Live Site:** [dreamsync.vercel.app](https://dreamsync-ruddy.vercel.app/)
+- **Official Repository:** [Vishwajeetsrk/dreamssync](https://github.com/Vishwajeetsrk/dreamssync)
+- **Production Mirror:** [Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
+- **Live Deployment:** [dreamsync.vercel.app](https://dreamsync-ruddy.vercel.app/)
 
 ## 🎥 Live Portfolio Preview (Auto-Play)
+
+<p align="center">
+  <img src="/DreamSynclogo.png" width="300" alt="Official DreamSync Logo">
+</p>
 
 <p align="center">
   <a href="./video.mp4">
@@ -20,8 +25,9 @@
 ## 🎨 Visual Language: Neo-Brutalism
 
 DreamSync features a custom-engineered **Neo-Brutalist** design system designed to be high-contrast, high-impact, and tactile:
-- **Hard-Surface Shadows**: Real-time 4px/8px black offsets for a physical depth feel.
-- **Bold Typography**: Inter & Black-weights for high legibility and impact.
+- **Official Branding**: Utilizing the **DreamSynclogo.png** for a consistent, high-fidelity identity across the web and documents.
+- **Hard-Surface Shadows**: Real-time 4px/6px/8px black offsets for a physical depth feel on all cards and buttons.
+- **Bold Typography**: Inter & Black-weights (900+) for maximum legibility and industrial impact.
 - **Vibrant Accent Palette**: Action-oriented colors (Yellow #fcc419, Blue #3b82f6) on flat white/black surfaces.
 - **Advanced Micro-Animations**: Powered by **Framer Motion** for a fluid, responsive interaction experience.
 
@@ -47,7 +53,6 @@ DreamSync is a precision-engineered, full-stack AI platform built with **Next.js
 The platform bridges the gap between technical career excellence and personal well-being:
 1.  **Technical Excellence:** AI-driven resume building, ATS scoring, and high-depth career roadmap architecture.
 2.  **Career Guidance:** A dedicated **Career Agent** providing real-time Indian job market insights, salary benchmarks, and direct application links.
-3.  **Wellness:** **Serenity**, an empathetic AI counselor supporting **11 Indian languages** with native voice integration.
 
 The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS v4** and **Framer Motion** for a premium, high-interaction experience.
 
@@ -57,16 +62,19 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 | Feature | Description | Engine / Stack |
 |:---|:---|:---|
-| ⚡ **Universal One-Tap Auth** | **Seamless Google Authentication** integrated into a sleek minimalist header. | Firebase + @supabase/ssr |
-| 🛡️ **Intelligent Guardrails** | **Platform-wide AI Safety Layer** engineered to prevent prompt injection and maintain ethical AI. | Custom Multi-Model Safety |
-| 🕉️ **IKIGAI Engine** | **High-Depth Career Purpose Analysis** utilizing the Japanese Ikigai framework. | Claude 3.7 / Gemini 2.0 |
-| 🌿 **Serenity Counselor** | **Empathetic Mental Health Support** supporting **11 Indian languages** with Voice (STT/TTS). | Groq / Gemini |
-| 🤖 **AI Career Strategist** | **2026 Market Intelligence Agent** providing real-time salary benchmarks and direct job links. | Groq / Upstash Redis |
-| 🗺️ **Skilled Roadmaps** | **High-Depth Architecture Generator** with curated phase-by-phase video resources and labs. | GPT-4o / GPT-4o-mini |
-| 💼 **LinkedIn Optimizer** | **Advanced Profile Engineering** with actionable rewrite suggestions and SEO keywords. | OpenAI / Tailwind CSS v4 |
+| 🛡️ **Universal Access** | **Streamlined Account Creation** with professional identity management. | Firebase + @supabase/ssr |
+| 👤 **Security Profile** | **Advanced Identity Management** including photo upload, secure settings, and credential control. | Firebase Storage + Firestore |
+| 🛡️ **Identity Guard** | **Encrypted Multi-Device Data Persistence** ensuring your career documents are always secure. | Firestore + AES-256 |
+| 🛡️ **Intelligent Guardrails** | **Platform-wide AI Safety Layer** engineered to prevent prompt injection and maintain ethical AI. | Custom Safety Layer |
+| 🕉️ **IKIGAI Engine** | **High-Depth Career Purpose Analysis** utilizing the Japanese Ikigai framework. | Claude / Gemini |
+| 🌿 **Serenity Counselor** | **Empathetic Mental Health Support** supporting **11 Indian languages** with Voice AI integration. | Groq / Google TTS |
+| 🤖 **AI Career Strategist** | **2026 Market Intelligence Agent** providing real-time salary benchmarks and direct job links. | Groq / Redis |
+| 🗺️ **Career Roadmap** | **High-Depth Architecture Generator** with curated phase-by-phase learning resources. | GPT-4o / GPT-4o-mini |
+| 📚 **Doc & Skill** | **Step-by-step guides & free resources** for essential carrier documentation and skills. | Next.js RSC |
+| 💼 **LinkedIn Optimizer** | **Advanced Profile Engineering** with actionable rewrite suggestions and SEO keywords. | OpenAI / Tailwind v4 |
 | 🧠 **FAANG Resume Suite** | **Precision Document Engineering** supporting multi-format (PDF/Word) export. | React 19 / `docx` |
 | 📊 **Smart ATS Analyzer** | **Recruiter-Grade Analysis** providing deep scoring against global hiring standards. | GPT-4o / Firestore |
-| 🖼️ **Portfolio Engine** | **Instant Deployment** of professional portfolio sites generated dynamically. | Next.js Server Components |
+| 🖼️ **Portfolio Engine** | **Instant Deployment** of professional portfolio sites generated dynamically. | Next.js RSC |
 
 ---
 
@@ -98,7 +106,7 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 - **Framer Motion** (Neo-Brutalist Animation Engine)
 
 ### Backend & Infrastructure
-- **Firebase** (Global Client Auth & Profile Sync)
+- **Firebase** (Global Client Auth, Storage & Profile Sync)
 - **Supabase** (PostgreSQL & Server-Side Security)
 - **Upstash Redis** (Global Rate Limiting & User Quota Tracking)
 - **Resend** (High-Deliverability Email API)
@@ -115,14 +123,15 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ```
 dreamsync/
-├── public/                         # Static assets (images, icons, QR codes)
+├── public/                         # Official DreamSynclogo.png and static assets
 ├── src/
 ├── app/
 │   ├── (auth)/
-│   │   ├── login/              # Direct login with Firebase + Google
-│   │   ├── signup/             # Multi-step signup with Firestore sync
-│   │   └── forgot-password/    # Email-based password recovery
+│   │   ├── login/              # Secure login flow
+│   │   ├── signup/             # Multi-step account creation
+│   │   └── forgot-password/    # Enrollment recovery
 │   │
+│   ├── profile/                # Security Profile Settings (Photo + Security)
 │   ├── mental-health/          # Serenity AI Counselor (11 languages + Mood + Voice)
 │   ├── career-agent/           # AI Career Guidance (Indian Market Specs)
 │   ├── roadmap/                # High-depth Career Roadmaps
@@ -130,7 +139,7 @@ dreamsync/
 │   ├── ats-check/              # ATS Score Checker
 │   ├── linkedin/               # LinkedIn Profile Optimizer
 │   ├── portfolio/              # Portfolio Generator
-│   ├── documents/              # Government Document Guide
+│   ├── documents/              # Doc & Skill storage
 │   │
 │   ├── dashboard/              # Centralized user dashboard
 │   ├── donate/                 # UPI donation portal (Dynamic QR)
@@ -143,7 +152,7 @@ dreamsync/
 ├── components/
 │   ├── MarketTrends.tsx        # Live 2026 job market data component
 │   ├── ProtectedRoute.tsx      # Auth-guarded navigation
-│   ├── Navbar.tsx              # Dynamic navigation with auth states
+│   ├── Navbar.tsx              # Official header with refined logo
 │   └── Footer.tsx              # Global footer with donate CTA
 │
 ├── context/                    # Auth and User Usage contexts
@@ -167,8 +176,8 @@ dreamsync/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Vishwajeetsrk/DreamSync.git
-cd DreamSync
+git clone https://github.com/Vishwajeetsrk/dreamssync.git
+cd dreamssync
 
 # 2. Install dependencies
 npm install

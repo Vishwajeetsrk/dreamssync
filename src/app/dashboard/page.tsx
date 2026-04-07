@@ -14,7 +14,7 @@ const tools = [
   { name: 'ATS Checker', href: '/ats-check', icon: CheckCircle, color: 'bg-purple-100', desc: 'Scan existing resume for score.' },
   { name: 'Portfolio Gen', href: '/portfolio', icon: Sparkles, color: 'bg-pink-100', desc: 'Auto-generate a personal site.' },
   { name: 'Career Roadmap', href: '/roadmap', icon: Briefcase, color: 'bg-amber-100', desc: 'Plan your learning timeline.' },
-  { name: 'Skill Roadmaps', href: '/documents', icon: BookOpen, color: 'bg-blue-100', desc: 'Step-by-step guides & free resources.' },
+  { name: 'Doc & Skill', href: '/documents', icon: BookOpen, color: 'bg-blue-100', desc: 'Step-by-step guides & free resources.' },
   { name: 'LinkedIn Optimizer', href: '/linkedin', icon: Link2, color: 'bg-[#0A66C2]/10', desc: 'AI headlines, about & keywords.' },
   { name: 'AI Career Agent', href: '/career-agent', icon: Brain, color: 'bg-violet-100', desc: 'AI guidance, roles & real jobs.' },
   { name: 'Mental Health', href: '/mental-health', icon: HeartHandshake, color: 'bg-rose-100', desc: 'Emotional support & wellness.' },
