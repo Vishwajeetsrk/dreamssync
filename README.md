@@ -101,11 +101,14 @@ DreamSync features a custom-engineered **Neo-Brutalist** design system:
 ### 🚀 Supabase Setup (Important)
 
 To ensure the profile and storage systems work correctly:
-1. **Database**: Ensure a `profiles` table exists with columns: `id (uuid, primary key)`, `name (text)`, `email (text)`, `photoURL (text)`, `plan (text)`, `created_at (timestamp)`.
+1. **Database**: Ensure a `profiles` table exists with columns: `id (uuid, primary key)`, `name (text)`, `email (text)`, `avatar_url (text)`, `plan (text)`, `created_at (timestamp)`.
 2. **Storage**: Create a **public** bucket named `avatars` in Supabase Storage.
    - Set the bucket to **Public**.
-   - Add a Policy to allow `authenticated` users to `INSERT` and `UPDATE` their own files (where filename starts with their user ID).
-   - Add a Policy to allow `public` to `SELECT` (read) files.
+- Add an **INSERT** Policy for **authenticated** users to upload: `(bucket_id = 'avatars'::text)`.
+- Add a **SELECT** Policy for **anon and authenticated** roles to view: `(bucket_id = 'avatars'::text)`.
+
+### 🛡️ Deployment Convention (Next.js 16)
+This project uses the new **`src/proxy.ts`** standard for edge rate-limiting and security. Ensure your environment variables for Upstash are configured for the proxy to function correctly.
 
 ### Installation
 
