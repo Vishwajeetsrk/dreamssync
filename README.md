@@ -98,9 +98,10 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ## 🛡️ Production-Grade Security
 
-1.  **Global CSP Policy:** Hardened Content Security Policy to mitigate XSS and data exfiltration.
-2.  **API Rate Limiting:** Global rate limiting implemented via **Upstash Redis** to ensure platform stability.
-3.  **AI Safety Shield:** Multi-layer prompt injection defense.
+- 🚀 **Smart ATS Analyzer v2 (FAANG-Tier):** Industry-leading resume auditor with detailed eligibility reports for top firms (Google, Microsoft, Amazon).
+- 🛡 **Global AI Safety Guard:** 400-level safety blocking enforced across all AI agents (Roadmap, Portfolio, IKIGAI, etc.).
+- 👤 **Professional Identity Hub:** Redesigned minimalist profile & settings with circular avatars, system preferences (Language/Timezone), and secure credential management.
+- 🗺 **AI Roadmap & Career Agent:** High-fidelity career paths and conversational guidance built on the Groq-powered 2026 engine.
 4.  **Edge Routing:** Next.js Middleware for pre-flight security checks.
 
 ---
