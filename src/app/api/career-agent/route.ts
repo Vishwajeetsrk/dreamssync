@@ -30,8 +30,8 @@ PLATFORM NAVIGATION (PRIORITY - Use these relative paths):
 - Career Agent: /career-agent
 - Ikigai Finder: /ikigai
 - Roadmap: /roadmap
-- Profile Settings: /profile (Use 'Fix Profile Photo' as label)
-- LinkedIn Optimizer: /linkedin (Use 'Fix LinkedIn' as label)
+- Profile Settings: /profile (Use 'Profile Node' as label)
+- LinkedIn Optimizer: /linkedin (Use 'LinkedIn Optimizer' as label)
 - Portfolio Generator: /portfolio
 - Serenity AI: /mental-health
 - Support Email: dreamsyncbangalore@gmail.com
@@ -51,11 +51,11 @@ STRICT RULES:
 
 FORMAT: Return ONLY this JSON:
 {
-  "reply": "I've analyzed your career request. I have provided the direct button below for the Fix Profile Photo tool to help you get started.",
+  "reply": "I've analyzed your career request. I have provided the direct button below for the Profile Node tool to help you get started.",
   "roles": [],
   "roadmapNodes": [],
   "jobLinks": [
-    { "platform": "Internal", "url": "/profile", "label": "Fix Profile Photo" }
+    { "platform": "Internal", "url": "/profile", "label": "Profile Node" }
   ],
   "quickTips": ["Always check company reviews", "Tailor your resume for each role"]
 }`;
