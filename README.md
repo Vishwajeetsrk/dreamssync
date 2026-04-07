@@ -98,6 +98,7 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ### 🛡️ Production-Grade Security & Reliability
 
+-   **Supabase Profile Sync**: High-performance photo uploads using Supabase Storage with automated real-time synchronization to Firestore.
 -   **DreamSync AI Guide**: Floating AI assistant with interactive **Close Assistant** controls and real-time platform tool discovery.
 -   **AI Reliability v2**: Optimized JSON generation and support-mode priority to ensure 99.9% uptime for conversational navigation.
 -   **Multi-Language Sync (i18n)**: Global English/Hindi synchronization persisted via Firestore.
