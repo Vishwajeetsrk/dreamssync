@@ -22,8 +22,10 @@ import {
   ArrowRight,
   Fingerprint,
   Zap,
-  Coffee
+  Coffee,
+  ShieldCheck
 } from 'lucide-react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function ProfileContent() {
