@@ -103,6 +103,12 @@ export default function Navbar() {
             <Link href="/about" className="text-lg font-black text-gray-900 hover:text-blue-600 transition-colors uppercase tracking-tight">
               About
             </Link>
+            <Link href="/team" className="text-lg font-black text-gray-900 hover:text-blue-600 transition-colors uppercase tracking-tight">
+              Team
+            </Link>
+            <Link href="/contact" className="text-lg font-black text-gray-900 hover:text-blue-600 transition-colors uppercase tracking-tight">
+              Contact
+            </Link>
           </div>
         </div>
 
@@ -130,7 +136,7 @@ export default function Navbar() {
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <Link 
                 href="/dashboard"
                 className="px-6 py-2.5 bg-white border-2 border-black text-black text-sm font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
@@ -138,30 +144,53 @@ export default function Navbar() {
                 Dashboard
               </Link>
               
-              <div className="flex items-center bg-gray-100 border-2 border-black p-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                <Link 
-                  href="/profile"
-                  title="Profile Settings"
-                  className="p-1.5 hover:bg-black group transition-all"
-                >
+              <div className="relative group">
+                <button className="flex items-center gap-2 p-1 focus:outline-none">
                   {userData?.photoURL ? (
-                    <div className="w-6 h-6 border border-black overflow-hidden relative">
-                      <Image src={userData.photoURL} alt="P" fill className="object-cover" />
+                    <div className="w-10 h-10 rounded-full border-2 border-black overflow-hidden relative shadow-[2px_2px_0px_1px_rgba(0,0,0,1)]">
+                      <Image src={userData.photoURL} alt={userData.name || 'User'} fill className="object-cover" />
                     </div>
                   ) : (
-                    <UserIcon className="w-5 h-5 text-black group-hover:text-white" />
+                    <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_1px_rgba(0,0,0,1)]">
+                      <UserIcon className="w-5 h-5 text-black" />
+                    </div>
                   )}
-                </Link>
-
-                <div className="w-[2px] h-6 bg-black mx-1 opacity-20" />
-
-                <button 
-                  onClick={handleLogout}
-                  title="Logout"
-                  className="p-1.5 hover:bg-red-500 group transition-all text-gray-500 hover:text-white"
-                >
-                  <LogOut className="w-5 h-5" />
                 </button>
+
+                {/* Refined Dropdown matching requested design */}
+                <div className="absolute right-0 mt-2 w-72 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100]">
+                  <div className="p-4 border-b-2 border-black flex items-center gap-3 bg-gray-50">
+                    {userData?.photoURL ? (
+                      <div className="w-12 h-12 rounded-full border-2 border-black overflow-hidden relative">
+                        <Image src={userData.photoURL} alt="P" fill className="object-cover" />
+                      </div>
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-blue-200 border-2 border-black flex items-center justify-center">
+                        <UserIcon className="w-6 h-6 text-black" />
+                      </div>
+                    )}
+                    <div className="flex flex-col overflow-hidden">
+                      <span className="font-black text-sm truncate uppercase">{userData?.name || 'DreamSync User'}</span>
+                      <span className="text-[10px] text-gray-500 truncate lowercase font-bold tracking-tight">{user.email}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="py-1">
+                    <Link href="/profile" className="block px-4 py-2.5 text-sm font-black uppercase text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2">
+                      <UserIcon className="w-4 h-4" /> My Account
+                    </Link>
+                    <Link href="/team" className="block px-4 py-2.5 text-sm font-black uppercase text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4" /> Manage Team
+                    </Link>
+                    <div className="h-[2px] bg-black mx-2 my-1" />
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2.5 text-sm font-black uppercase text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
+                    >
+                      <LogOut className="w-4 h-4" /> Sign Out
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
