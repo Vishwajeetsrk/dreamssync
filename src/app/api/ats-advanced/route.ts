@@ -25,30 +25,59 @@ async function extractPdfText(buffer: Buffer): Promise<string> {
 }
 
 // ── System Prompt ─────────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are an expert ATS (Applicant Tracking System) resume reviewer for the Indian job market.
+const SYSTEM_PROMPT = `You are a world-class Elite ATS (Applicant Tracking System) Auditor for the FAANG and Indian tech ecosystem (Google, Microsoft, Amazon, Meta, Zomato, Swiggy).
 
 SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
 
 Analyze the resume and return ONLY a JSON object with this exact schema — no markdown, no extra text:
 {
-  "score": <number 0-100>,
-  "grade": "A" | "B" | "C" | "D" | "F",
-  "summary": "<one sentence summary of overall resume quality>",
-  "keywords_found": ["<keyword>"],
-  "keywords_missing": ["<important missing keyword>"],
-  "issues": [
-    { "title": "<issue title>", "description": "<what to fix>", "severity": "high" | "medium" | "low" }
+  "ats_score": <number 0-100>,
+  "keyword_match": <number 0-100>,
+  "strengths": ["<strength 1>", "<strength 2>"],
+  "weaknesses": ["<weakness 1>", "<weakness 2>"],
+  "missing_keywords": ["<missing keyword 1>", "<missing keyword 2>"],
+  "improvement_suggestions": ["<suggestion 1>", "<suggestion 2>"],
+  "company_eligibility": [
+    {
+      "company": "Google",
+      "eligibility": "Eligible" | "Partially Eligible" | "Not Eligible",
+      "score": <number 0-100>,
+      "reasons": ["<reason 1>"],
+      "missing_skills": ["<missing 1>"],
+      "suggestions": ["<how to improve for this company>"]
+    },
+    {
+      "company": "Microsoft",
+      "eligibility": "Eligible" | "Partially Eligible" | "Not Eligible",
+      "score": <number 0-100>,
+      "reasons": ["<reason 1>"],
+      "missing_skills": ["<missing 1>"],
+      "suggestions": ["<how to improve for this company>"]
+    },
+    {
+      "company": "Amazon",
+      "eligibility": "Eligible" | "Partially Eligible" | "Not Eligible",
+      "score": <number 0-100>,
+      "reasons": ["<reason 1>"],
+      "missing_skills": ["<missing 1>"],
+      "suggestions": ["<how to improve for this company>"]
+    }
   ],
-  "strengths": ["<strength 1>", "<strength 2>"]
+  "improved_resume_markdown": "<Write a 2026-format, markdown-styled optimized resume content and suggestions here>"
 }
 
-Grading: A=90+, B=75-89, C=60-74, D=45-59, F=below 45.
-Focus on: ATS parse-ability, keyword density, quantified achievements, formatting, action verbs.
-India context: check for CTC expectations, CGPA, relevant Indian certifications, Naukri/LinkedIn optimization.`;
+Grading Context: 
+- Google focuses on: Scalability, DS/Algo, System Architecture.
+- Microsoft focuses on: Cloud (Azure), Enterprise software, Clean code.
+- Amazon focuses on: Leadership principles, Customer obsession, Hard numbers/Metrics.
+- Indian Startups: Speed, React/Node, Product impact.
+
+Ensure all suggestions are actionable and high-impact.`;
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-
+  // 1. Authenticate (optional, but good for safety)
+  
   // 2. Parse multipart form
   let formData: FormData;
   try {
@@ -58,6 +87,9 @@ export async function POST(req: NextRequest) {
   }
 
   const file = formData.get('file') as File | null;
+  const jobRole = formData.get('jobRole') as string || 'Not specified';
+  const jobDescription = formData.get('jobDescription') as string || 'Not specified';
+  const experienceLevel = formData.get('experienceLevel') as string || 'Fresher';
 
   if (!file) {
     return NextResponse.json({ error: 'No file uploaded. Please select a PDF.' }, { status: 400 });
@@ -82,8 +114,7 @@ export async function POST(req: NextRequest) {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-
-  // 5. Extract text
+  // 4. Extract text
   let resumeText: string;
   try {
     resumeText = await extractPdfText(buffer);
@@ -102,29 +133,33 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 6. Safety Guard
+  // 5. Safety Guard
   const safety = validateCareerInput(resumeText);
   if (!safety.allowed) {
     return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
   }
 
-
-  // 7. Call AI
+  // 6. Call AI
   const truncatedText = resumeText.slice(0, 6000); // Stay within token limits
 
   const aiMessages = [
     { role: 'system' as const, content: SYSTEM_PROMPT },
     {
       role: 'user' as const,
-      content: `Analyze this resume and provide an honest, detailed ATS score:\n\n${truncatedText}`,
+      content: `Analyze this resume for the role of "${jobRole}". 
+Experience Level: ${experienceLevel}.
+Additional Context (JD): ${jobDescription}.
+
+RESUME CONTENT:
+${truncatedText}`,
     },
   ];
 
   try {
     const { content, provider } = await callAI(aiMessages, {
       jsonMode: true,
-      maxTokens: 1000,
-      temperature: 0.3, // Low temp for consistent, factual analysis
+      maxTokens: 2500,
+      temperature: 0.1, // Low temp for factual analysis
     });
 
     const result = parseJSON<object>(content);
@@ -132,9 +167,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ...result, _provider: provider });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'AI error';
-    console.error('[ats] All providers failed:', msg);
+    console.error('[ats-advanced] All providers failed:', msg);
     return NextResponse.json(
-      { error: 'AI analysis temporarily unavailable. Please try again in a minute.' },
+      { error: 'Advanced analysis unavailable. Please try again soon.' },
       { status: 503 }
     );
   }
