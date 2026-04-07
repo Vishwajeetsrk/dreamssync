@@ -37,9 +37,8 @@ export default function AIAssistant() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          message: userMsg,
-          vibe: 'support_assistant',
-          chatHistory: messages
+          messages: [...messages, { role: 'user', content: userMsg }],
+          context: 'System Support Mode: Help user find ATS Check, Roadmap, Ikigai, or Portfolio tools.'
         }),
       });
 
@@ -91,7 +90,11 @@ export default function AIAssistant() {
                   </div>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="hover:text-red-500 transition-colors">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="hover:bg-red-600 px-3 py-1 flex items-center gap-1 transition-all border-2 border-transparent hover:border-white group"
+              >
+                <span className="text-[10px] font-black uppercase hidden group-hover:block">Close Assistant</span>
                 <X className="w-6 h-6" />
               </button>
             </div>
