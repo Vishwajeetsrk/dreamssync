@@ -7,9 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { db, auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
-import { handleGoogleSignIn } from '@/lib/auth-utils';
+import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -21,22 +19,10 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await supabase.auth.signOut();
       window.location.href = '/';
     } catch (error) {
       console.error('Logout failed:', error);
-    }
-  };
-
-  const handleAuthAction = async () => {
-    setLoading(true);
-    try {
-      await handleGoogleSignIn();
-      window.location.href = '/dashboard';
-    } catch (err) {
-      console.error('Auth error:', err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -55,14 +41,13 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b-4 border-black flex items-center h-20 overflow-visible">
       <div className="max-w-[1440px] mx-auto px-10 w-full flex items-center justify-between gap-4">
-        
+
         <div className="flex items-center gap-12 shrink-0">
-          {/* Official Logo PNG */}
           <Link href="/" className="flex items-center py-2">
             <div className="relative h-12 w-48 flex items-center">
-              <Image 
-                src="/DreamSynclogo.png" 
-                alt="DreamSync Logo" 
+              <Image
+                src="/DreamSynclogo.png"
+                alt="DreamSync Logo"
                 fill
                 className="object-contain object-left"
                 priority
@@ -72,7 +57,7 @@ export default function Navbar() {
 
           <div className="hidden lg:flex items-center gap-10 mt-1">
             <div className="relative">
-              <button 
+              <button
                 onMouseEnter={() => setIsFeaturesOpen(true)}
                 onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
                 className="flex items-center gap-1.5 text-lg font-black text-gray-900 hover:text-blue-600 transition-colors group uppercase tracking-tight"
@@ -81,7 +66,7 @@ export default function Navbar() {
               </button>
               <AnimatePresence>
                 {isFeaturesOpen && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
@@ -89,7 +74,7 @@ export default function Navbar() {
                     className="absolute top-full -left-4 w-72 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mt-4 p-2 z-[60]"
                   >
                     {featureLinks.map((item) => (
-                      <Link 
+                      <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setIsFeaturesOpen(false)}
@@ -115,7 +100,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4 shrink-0">
-          <Link 
+          <Link
             href="/donate"
             className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-[#fcc419] border-2 border-black text-black text-xs font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
           >
@@ -124,13 +109,13 @@ export default function Navbar() {
 
           {!user ? (
             <div className="flex items-center gap-3">
-              <Link 
+              <Link
                 href="/login"
                 className="px-6 py-2.5 text-sm font-black text-black hover:text-blue-600 transition-colors uppercase tracking-tight"
               >
                 {t('login')}
               </Link>
-              <Link 
+              <Link
                 href="/signup"
                 className="px-6 py-2.5 bg-black text-white border-2 border-black text-sm font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
               >
@@ -139,18 +124,18 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              <Link 
+              <Link
                 href="/dashboard"
                 className="px-6 py-2.5 bg-white border-2 border-black text-black text-sm font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
               >
                 {t('dashboard')}
               </Link>
-              
+
               <div className="relative group">
                 <button className="flex items-center gap-2 p-1 focus:outline-none">
-                  {userData?.photoURL ? (
+                  {userData?.avatar_url ? (
                     <div className="w-10 h-10 rounded-full border-2 border-black overflow-hidden relative shadow-[2px_2px_0px_1px_rgba(0,0,0,1)]">
-                      <Image src={userData.photoURL} alt={userData.name || 'User'} fill className="object-cover" />
+                      <Image src={userData.avatar_url} alt={userData.name || 'User'} fill className="object-cover" />
                     </div>
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_1px_rgba(0,0,0,1)]">
@@ -159,12 +144,11 @@ export default function Navbar() {
                   )}
                 </button>
 
-                {/* Refined Dropdown matching requested design */}
                 <div className="absolute right-0 mt-2 w-72 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100]">
                   <div className="p-4 border-b-2 border-black flex items-center gap-3 bg-gray-50">
-                    {userData?.photoURL ? (
+                    {userData?.avatar_url ? (
                       <div className="w-12 h-12 rounded-full border-2 border-black overflow-hidden relative">
-                        <Image src={userData.photoURL} alt="P" fill className="object-cover" />
+                        <Image src={userData.avatar_url} alt="P" fill className="object-cover" />
                       </div>
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-blue-200 border-2 border-black flex items-center justify-center">
@@ -176,13 +160,13 @@ export default function Navbar() {
                       <span className="text-[10px] text-gray-500 truncate lowercase font-bold tracking-tight">{user.email}</span>
                     </div>
                   </div>
-                  
+
                   <div className="py-1">
                     <Link href="/profile" className="block px-4 py-2.5 text-sm font-black uppercase text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2">
                       <UserIcon className="w-4 h-4" /> {t('my_account')}
                     </Link>
                     <div className="h-[2px] bg-black mx-2 my-1" />
-                    <button 
+                    <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2.5 text-sm font-black uppercase text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
                     >

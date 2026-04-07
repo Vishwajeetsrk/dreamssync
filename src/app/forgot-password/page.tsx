@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { ArrowLeft, Mail, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Mail, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -18,24 +17,15 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      await sendPasswordResetEmail(auth, email);
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback?next=/profile`,
+      });
+      
+      if (resetError) throw resetError;
       setSuccess(true);
     } catch (err: any) {
       console.error('Password reset error:', err);
-      // Friendly errors for common cases
-      switch (err.code) {
-        case 'auth/user-not-found':
-          setError('No account found with this email. Check for typos or sign up!');
-          break;
-        case 'auth/invalid-email':
-          setError('Please enter a valid email address.');
-          break;
-        case 'auth/too-many-requests':
-          setError('Too many attempts. Please try again later.');
-          break;
-        default:
-          setError('Failed to send reset email. Please try again.');
-      }
+      setError(err.message || 'Failed to send reset email. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -49,18 +39,18 @@ export default function ForgotPassword() {
             <div className="w-16 h-16 bg-green-400 flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
               <CheckCircle2 className="w-8 h-8 text-black" />
             </div>
-            <h1 className="text-3xl font-black">Check Your Email!</h1>
-            <p className="text-muted-foreground font-medium mt-4">
-              We've sent a password reset link to <span className="font-bold text-black">{email}</span>.
+            <h1 className="text-3xl font-black uppercase tracking-tight">Check Your Email!</h1>
+            <p className="text-muted-foreground font-black mt-4 uppercase text-sm">
+              Sent recovery link to <span className="text-black">{email}</span>.
             </p>
-            <p className="text-sm mt-4 italic"> (Don't forget to check your spam folder) </p>
+            <p className="text-xs mt-4 font-bold text-gray-400 uppercase tracking-widest"> (Verify your spam folder) </p>
           </div>
           
           <Link 
             href="/login" 
-            className="w-full py-4 bg-primary text-white font-bold text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 bg-primary text-white font-black text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2"
           >
-            <ArrowLeft className="w-5 h-5" /> Back to Login
+            <ArrowLeft className="w-5 h-5" /> BACK TO LOGIN
           </Link>
         </div>
       </div>
@@ -74,24 +64,24 @@ export default function ForgotPassword() {
           <div className="w-16 h-16 bg-yellow-400 flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
             <Mail className="w-8 h-8 text-black" />
           </div>
-          <h1 className="text-3xl font-black text-center">Reset Password</h1>
-          <p className="text-muted-foreground font-medium text-center">We'll send you a link to get back into your account.</p>
+          <h1 className="text-3xl font-black text-center uppercase tracking-tight">Reset Password</h1>
+          <p className="text-muted-foreground font-bold text-center text-sm uppercase tracking-tight mt-2">RECOVER YOUR ACCOUNT CREDENTIALS</p>
         </div>
 
         {error && (
-          <div className="bg-red-100 border-2 border-black p-3 mb-6 text-red-900 font-bold text-sm">
-            {error}
+          <div className="bg-red-100 border-4 border-black p-4 mb-6 text-red-900 font-bold text-xs flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" /> {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="font-bold text-sm uppercase tracking-wide">Email Address</label>
+            <label className="font-black text-xs uppercase tracking-widest text-gray-500">Email Address</label>
             <input
               type="email"
               required
-              className="w-full bg-gray-50 border-2 border-black p-3 focus:outline-none focus:bg-white focus:ring-2 focus:ring-primary transition-all font-medium"
-              placeholder="e.g. john@example.com"
+              className="w-full bg-gray-50 border-4 border-black p-4 focus:outline-none focus:bg-white focus:ring-4 focus:ring-primary/20 transition-all font-black"
+              placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -100,15 +90,15 @@ export default function ForgotPassword() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full py-4 bg-black text-white font-bold text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-4 bg-black text-white font-black text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {loading ? 'Sending...' : 'Send Reset Link'} 
+            {loading ? 'SENDING LINK...' : 'SEND RECOVERY LINK'} 
           </button>
         </form>
 
-        <div className="mt-8 text-center border-t-2 border-dashed border-gray-300 pt-6">
-          <Link href="/login" className="text-primary font-bold hover:underline flex items-center justify-center gap-2">
-            <ArrowLeft className="w-4 h-4" /> Back to Sign In
+        <div className="mt-8 text-center border-t-4 border-black border-dashed pt-6">
+          <Link href="/login" className="text-primary font-black hover:underline flex items-center justify-center gap-2 uppercase text-sm">
+            <ArrowLeft className="w-4 h-4" /> BACK TO SIGN IN
           </Link>
         </div>
       </div>

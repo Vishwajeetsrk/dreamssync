@@ -30,7 +30,7 @@ PLATFORM NAVIGATION (PRIORITY - Use these relative paths):
 - Career Agent: /career-agent
 - Ikigai Finder: /ikigai
 - Roadmap: /roadmap
-- LinkedIn Optimizer: /linkedin
+- LinkedIn Optimizer: /linkedin (Use 'Fix LinkedIn' as label)
 - Portfolio Generator: /portfolio
 - Serenity AI: /mental-health
 - Support Email: dreamsyncbangalore@gmail.com
@@ -49,11 +49,11 @@ STRICT RULES:
 
 FORMAT: Return ONLY this JSON:
 {
-  "reply": "I've analyzed your career request. I have provided the direct button below for the ATS Checker to help you get started.",
+  "reply": "I've analyzed your career request. I have provided the direct button below for the Fix LinkedIn tool to help you get started.",
   "roles": [],
   "roadmapNodes": [],
   "jobLinks": [
-    { "platform": "ATS", "url": "/ats-check", "label": "Open ATS Checker" }
+    { "platform": "LinkedIn", "url": "/linkedin", "label": "Fix LinkedIn" }
   ],
   "quickTips": ["Always check company reviews", "Tailor your resume for each role"]
 }`;
