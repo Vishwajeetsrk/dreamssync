@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { db } from '@/lib/firebase';
-import { supabase } from '@/lib/supabase';
+import { db, auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
 import { handleGoogleSignIn } from '@/lib/auth-utils';
 import Image from 'next/image';
 
@@ -21,7 +21,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
+      await signOut(auth);
       window.location.href = '/';
     } catch (error) {
       console.error('Logout failed:', error);

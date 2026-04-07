@@ -1,62 +1,38 @@
-import { supabase } from './supabase';
+import { signInWithPopup, User } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from './firebase';
+import { auth, db, googleProvider } from './firebase';
 
-/**
- * Handle Google Sign-In via Supabase OAuth
- * Syncs profile metadata to Firestore for backward compatibility
- */
 export const handleGoogleSignIn = async () => {
   try {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
-      },
-    });
-
-    if (error) throw error;
-    return data;
-  } catch (err: any) {
-    console.error('Supabase Google Sign-in error:', err);
-    throw err;
-  }
-};
-
-/**
- * Background Sync: Ensures Supabase User exists in Firestore
- * Use this in AuthContext on state change
- */
-export const syncUserToFirestore = async (supabaseUser: any) => {
-  if (!supabaseUser) return;
-  
-  try {
-    const userDocRef = doc(db, "users", supabaseUser.id);
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    
+    // Check if user already exists in Firestore
+    const userDocRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userDocRef);
     
-    const metadata = supabaseUser.user_metadata || {};
-    
     if (!userDoc.exists()) {
+      // Create user profile if it doesn't exist
       await setDoc(userDocRef, {
-        name: metadata.full_name || metadata.name || 'DreamSync User',
-        email: supabaseUser.email,
-        photoURL: metadata.avatar_url || metadata.picture || '',
+        name: user.displayName || 'Anonymous User',
+        email: user.email,
+        photoURL: user.photoURL || '',
         plan: "free",
         createdAt: new Date(),
-        authMethod: 'supabase-google',
+        authMethod: 'google',
         lastLogin: new Date()
       });
     } else {
+      // Update last login
       await setDoc(userDocRef, { 
         lastLogin: new Date(),
-        photoURL: metadata.avatar_url || metadata.picture || userDoc.data().photoURL
+        photoURL: user.photoURL || userDoc.data().photoURL
       }, { merge: true });
     }
-  } catch (err) {
-    console.error("Firestore sync failed for Supabase user:", err);
+    
+    return user;
+  } catch (err: any) {
+    console.error('Google Sign-in error:', err);
+    throw err;
   }
 };

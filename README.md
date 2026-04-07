@@ -98,9 +98,9 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ### 🛡️ Production-Grade Security & Reliability
 
--   **Professional Identity Hub**: Re-engineered profile management with Supabase Storage, real-time Firestore sync, and sleek Neo-Brutalist design.
--   **Enterprise Auth Migration**: Transitioned from Firebase Auth to **Supabase Google OAuth** for high-performance session management and recovery.
--   **DreamSync AI Guide**: Interactive-first navigation assistant with verified job resources and absolute-zero URL link scrubbing.
+-   **Supabase Profile Sync**: High-performance photo uploads using Supabase Storage with automated real-time synchronization to Firestore.
+-   **DreamSync AI Guide**: Floating AI assistant with interactive **Close Assistant** controls and real-time platform tool discovery.
+-   **AI Reliability v2**: Optimized JSON generation and support-mode priority to ensure 99.9% uptime for conversational navigation.
 -   **Multi-Language Sync (i18n)**: Global English/Hindi synchronization persisted via Firestore.
 -   **Real-Time Identity Hub**: Instant profile photo and name updates across all components using Firestore Snapshots.
 -   **Global AI Safety Guard:** 400-level whole-word regex safety blocking enforced across all AI agents.
