@@ -43,21 +43,6 @@ function LoginContent() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      setError(err.message || 'Google login failed');
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="flex items-center justify-center min-h-[70vh]">
@@ -67,7 +52,7 @@ function LoginContent() {
             <Lock className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-black uppercase tracking-tight">Access Hub</h1>
-          <p className="text-muted-foreground font-black text-xs uppercase tracking-widest mt-2">LOGIN TO YOUR DREAMSYNC IDENTITY</p>
+          <p className="text-muted-foreground font-black text-xs uppercase tracking-widest mt-2">Access your professional dashboard</p>
         </div>
 
         {error && (
@@ -116,9 +101,9 @@ function LoginContent() {
 
         <div className="text-center border-t-4 border-black border-dashed pt-6 mt-8">
           <p className="font-black text-muted-foreground text-[10px] tracking-widest uppercase">
-            NEW TO THE ARCHITECTURE?{' '}
+            New to the platform?{' '}
             <Link href="/signup" className="text-primary hover:underline underline-offset-4">
-              CREATE IDENTITY
+              Create your account
             </Link>
           </p>
         </div>

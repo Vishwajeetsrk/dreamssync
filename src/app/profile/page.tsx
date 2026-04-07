@@ -208,7 +208,7 @@ export default function ProfilePage() {
           onClick={() => setActiveTab('security')}
           className={`pb-4 text-xs font-black uppercase tracking-widest transition-all relative ${activeTab === 'security' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
         >
-          IDENTITY & SECURITY
+          PROFILE & SECURITY
           {activeTab === 'security' && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-1.5 bg-black" />}
         </button>
         <button 
@@ -254,13 +254,15 @@ export default function ProfilePage() {
                 />
                 <div className="text-center">
                   <h3 className="font-black text-2xl uppercase tracking-tighter">{name || 'ARCHITECT'}</h3>
+                  <h3 className="font-black text-2xl uppercase tracking-tighter">{name || 'USER'}</h3>
                   <p className="text-[10px] font-black text-gray-400 uppercase mt-1 tracking-[0.2em]">{user.email}</p>
                 </div>
               </div>
 
               <div className="md:col-span-2 space-y-8">
+                <h3 className="font-black uppercase text-sm mb-4 flex items-center gap-2"> <Fingerprint className="w-5 h-5" /> Personal Information</h3>
                 <h2 className="text-xl font-black uppercase flex items-center gap-2 border-l-8 border-primary pl-4">
-                  CORE IDENTITY
+                  PERSONAL DETAILS
                 </h2>
                 <form onSubmit={handleUpdateProfile} className="space-y-6">
                   <div className="space-y-2">
@@ -278,7 +280,7 @@ export default function ProfilePage() {
                     disabled={loading || uploading} 
                     className="px-8 py-4 bg-primary text-white font-black uppercase text-xs border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-3 disabled:opacity-50"
                   >
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-5 h-5" />} SAVE IDENTITY
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-5 h-5" />} UPDATE PROFILE
                   </button>
                 </form>
               </div>
@@ -291,7 +293,7 @@ export default function ProfilePage() {
               </h2>
               <form onSubmit={handleChangePassword} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Active Email Identity</label>
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Account email</label>
                   <input 
                     type="text" 
                     value={user.email} 
@@ -340,7 +342,7 @@ export default function ProfilePage() {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Timezone Architecture</label>
+                    <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Timezone Configuration</label>
                     <select 
                       value={timezone}
                       onChange={(e) => setTimezone(e.target.value)}
@@ -364,9 +366,10 @@ export default function ProfilePage() {
             {/* Session Management */}
             <section className="bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col md:flex-row md:items-center justify-between gap-8">
               <div>
-                <h2 className="text-2xl font-black uppercase text-red-600 mb-2">END SESSION</h2>
+                <h1 className="text-3xl font-black uppercase tracking-tighter">Profile & Security</h1>
+                <p className="text-xs font-black text-muted-foreground uppercase tracking-widest">Manage your professional account</p>
                 <p className="text-xs font-black text-gray-500 uppercase tracking-widest max-w-md">
-                  Destroy current session credentials and remove local identity cache.
+                  Destroy current session credentials and remove local profile cache.
                 </p>
               </div>
               <button 

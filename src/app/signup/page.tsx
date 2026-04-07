@@ -60,21 +60,6 @@ export default function Signup() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      setError(err.message || 'Google signup failed');
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="flex items-center justify-center min-h-[70vh] py-12">

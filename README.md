@@ -6,7 +6,7 @@
 ### 🛡 Supabase Migration & Security Architecture (v22.1)
 The DreamSync platform has successfully migrated from Firebase to **Supabase** for a more robust, unified authentication and database experience.
 
-*   **Unified Auth (`/context/AuthContext.tsx`)**: Managed entirely via Supabase Auth with support for Google OAuth and Email/Password.
+*   **Secure Identity Auth (`/context/AuthContext.tsx`)**: Managed entirely via Supabase Auth with a centralized **Email/Password** strategy (Google OAuth removed for platform security).
 *   **PostgreSQL Persistence**: All user profiles and career data are now stored in Supabase's high-performance PostgreSQL database.
 *   **Supabase Storage**: User identity photos and career documents are securely hosted in Supabase Storage with granular RLS policies.
 *   **Centralized Validation (`/lib/aiGuard.ts`)**: Every user input across all AI modules is scanned for safety and ethical alignment.
@@ -98,14 +98,12 @@ DreamSync features a custom-engineered **Neo-Brutalist** design system:
 - **Supabase Account**: Project URL & Anon Key.
 - **Upstash Redis**: URL/Token for rate limiting.
 
-### 🛡️ Security & Edge Protection
-This platform implements **Next.js 16 (Turbopack)** edge-ready security:
-- **`src/proxy.ts`**: The centralized entry point for all edge security middleware.
-- **Rate Limiting**: Powered by **Upstash Redis**.
-- **Self-Configuration**: To adjust performance vs. security, edit `src/lib/ratelimit.ts`:
-  - `globalRateLimit`: General browsing speed.
-  - `toolRateLimit`: AI endpoint protection (ATS/Roadmap).
-  - `authRateLimit`: Signup/Login attempt limits.
+### 🛡️ Production-Grade Security & Edge Protection
+DreamSync implements **Next.js 16 (Turbopack)** edge-ready security:
+- **`src/proxy.ts`**: Centralized entry point for all edge security middleware.
+- **Rate Limiting**: Powered by **Upstash Redis** (Global, Tool-specific, and Auth-specific).
+- **Identity Sync**: Transitioned from technical jargon to a **Professional Identity Model**. All 'Architecture' and 'Identity' terms have been replaced with 'Platform' and 'Profile' to ensure a premium user experience.
+- **Supabase 429 Fix**: If you encounter "Email rate limit exceeded" or "Sign up too many requests", adjust your **Supabase Dashboard** under *Authentication > Settings > Rate Limits* (increase signups/hour).
 
 ### 🚀 Supabase Setup (Important)
 To ensure the profile and storage systems work correctly:
