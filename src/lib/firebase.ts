@@ -1,12 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
-/**
- * DreamSync Firebase Configuration (v2 - Production Hardened)
- * - Zero hardcoded secrets (GitHub Secret Scan Compliant)
- * - Strictly driven by production environment variables
- */
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -24,4 +19,12 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
-export { auth, db, app, googleProvider };
+// Analytics only in browser
+let analytics;
+if (typeof window !== 'undefined') {
+  isSupported().then(supported => {
+    if (supported) analytics = getAnalytics(app);
+  });
+}
+
+export { auth, db, app, googleProvider, analytics };
