@@ -3,7 +3,8 @@ import { globalRateLimit, authRateLimit, toolRateLimit } from './lib/ratelimit';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const ip = request.ip ?? request.headers.get('x-forwarded-for') ?? '127.0.0.1';
+  // Next.js 16 Type Fix: access IP via casting or headers
+  const ip = (request as any).ip ?? request.headers.get('x-forwarded-for') ?? '127.0.0.1';
 
   // 1. RATE LIMITING FOR ALL API ROUTES
   if (pathname.startsWith('/api/')) {

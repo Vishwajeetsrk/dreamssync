@@ -27,15 +27,15 @@ The DreamSync platform has successfully migrated from Firebase to **Supabase** f
 -   **Global Rate Limiting Architecture**:
     -   **Standard API**: Multi-region sliding window (10 req / 10s).
     -   **High-Depth Tools**: Specialized limits (5 req / 1m) for Roadmap & ATS.
-    -   **Security Threshold (Auth)**: Enhanced protection (5 attempts / 15m) for login & signup routes via Next.js Middleware & Upstash Redis.
+    -   **Security Threshold (Auth)**: Enhanced protection (5 attempts / 15m) for login & signup routes via Next.js Proxy & Upstash Redis.
+-   **Next.js Proxy (v16.x)**: Secure configuration utilizing `src/proxy.ts` (Edge-compatible) for pre-flight security, authentication checks, and global rate limiting.
 -   **Supabase Identity Sync**: High-performance photo uploads and profile management using Supabase Storage and PostgreSQL.
 -   **DreamSync AI Guide**: Floating AI assistant with interactive tool discovery and 'Fix LinkedIn' priority mode.
 -   **AI Reliability v2**: Optimized JSON generation and support-mode priority for 99.9% uptime.
 -   **Supabase Real-time**: Instant profile photo and name updates across all components using Supabase Auth state changes.
 -   **Global AI Safety Guard:** 400-level whole-word regex safety blocking enforced across all AI agents.
--   **Next.js Remote Hardening:** Securely configured `remotePatterns` for Supabase Storage domains.
+-   **Next.js Remote Hardening**: Securely configured `remotePatterns` for Supabase Storage domains.
 -   **API Rate Limiting:** Global rate limiting via **Upstash Redis** to ensure multi-region stability.
--   **Edge Routing:** Next.js Middleware for pre-flight security and authentication checks.
 -   **Global CSP Policy:** Hardened Content Security Policy to mitigate XSS and data exfiltration.
 
 ---
