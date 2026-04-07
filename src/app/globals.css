@@ -2,82 +2,72 @@
 
 @layer base {
   :root {
-    /* DREAM SYNC LUXURY AI THEME */
-    --background: #0F172A; /* Deep Navy */
-    --foreground: #FFFFFF;
-    --card: #1E293B;
-    --card-foreground: #FFFFFF;
-    --primary: #3B82F6; /* Electric Blue */
-    --primary-foreground: #FFFFFF;
-    --secondary: #1E3A8A; /* Deep Blue */
-    --secondary-foreground: #FFFFFF;
-    --accent: #e11d48; /* Accent Crimson */
-    --accent-foreground: #000000;
-    --border: rgba(255, 255, 255, 0.05);
-    --muted: #94A3B8;
-    --muted-foreground: #64748B;
+    /* DREAM SYNC PREMIUM AI SAAS DESIGN SYSTEM */
+    --background: #0B0F19; /* Dark Premium */
+    --foreground: #E5E7EB; /* Text Primary */
+    --surface: #111827; /* Cards/Surface */
+    --surface-hover: #1F2937;
+    --border: #1F2937;
+    
+    --primary: #2563EB; /* Strong AI Blue */
+    --secondary: #7C3AED; /* Purple Intelligence */
+    --accent: #06B6D4; /* Cyan Highlight */
+    
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --text-muted: #6B7280;
+    
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --error: #EF4444;
 
-    /* Custom Gradients */
-    --grad-hero: linear-gradient(135deg, #1E3A8A, #3B82F6, #e11d48);
-    --grad-button: linear-gradient(135deg, #3B82F6, #e11d48);
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
   }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'Inter', 'Poppins', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
+  h1, h2, h3, h4 {
+    font-family: 'Inter', 'Satoshi', sans-serif;
+    letter-spacing: -0.025em;
   }
 }
 
 @layer utilities {
-  .pill-nav {
-    @apply bg-[rgba(15,23,42,0.7)] backdrop-blur-xl border border-white/10 rounded-full px-6 py-2 transition-all duration-300;
-  }
-
   .glass-card {
-    @apply bg-[#1E293B] border border-white/5 shadow-2xl backdrop-blur-md rounded-[24px] transition-all duration-300;
+    @apply bg-[#111827]/80 backdrop-blur-xl border border-[#1F2937] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
 
-  .btn-gradient {
-    background: linear-gradient(135deg, #3B82F6 0%, #e11d48 100%);
-    @apply text-white font-bold rounded-full transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_0_20px_rgba(225,29,72,0.4)];
+  .btn-primary {
+    @apply relative overflow-hidden bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)];
   }
 
-  .text-gradient-blue {
-    background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .btn-secondary {
+    @apply bg-[#1F2937] hover:bg-[#2D3748] text-white font-medium py-3 px-6 rounded-xl border border-[#374151] transition-all;
   }
 
-  .text-gradient-hero {
-    background: linear-gradient(135deg, #1E3A8A, #3B82F6, #e11d48);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .input-premium {
+    @apply bg-[#111827] border border-[#1F2937] rounded-xl px-4 py-3 text-[#E5E7EB] placeholder-[#4B5563] outline-none transition-all duration-300 focus:border-[#2563EB] focus:ring-2 focus:ring-[#2563EB]/20 focus:shadow-[0_0_20px_rgba(37,99,235,0.1)];
   }
 
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.3)];
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4];
   }
 
-  .futuristic-glow {
-    @apply relative after:absolute after:inset-0 after:bg-blue-500/20 after:blur-[100px] after:-z-10;
+  .bg-glow-radial {
+    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
   }
-
-  .marquee-logos {
-    @apply flex items-center gap-12;
-    animation: scroll 30s linear infinite;
-  }
-
-  @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(var(--surface), var(--surface)) padding-box,
+                linear-gradient(to right, #2563EB, #7C3AED) border-box;
   }
 }

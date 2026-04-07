@@ -1,163 +1,162 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { auth } from '@/lib/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { auth, db } from '@/lib/firebase';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, Mail, Lock, ShieldAlert, Sparkles, Orbit } from 'lucide-react';
+import { Mail, Lock, LogIn, Chrome, ArrowRight, ShieldCheck, AlertCircle, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-function LoginContent() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const errorParam = searchParams.get('error');
-    if (errorParam === 'too-many-attempts') {
-      setError('SECURITY RESTRICTION: Multiple unauthorized access attempts. Uplink stabilized but locked.');
-    }
-  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setLoading(true);
-
+    setError('');
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
-      router.refresh();
     } catch (err: any) {
-      setError(err.message || 'Authentication sequence failed. Protocol mismatch.');
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, 'users', user.uid), {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          avatar_url: user.photoURL,
+          created_at: new Date().toISOString(),
+        });
+      }
+      router.push('/dashboard');
+    } catch (err: any) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#0F172A] text-white selection:bg-[#3B82F6]/40 relative overflow-hidden">
-      {/* Luxurious AI Glow Elements */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#1E3A8A]/20 rounded-full blur-[140px] animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#e11d48]/10 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '3s' }} />
-      </div>
+    <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center relative overflow-hidden px-6">
+      
+      {/* Premium Background Glows */}
+      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#2563EB]/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#7C3AED]/10 blur-[120px] rounded-full pointer-events-none" />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-        className="w-full max-w-[500px] p-8 z-10"
+        className="w-full max-w-md relative z-10"
       >
-        <div className="glass-card p-12 relative overflow-hidden group">
-          {/* Top Branding Header */}
-          <div className="mb-12 text-center">
-            <div className="inline-flex p-4 bg-white/5 rounded-2xl mb-8 border border-white/10 shadow-[0_0_25px_rgba(59,130,246,0.2)]">
-               <Orbit className="w-8 h-8 text-[#3B82F6] animate-pulse" />
+        <div className="glass-card rounded-3xl p-10 border border-white/5 relative overflow-hidden backdrop-blur-3xl">
+          {/* Subtle Accent Glow */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#2563EB] to-transparent opacity-50" />
+          
+          <div className="text-center mb-10">
+            <div className="inline-flex p-3 bg-white/5 border border-white/10 rounded-2xl mb-6 shadow-inner">
+               <ShieldCheck className="w-8 h-8 text-[#2563EB]" />
             </div>
-            <h1 className="text-4xl font-bold tracking-tight mb-4 text-white">
-               Access <span className="text-gradient-blue">DreamSync</span>
-            </h1>
-            <p className="text-[#94A3B8] text-[15px] font-medium leading-relaxed max-w-[280px] mx-auto">
-               Synchronize your professional aspirations with our core AI infrastructure.
-            </p>
+            <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Welcome Back</h1>
+            <p className="text-[#9CA3AF] text-sm">Secure authorization for your career hub.</p>
           </div>
 
           {error && (
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-red-500/10 border border-red-500/20 p-4 mb-8 rounded-2xl text-red-500 text-[13px] font-bold flex items-start gap-4 backdrop-blur-md"
+              className="mb-8 p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl flex items-center gap-3"
             >
-              <ShieldAlert className="w-5 h-5 shrink-0 opacity-60" />
-              {error}
+              <AlertCircle className="w-5 h-5 flex-shrink-0" /> {error}
             </motion.div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2.5">
-              <label className="text-[12px] font-bold text-white/50 tracking-widest uppercase px-1">Resource Address</label>
+            <div className="space-y-2">
+              <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF] ml-1">Identity Mail</label>
               <div className="relative group">
-                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#94A3B8] group-focus-within:text-[#3B82F6] transition-colors" />
-                <input
-                  type="email"
-                  required
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl py-4.5 pl-14 pr-5 text-white font-bold placeholder:text-white/20 focus:outline-none focus:bg-white/10 focus:border-[#3B82F6]/50 transition-all shadow-inner"
+                <input 
+                  type="email" 
+                  required 
+                  className="input-premium w-full pl-12"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
+                  placeholder="name@email.com"
                 />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#2563EB] transition-colors" />
               </div>
             </div>
 
-            <div className="space-y-2.5">
-              <div className="flex justify-between items-center px-1">
-                <label className="text-[12px] font-bold text-white/50 tracking-widest uppercase">Security Key</label>
-                <Link href="/forgot-password" className="text-[11px] text-[#3B82F6] hover:text-[#e11d48] font-bold tracking-widest uppercase transition-colors">Lockout?</Link>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center ml-1">
+                <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF]">Secret Protocol</label>
+                <Link href="/forgot-password" size="sm" className="text-xs text-[#2563EB] hover:text-[#06B6D4] transition-colors">Forgot Access?</Link>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-[#94A3B8] group-focus-within:text-[#3B82F6] transition-colors" />
-                <input
-                  type="password"
-                  required
-                  className="w-full bg-white/5 border border-white/5 rounded-2xl py-4.5 pl-14 pr-5 text-white font-bold placeholder:text-white/20 focus:outline-none focus:bg-white/10 focus:border-[#3B82F6]/50 transition-all shadow-inner"
+                <input 
+                  type="password" 
+                  required 
+                  className="input-premium w-full pl-12"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                 />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#2563EB] transition-colors" />
               </div>
             </div>
 
-            <button
-              type="submit"
+            <button 
+              type="submit" 
               disabled={loading}
-              className="w-full py-5 btn-gradient text-[14px] uppercase tracking-[0.2em] relative group overflow-hidden"
+              className="btn-primary w-full flex items-center justify-center gap-3 group h-14"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
               {loading ? (
-                <>
-                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                   <span>Syncing...</span>
-                </>
+                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <>
-                   Authorize Entry <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </>
+                <>Authorize Hub <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>
               )}
             </button>
           </form>
 
-          <div className="mt-12 pt-10 border-t border-white/5 text-center">
-            <p className="text-white/30 text-[13px] font-medium mb-4">
-               New entity detection required?
-            </p>
-            <Link 
-               href="/signup" 
-               className="inline-flex items-center gap-2 text-[#3B82F6] hover:text-[#e11d48] font-bold text-[14px] uppercase tracking-widest transition-all group"
+          <div className="mt-10 pt-10 border-t border-white/5 space-y-6">
+            <p className="text-center text-xs font-medium text-[#4B5563] uppercase tracking-[0.2em]">External Synchronization</p>
+            <button 
+              onClick={handleGoogleLogin} 
+              className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-4 rounded-xl transition-all"
             >
-              Initialize Node <Sparkles className="w-4 h-4 group-hover:scale-125 transition-transform" />
-            </Link>
+              <Chrome className="w-5 h-5" /> <span>Google Cloud Auth</span>
+            </button>
+
+            <p className="text-center text-sm text-[#9CA3AF]">
+              New to the system? <Link href="/signup" className="text-[#2563EB] hover:text-[#06B6D4] font-semibold transition-colors">Create Identity</Link>
+            </p>
           </div>
         </div>
-        
-        <p className="text-center mt-12 text-white/20 text-[10px] font-bold uppercase tracking-[0.4em] opacity-60"> DreamSync // Luxury AI Systems </p>
+
+        {/* Security Badge */}
+        <div className="mt-8 flex justify-center items-center gap-2 opacity-30">
+           <Sparkles className="w-4 h-4 text-[#2563EB]" />
+           <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white">Sovereign Layer 4 Architecture</span>
+        </div>
       </motion.div>
     </div>
-  );
-}
-
-export default function Login() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#3B82F6] border-t-transparent rounded-full animate-spin shadow-[0_0_20px_rgba(59,130,246,0.3)]"></div>
-      </div>
-    }>
-      <LoginContent />
-    </Suspense>
   );
 }

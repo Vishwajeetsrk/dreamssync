@@ -1,70 +1,95 @@
 'use client';
 
 import Link from 'next/link';
-import { Coffee } from 'lucide-react';
-
+import { Coffee, Globe, Shield, Zap, Sparkles, Fingerprint } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="border-t-4 border-black bg-white mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 font-medium">
-          <div className="space-y-4">
-            <Image 
-              src="/DreamSynclogo.png" 
-              alt="DreamSync" 
-              width={160} 
-              height={40} 
-              className="h-10 object-contain w-auto"
-              priority={false}
-            />
-            <p className="text-muted-foreground">
-              AI-powered career guidance for Indian students. Find your path, build your resume, and grow your career.
+    <footer className="bg-[#0B0F19] border-t border-white/5 pt-24 pb-12 px-6 md:px-10 overflow-hidden relative">
+      {/* Background Subtle Glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-t from-[#2563EB]/5 to-transparent pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+          
+          {/* Brand Identity */}
+          <div className="space-y-8">
+            <Link href="/" className="inline-block">
+              <div className="relative h-8 w-36 overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
+                <Image 
+                  src="/DreamSynclogo.png" 
+                  alt="DreamSync" 
+                  fill
+                  className="object-contain object-left"
+                />
+              </div>
+            </Link>
+            <p className="text-sm font-medium text-[#9CA3AF] leading-relaxed max-w-xs">
+              Engineering the future of professional identity for the next generation of Indian talent. AI-driven, sovereign-focused.
             </p>
+            <div className="flex items-center gap-4 text-[#4B5563]">
+               <Globe className="w-5 h-5 hover:text-white transition-colors cursor-pointer" />
+               <Shield className="w-5 h-5 hover:text-white transition-colors cursor-pointer" />
+               <Zap className="w-5 h-5 hover:text-white transition-colors cursor-pointer" />
+            </div>
           </div>
           
-          <div>
-            <h4 className="font-bold mb-4 border-b-2 border-black inline-block">Features</h4>
-            <ul className="space-y-2">
-              <li><Link href="/resume-builder" className="hover:underline hover:text-primary">Resume Builder</Link></li>
-              <li><Link href="/ats-check" className="hover:underline hover:text-primary">ATS Check</Link></li>
-              <li><Link href="/roadmap" className="hover:underline hover:text-primary">Career Roadmap</Link></li>
-              <li><Link href="/portfolio" className="hover:underline hover:text-primary">Portfolio Gen</Link></li>
-              <li><Link href="/linkedin" className="hover:underline hover:text-primary">LinkedIn Optimizer</Link></li>
+          {/* Engineering Verticals */}
+          <div className="space-y-6">
+            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Technological Stack_</h4>
+            <ul className="space-y-4">
+              <li><Link href="/resume-builder" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">Resume Architect</Link></li>
+              <li><Link href="/ats-check" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">ATS Sync Protocol</Link></li>
+              <li><Link href="/roadmap" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">Career Graph Engine</Link></li>
+              <li><Link href="/career-agent" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">AI Cognition Agent</Link></li>
             </ul>
           </div>
           
-          <div>
-            <h4 className="font-bold mb-4 border-b-2 border-black inline-block">Company</h4>
-            <ul className="space-y-2">
-              <li><Link href="/about" className="hover:underline hover:text-primary">About Us</Link></li>
-              <li><Link href="/team" className="hover:underline hover:text-primary">Team</Link></li>
-              <li><Link href="/contact" className="hover:underline hover:text-primary">Contact</Link></li>
+          {/* Community Protocols */}
+          <div className="space-y-6">
+            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Infrastructure_</h4>
+            <ul className="space-y-4">
+              <li><Link href="/about" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Documentation</Link></li>
+              <li><Link href="/team" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Core Engineers</Link></li>
+              <li><Link href="/contact" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Support Comms</Link></li>
               <li>
-                <Link href="/donate" className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent border-2 border-black font-black text-xs hover:-translate-y-0.5 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  <Coffee className="w-3.5 h-3.5" /> Support Us
+                <Link 
+                  href="/donate" 
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[#F59E0B] hover:text-[#FBBF24] transition-all group"
+                >
+                  <Coffee className="w-4 h-4 group-hover:scale-110 transition-transform" /> Sponsor the Node
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-bold mb-4 border-b-2 border-black inline-block">Connect</h4>
-            <ul className="space-y-2">
-              <li><a href="https://www.linkedin.com/in/dreamsync-a-care-experienced-community-41601a2a0/" className="hover:underline hover:text-primary">LinkedIn</a></li>
-              <li><a href="https://instagram.com/dream_sync_hub" className="hover:underline hover:text-primary">Instagram</a></li>
-              <li><a href="https://twitter.com/ADreamsync" className="hover:underline hover:text-primary">Twitter / X</a></li>
-              <li><a href="mailto:dreamsyncbangalore@gmail.com" className="hover:underline hover:text-primary">Email Us</a></li>
+          {/* Institutional Links */}
+          <div className="space-y-6">
+            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Terminal Access_</h4>
+            <ul className="space-y-4">
+              <li><a href="https://linkedin.com" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">LinkedIn Archive</a></li>
+              <li><a href="https://github.com" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Git Repositories</a></li>
+              <li><a href="https://twitter.com" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Carrier X Dev</a></li>
+              <li className="flex items-center gap-2 pt-2 grayscale opacity-50">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Global Node Active</span>
+              </li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t-2 border-black mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-bold">
-          <p>© {new Date().getFullYear()} DreamSync. All rights reserved.</p>
-          <div className="flex flex-wrap gap-4 mt-4 md:mt-0 items-center">
-            <Link href="/privacy" className="hover:underline">Privacy</Link>
-            <Link href="/terms" className="hover:underline">Terms</Link>
+        {/* Footer Meta */}
+        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#4B5563]">
+          <div className="flex items-center gap-3">
+             <Fingerprint className="w-4 h-4 text-[#2563EB]" />
+             <span>© {currentYear} DreamSync. Intelligence Systems Synchronized.</span>
+          </div>
+          <div className="flex gap-10">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Protocol</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Service Terms</Link>
           </div>
         </div>
       </div>

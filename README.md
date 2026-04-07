@@ -1,171 +1,78 @@
-# 🌙 DreamSync AI — Career & Wellness Platform
+# 💠 DreamSync AI — The Architecture of Professional Destiny
 
-> **The all-in-one AI ecosystem for career growth and mental well-being.**
-> Resume building, ATS optimization, LinkedIn profile enhancement, high-depth roadmap generation, interactive career coaching, and empathetic mental health support — all in one unified platform.
+> **A high-fidelity, multi-model AI ecosystem engineered for the next generation of professional excellence.**
+> Synthetic intelligence for Resume Architecture, ATS Synchronization, Strategic Roadmapping, and Sovereign Identity Generation — all within a premium, minimalist framework.
 
-- **GitHub:** [Vishwajeetsrk/dreamsync](https://github.com/Vishwajeetsrk/dreamsync)
-- **Live Site:** [dreamsync.vercel.app](https://dreamsync-ruddy.vercel.app/)
-
-## 🎥 Live Portfolio Preview (Auto-Play)
-
-<p align="center">
-  <a href="./video.mp4">
-    <img src="assets/DreamSync.gif" width="900" alt="Portfolio Live Preview">
-  </a>
-</p>
-
-> ▶️ **GIF auto-plays** on GitHub  
----
-
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [API Routes](#-api-routes)
-- [Deployment](#-deployment)
+[![Vercel Deployment](https://img.shields.io/badge/Ship-Vercel-000000?style=for-the-badge&logo=vercel)](https://dreamsync-ruddy.vercel.app/)
+[![Tech Stack](https://img.shields.io/badge/Stack-Next.js%2015%20%7C%20Tailwind%20v4-2563EB?style=for-the-badge)](https://github.com/Vishwajeetsrk/dreamsync)
 
 ---
 
-## 🚀 Overview
-
-DreamSync is a precision-engineered, full-stack AI platform built with **Next.js 16 (App Router)** and **React 19**. It leverages a robust backend powered by **Supabase**, **Upstash Redis**, and a multi-model AI architecture (OpenAI, Groq, Google Gemini, OpenRouter).
-
-The platform bridges the gap between technical career excellence and personal well-being:
-1.  **Technical Excellence:** AI-driven resume building, ATS scoring, and high-depth career roadmap architecture.
-2.  **Career Guidance:** A dedicated **Career Agent** providing real-time Indian job market insights, salary benchmarks, and direct application links.
-3.  **Wellness:** **Serenity**, an empathetic AI counselor supporting **11 Indian languages** with native voice integration.
-
-The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS v4** and **Framer Motion** for a premium, high-interaction experience.
+## 💎 Design Philosophy
+DreamSync utilizes a **Premium AI SaaS** aesthetic inspired by the minimalist excellence of Stripe, Vercel, and Linear.
+- **Visual Identity**: Dark Premium (`#0B0F19`) with Glassmorphic depth.
+- **Intelligence Accents**: AI Blue (`#2563EB`) and Purple Intelligence (`#7C3AED`) gradients.
+- **Typography**: Precision-engineered hierarchy using *Inter* and *Satoshi*.
 
 ---
 
-## ✨ Features
+## 🧬 Technological Verticals
 
-| Feature | Description | Engine / Stack |
-|---|---|---|
-| 📉 **Interactive News Ticker** | **Live-linked 2026 platform updates** and tool announcements. | Next.js Server Components |
-| ⚡ **Direct Google Auth** | **Ubiquitous One-Tap Access** from the global Navbar. Seamless profile creation and sync across all platform pages. | Google Web SDK / Firebase |
-| 🕉️ **IKIGAI Finder** | **Premium Career Purpose Tool** based on the Japanese Ikigai framework. | Claude 3.7 / Gemini 2.0 |
-| 🌿 **Serenity (AI Counselor)** | **Empathetic Mental Health Agent** with native Indian persona. Supports **11 languages** with **Voice Mode (STT/TTS)**. | Groq (Llama-3-70b) / Gemini |
-| 🤖 **AI Career Agent** | **Conversational Career Coach** specialized in the Indian market (2026). Provides Naukri/LinkedIn links. | Groq / Redis |
-| 🗺️ **Skill Roadmaps** | **High-Depth Roadmap Architect** with phase-by-phase video lectures, study materials, and certifications. | OpenAI GPT-4o / GPT-4o-mini |
-| 💼 **LinkedIn Optimizer** | AI-powered profile analysis with actionable rewrite suggestions. | OpenAI / Tailwind CSS v4 |
-| 🧠 **FAANG Resume Builder** | **Professional Multi-Format Suite** with side-by-side editing and FAANG-grade export (PDF/Word). Optimized for precision document engineering. | React 19 / `docx` / `lucide` |
-| 📊 **Smart ATS Analyzer** | **AI-powered Score Tracker** providing deep analysis against global recruitment standards. | GPT-4o / Firestore |
-| 🖼️ **Portfolio Generator** | Instant deployment-ready portfolio sites generated from your career data. | Next.js App Router |
-| 📄 **Document Guide** | A comprehensive portal for navigating government documentation and career requirements. | Static Content Optimization |
-| 💸 **Donation System** | Dynamic UPI QR-based support system for platform sustainability. | Custom QR Generator |
+### 1. 🏗️ Resume Architect
+Autonomous document construction utilizing sovereign LLM protocols. Engineered for FAANG-level compatibility and real-time persona calibration.
 
----
+### 2. 🛡️ ATS Sync Protocol
+Automated compatibility analysis across enterprise nodes. Reveal the hidden "Matching Coefficient" of your professional identity.
 
-## 🛠 Tech Stack
+### 3. 📈 Strategic Graph Roadmap
+Multidimensional skill-acquisition mapping with AI foresight. Predict your professional trajectory with high-fidelity accuracy.
 
-### Frontend
-- **Next.js 16** (App Router, Server Components, Server Actions) — *Next-gen performance and stability.*
-- **React 19** — *Leveraging the latest concurrent features.*
-- **TypeScript 5** — *Strictly typed codebase.*
-- **Tailwind CSS v4** — *High-performance styling engine.*
-- **Framer Motion** — *Liquid-smooth micro-animations and page transitions.*
-- **Lucide React** — *Modern, lightweight iconography.*
+### 4. 🌐 Portfolio Node Generation
+Establish your digital sovereignty with instantly generated, high-performance personal nodes.
 
-### Backend & Infrastructure
-- **Supabase** — *PostgreSQL database, storage, and server-side auth (@supabase/ssr).*
-- **Firebase** — *Optimized client-side auth for Google Sign-In and profile synchronization.*
-- **Upstash Redis** — *Global low-latency session caching and performance optimization.*
-- **Resend** — *High-deliverability transactional email engine.*
-
-### AI Engine
-- **Groq** (`llama-3-8b/70b`) — *Ultra-fast inference for Serenity and Career Agent chat.*
-- **OpenAI** (`gpt-4o`, `gpt-4o-mini`) — *Primary reasoning and resume engine.*
-- **Google Gemini** (`gemini-2.0-flash`) — *Multimodal tasks and deep context analysis.*
-- **OpenRouter** — *Dynamic model switching and unified API gateway.*
+### 5. 🧠 Serenity AI
+Empathetic intelligence layer for professional mental well-being and stress-mitigation protocols.
 
 ---
 
-## 📁 Project Structure
-
-```
-dreamsync/
-├── public/                         # Static assets (images, icons, QR codes)
-├── src/
-├── app/
-│   ├── (auth)/
-│   │   ├── login/              # Direct login with Firebase + Google
-│   │   ├── signup/             # Multi-step signup with Firestore sync
-│   │   └── forgot-password/    # Email-based password recovery
-│   │
-│   ├── mental-health/          # Serenity AI Counselor (11 languages + Mood + Voice)
-│   ├── career-agent/           # AI Career Guidance (Indian Market Specs)
-│   ├── roadmap/                # High-depth Career Roadmaps
-│   ├── resume-builder/         # AI Resume Builder
-│   ├── ats-check/              # ATS Score Checker
-│   ├── linkedin/               # LinkedIn Profile Optimizer
-│   ├── portfolio/              # Portfolio Generator
-│   ├── documents/              # Government Document Guide
-│   │
-│   ├── dashboard/              # Centralized user dashboard
-│   ├── donate/                 # UPI donation portal (Dynamic QR)
-│   └── api/
-│       ├── mental-health/      # Serenity chat endpoint (Groq/Gemini)
-│       ├── career-agent/       # Career coach endpoint (Redis cached)
-│       ├── roadmap/            # High-depth roadmap generation
-│       └── usage/              # User quota tracking
-│
-├── components/
-│   ├── MarketTrends.tsx        # Live 2026 job market data component
-│   ├── ProtectedRoute.tsx      # Auth-guarded navigation
-│   ├── Navbar.tsx              # Dynamic navigation with auth states
-│   └── Footer.tsx              # Global footer with donate CTA
-│
-├── context/                    # Auth and User Usage contexts
-└── lib/                        # Core AI logic, Firebase/Supabase, and API utils
-```
+## 🛠️ Infrastructure Stack
+- **Framework**: Next.js 15 (App Router / Turbopack)
+- **Styling**: Tailwind CSS v4 (Experimental Premium Tokens)
+- **Intelligence**: OpenAI G-Series / Anthropic Neural Architectures
+- **Database**: Firebase Sovereign Cloud Storage
+- **Identity**: Firebase Quantum Authentication
 
 ---
 
-## 🏁 Getting Started
+## 🚀 Deployment Instructions
 
-### Prerequisites
-
-- **Node.js** >= 20.x
-- **npm** >= 10.x
-- A **Supabase** instance (Project URL & Anon Key)
-- A **Firebase** project (Client SDK config)
-- An **Upstash Redis** URL/Token
-- **API Keys:** OpenAI, Groq, or OpenRouter for AI features.
-
-### Installation
-
+### Initialization
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone https://github.com/Vishwajeetsrk/dreamsync.git
-cd dreamsync
 
-# 2. Install dependencies
+# Install dependencies
 npm install
 
-# 3. Configure environment
-cp .env.local.example .env.local
-# Add your secret keys to .env.local
-
-# 4. Start development server
+# Start the Command Center
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
-
-> If `npm run dev` detects port `3000` is in use, it may start on `http://localhost:3001`. In that case, add both `localhost` and `localhost:3001` to Firebase Authentication authorized domains so login requests are not blocked.
-
----
-
-## 📄 License
-
-© 2026 DreamSync AI. All rights reserved. Private repository.
+### Environment Synchronization
+Configure your `.env.local` with the following parameters:
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `OPENAI_API_KEY`
+- `NEXT_PUBLIC_BASE_URL`
 
 ---
 
-*Built with ❤️ by [Vishwajeet](https://github.com/Vishwajeetsrk)*
+## 🤝 Sustain the Mission
+DreamSync is an autonomous node free for students. If this infrastructure helped your journey, consider contributing to maintain node stability.
+
+[❤️ Sponsor the Node](https://dreamsync-ruddy.vercel.app/donate)
+
+---
+
+### 🏛️ Engineering Team
+**DreamSync Architecture Group**  
+*Intelligence Synchronized. Destiny Autonomous.*
