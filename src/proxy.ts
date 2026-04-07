@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { globalRateLimit, authRateLimit, toolRateLimit } from './lib/ratelimit';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   // Next.js 16 Type Fix: access IP via casting or headers
   const ip = (request as any).ip ?? request.headers.get('x-forwarded-for') ?? '127.0.0.1';

@@ -144,7 +144,7 @@ export default function AIAssistant() {
 
             {/* Quick Suggestions */}
             <div className="p-2 flex gap-2 overflow-x-auto border-t-2 border-black bg-white no-scrollbar">
-              {['Find ATS Tool', 'Fix LinkedIn', 'Contact Support'].map((txt) => (
+            {['Fix Profile Photo', 'Fix LinkedIn', 'Find ATS Tool', 'Contact Support'].map((txt) => (
                 <button 
                   key={txt}
                   onClick={() => setInput(txt)}

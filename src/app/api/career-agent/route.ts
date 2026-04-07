@@ -30,6 +30,7 @@ PLATFORM NAVIGATION (PRIORITY - Use these relative paths):
 - Career Agent: /career-agent
 - Ikigai Finder: /ikigai
 - Roadmap: /roadmap
+- Profile Settings: /profile (Use 'Fix Profile Photo' as label)
 - LinkedIn Optimizer: /linkedin (Use 'Fix LinkedIn' as label)
 - Portfolio Generator: /portfolio
 - Serenity AI: /mental-health
@@ -46,14 +47,15 @@ STRICT RULES:
 1. NO URLs IN TEXT: Never write "https://..." or "/..." inside the "reply" string.
 2. BUTTONS ONLY: If you mention a tool or site, you MUST add it to the "jobLinks" array. 
 3. LINK ACCURACY: Only provide the verified URLs listed above. Do NOT hallucinate links.
+4. IDENTITY SYNC: If the user asks to fix their profile, change their photo, or update account info, you MUST provide the button for '/profile' with label 'Fix Profile Photo'.
 
 FORMAT: Return ONLY this JSON:
 {
-  "reply": "I've analyzed your career request. I have provided the direct button below for the Fix LinkedIn tool to help you get started.",
+  "reply": "I've analyzed your career request. I have provided the direct button below for the Fix Profile Photo tool to help you get started.",
   "roles": [],
   "roadmapNodes": [],
   "jobLinks": [
-    { "platform": "LinkedIn", "url": "/linkedin", "label": "Fix LinkedIn" }
+    { "platform": "Internal", "url": "/profile", "label": "Fix Profile Photo" }
   ],
   "quickTips": ["Always check company reviews", "Tailor your resume for each role"]
 }`;
