@@ -3,7 +3,7 @@
 > **The all-in-one AI ecosystem for career growth and mental well-being.**
 > Resume building, ATS optimization, LinkedIn profile enhancement, high-depth roadmap generation, interactive career coaching, and empathetic mental health support — all in one unified platform.
 
-- **GitHub:** [Vishwajeetsrk/dreamsync](https://github.com/Vishwajeetsrk/dreamsync)
+- **GitHub:** [Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
 - **Live Site:** [dreamsync.vercel.app](https://dreamsync-ruddy.vercel.app/)
 
 ## 🎥 Live Portfolio Preview (Auto-Play)
@@ -47,7 +47,6 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 | Feature | Description | Engine / Stack |
 |---|---|---|
-| 📉 **Interactive News Ticker** | **Live-linked 2026 platform updates** and tool announcements. | Next.js Server Components |
 | ⚡ **Direct Google Auth** | **Ubiquitous One-Tap Access** from the global Navbar. Seamless profile creation and sync across all platform pages. | Google Web SDK / Firebase |
 | 🕉️ **IKIGAI Finder** | **Premium Career Purpose Tool** based on the Japanese Ikigai framework. | Claude 3.7 / Gemini 2.0 |
 | 🌿 **Serenity (AI Counselor)** | **Empathetic Mental Health Agent** with native Indian persona. Supports **11 languages** with **Voice Mode (STT/TTS)**. | Groq (Llama-3-70b) / Gemini |
@@ -142,8 +141,8 @@ dreamsync/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Vishwajeetsrk/dreamsync.git
-cd dreamsync
+git clone https://github.com/Vishwajeetsrk/DreamSync.git
+cd DreamSync
 
 # 2. Install dependencies
 npm install
