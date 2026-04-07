@@ -8,12 +8,21 @@
 
 | Module | Intelligent Function | Identity Impact |
 | :--- | :--- | :--- |
+| **AI Strategist v2** | Headless Identity Sync & Career Guidance | Automated Profile Resilience |
 | **Resume Architect** | AI-Synthesized FAANG-optimized resumes | Instant professional authority |
 | **Smart ATS Analyzer** | Real-time compatibility & eligibility auditing | Bypasses traditional gatekeepers |
 | **Strategic Roadmap** | AI-generated career trajectories | Clear path to professional mastery |
 | **Project Portfolio** | Dynamic, aesthetic project showcase | Visual proof of technical capability |
 | **IKIGAI Engine** | Purpose-driven career alignment analysis | Long-term professional fulfillment |
-| **Identity Hub** | Secure Firebase Auth with Profile Resilience | Absolute control over your digital self |
+| **Identity Hub** | Premium Dark UI + Multi-Sync Auth (Base64) | Absolute identity security |
+
+---
+
+## 🎨 Premium Dark Aesthetics
+DreamSync utilizes a high-fidelity **Dark-Teal Architecture** (`#0A0A0A` / `#1D4D47`). To maintain this:
+- Prioritize glassmorphic components (`backdrop-blur-xl`).
+- Use the **Headless Sync** trigger (`/profile?action=fix`) for rapid profile resolution.
+- Ensure all interactive elements utilize the unified Framer Motion transition protocol.
 
 ---
 
