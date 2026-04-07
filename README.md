@@ -96,14 +96,14 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ---
 
-## 🛡️ Production-Grade Security
+### 🛡️ Production-Grade Security & Reliability
 
-- 🚀 **Smart ATS Analyzer v2 (FAANG-Tier):** Industry-leading resume auditor with detailed eligibility reports for top firms (Google, Microsoft, Amazon).
-- 🛡 **Global AI Safety Guard:** 400-level safety blocking enforced across all AI agents (Roadmap, Portfolio, IKIGAI, etc.).
-- 👤 **Professional Identity Hub:** Redesigned minimalist profile & settings with circular avatars, system preferences (Language/Timezone), and secure credential management.
-- 🗺 **AI Roadmap & Career Agent:** High-fidelity career paths and conversational guidance built on the Groq-powered 2026 engine.
-- 🖼 **Next.js Remote Image Hardening:** Securely configured `remotePatterns` for Firebase Storage and Google Content to ensure asset visibility without security regressions.
-- 4. **Edge Routing:** Next.js Middleware for pre-flight security checks.
+-   **Global AI Safety Guard:** 400-level whole-word regex safety blocking enforced across all AI agents.
+-   **Smart ATS Analyzer v2:** FAANG-tier resume auditing with detailed eligibility logic for top firms.
+-   **Next.js Remote Hardening:** Securely configured `remotePatterns` for asset visibility and security.
+-   **API Rate Limiting:** Global rate limiting via **Upstash Redis** to ensure multi-region stability.
+-   **Edge Routing:** Next.js Middleware for pre-flight security and authentication checks.
+-   **Global CSP Policy:** Hardened Content Security Policy to mitigate XSS and data exfiltration.
 
 ---
 
