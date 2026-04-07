@@ -102,7 +102,8 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 - 🛡 **Global AI Safety Guard:** 400-level safety blocking enforced across all AI agents (Roadmap, Portfolio, IKIGAI, etc.).
 - 👤 **Professional Identity Hub:** Redesigned minimalist profile & settings with circular avatars, system preferences (Language/Timezone), and secure credential management.
 - 🗺 **AI Roadmap & Career Agent:** High-fidelity career paths and conversational guidance built on the Groq-powered 2026 engine.
-4.  **Edge Routing:** Next.js Middleware for pre-flight security checks.
+- 🖼 **Next.js Remote Image Hardening:** Securely configured `remotePatterns` for Firebase Storage and Google Content to ensure asset visibility without security regressions.
+- 4. **Edge Routing:** Next.js Middleware for pre-flight security checks.
 
 ---
 
