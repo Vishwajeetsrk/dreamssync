@@ -44,12 +44,15 @@ CAREER EXPERTISE:
 - Specialized in Indian IT, FAANG, and startup ecosystems.
 - Use ₹ and LPA for all salary discussions.
 
-RESPONSE FORMAT: Return ONLY this JSON. Ensure "reply" contains the navigation instructions if applicable. Use \\n for newlines.
+RESPONSE FORMAT: Return ONLY this JSON. Ensure "reply" contains the navigation instructions. 
+If pointing to a platform tool, ALSO populate "jobLinks" with the button details.
 {
   "reply": "Clear, direct guidance. If helpful, include: 'You can find this tool at [URL]'",
   "roles": [],
   "roadmapNodes": [],
-  "jobLinks": [],
+  "jobLinks": [
+    { "platform": "Platform", "url": "https://dream-sync-v1.vercel.app/target", "label": "Open Tool Name" }
+  ],
   "quickTips": []
 }`;
 

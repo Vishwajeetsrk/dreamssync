@@ -2,11 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Send, Loader2, Sparkles, HelpCircle, Search, Menu } from 'lucide-react';
+import { MessageSquare, X, Send, Loader2, Sparkles, HelpCircle, Search, Menu, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  links?: { platform: string; url: string; label: string }[];
 }
 
 export default function AIAssistant() {
@@ -45,7 +47,11 @@ export default function AIAssistant() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed');
 
-      setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: data.reply,
+        links: data.jobLinks || []
+      }]);
     } catch (error: any) {
       setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I am having trouble connecting. Please try again or contact support.' }]);
     } finally {
@@ -105,12 +111,26 @@ export default function AIAssistant() {
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
               {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                   <div className={`max-w-[85%] p-3 border-2 border-black font-medium text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] ${
                     msg.role === 'user' ? 'bg-blue-100' : 'bg-white'
                   }`}>
                     {msg.content}
                   </div>
+                  {msg.links && msg.links.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {msg.links.map((link, li) => (
+                        <Link 
+                          key={li}
+                          href={link.url}
+                          target={link.url.startsWith('http') ? '_blank' : '_self'}
+                          className="px-3 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all flex items-center gap-1"
+                        >
+                          {link.label} <ExternalLink className="w-3 h-3" />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
               {loading && (
