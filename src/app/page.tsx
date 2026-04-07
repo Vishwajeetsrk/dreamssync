@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Brain, Briefcase, CheckCircle, FileText, HeartHandshake, Sparkles, Coffee, Map, TrendingUp, Building2, User } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Briefcase, CheckCircle, FileText, HeartHandshake, Sparkles, Coffee, Map, TrendingUp, Building2, User, Globe, ShieldCheck, Zap } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
@@ -12,131 +12,171 @@ export default function Home() {
   const { user, userData } = useAuth();
 
   const features = [
-    { title: t('ikigai_finder'), desc: t('ikigai_desc'), icon: Brain, color: "bg-black text-white", href: "/ikigai", premium: true },
-    { title: t('career_agent'), desc: t('career_desc'), icon: Briefcase, color: "bg-violet-100", href: "/career-agent" },
-    { title: t('resume_builder'), desc: t('resume_desc'), icon: FileText, color: "bg-green-100", href: "/resume-builder" },
-    { title: t('ats_check'), desc: t('ats_desc'), icon: CheckCircle, color: "bg-purple-100", href: "/ats-check" },
-    { title: t('linkedin_optimizer'), desc: t('linkedin_desc'), icon: Briefcase, color: "bg-yellow-100", href: "/linkedin" },
-    { title: t('portfolio_gen'), desc: t('portfolio_desc'), icon: Sparkles, color: "bg-pink-100", href: "/portfolio" },
-    { title: t('roadmap'), desc: t('roadmap_desc'), icon: Map, color: "bg-sky-100", href: "/roadmap" },
-    { title: t('doc_skill'), desc: t('doc_desc'), icon: BookOpen, color: "bg-orange-100", href: "/documents" },
-    { title: t('serenity_ai'), desc: t('serenity_desc'), icon: HeartHandshake, color: "bg-rose-100", href: "/mental-health" },
+    { title: t('ikigai_finder'), desc: t('ikigai_desc'), icon: Brain, gradient: "from-[#3B82F6] to-[#e11d48]", href: "/ikigai", premium: true },
+    { title: t('career_agent'), desc: t('career_desc'), icon: Briefcase, gradient: "from-blue-600 to-cyan-500", href: "/career-agent" },
+    { title: t('resume_builder'), desc: t('resume_desc'), icon: FileText, gradient: "from-purple-600 to-pink-500", href: "/resume-builder" },
+    { title: t('ats_check'), desc: t('ats_desc'), icon: CheckCircle, gradient: "from-emerald-600 to-teal-500", href: "/ats-check" },
+    { title: t('linkedin_optimizer'), desc: t('linkedin_desc'), icon: Briefcase, gradient: "from-orange-600 to-amber-500", href: "/linkedin" },
+    { title: t('portfolio_gen'), desc: t('portfolio_desc'), icon: Sparkles, gradient: "from-rose-600 to-red-500", href: "/portfolio" },
+    { title: t('roadmap'), desc: t('roadmap_desc'), icon: Map, gradient: "from-sky-600 to-blue-500", href: "/roadmap" },
+    { title: t('serenity_ai'), desc: t('serenity_desc'), icon: HeartHandshake, gradient: "from-indigo-600 to-violet-500", href: "/mental-health" },
   ];
 
   return (
-    <div className="flex flex-col space-y-24 py-12 px-4 sm:px-6">
-      {/* Latest Updates Ticker */}
-      <div className="bg-black text-white py-3 overflow-hidden border-y-4 border-black">
+    <div className="flex flex-col space-y-32 py-12 px-4 sm:px-6 bg-[#0F172A] relative overflow-hidden selection:bg-[#3B82F6]/50">
+      
+      {/* Background Orbs */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+        <div className="absolute top-[10%] left-[-10%] w-[40%] h-[40%] bg-[#3B82F6] rounded-full blur-[140px] animate-pulse" />
+        <div className="absolute bottom-[20%] right-[-10%] w-[40%] h-[40%] bg-[#e11d48] rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '3s' }} />
+      </div>
+
+      {/* 🚀 LATEST PROTOCOL TICKER */}
+      <div className="fixed top-[4.5rem] left-0 w-full bg-black/40 backdrop-blur-md border-y border-white/5 z-40 py-2.5 overflow-hidden">
         <motion.div 
-          animate={{ x: [0, -1200] }}
-          transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-          className="flex whitespace-nowrap gap-16 font-black text-xs uppercase tracking-widest items-center"
+          animate={{ x: [0, -1000] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          className="flex whitespace-nowrap gap-12 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-white/40 items-center"
         >
-          <Link href="/career-agent" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><TrendingUp className="w-4 h-4 text-primary" /> New: AI Career Agent live with 2026 insights</Link>
-          <Link href="/ikigai" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><Briefcase className="w-4 h-4 text-sky-400" /> Premium "IKIGAI" Career Finder now active</Link>
-          <Link href="/resume-builder" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><Sparkles className="w-4 h-4 text-violet-400" /> AI Resume Builder: 100% Free for students</Link>
-          <Link href="/mental-health" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><HeartHandshake className="w-4 h-4 text-rose-400" /> Serenity AI now supports 11 Indian Languages</Link>
-          <Link href="/roadmap" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><Map className="w-4 h-4 text-amber-400" /> Custom AI Career Roadmaps for 2026 roles</Link>
+          <div className="flex items-center gap-3"><Zap className="w-3.5 h-3.5 text-[#3B82F6]" /> Protocol Updated: Next.js 16 + React 19 Architecture</div>
+          <div className="flex items-center gap-3"><Globe className="w-3.5 h-3.5 text-[#e11d48]" /> Node Synced: 11 Indian Languages Live in Serenity</div>
+          <div className="flex items-center gap-3"><ShieldCheck className="w-3.5 h-3.5 text-blue-500" /> Security: Sovereign Identity Encryption Active</div>
+          <div className="flex items-center gap-3 text-white/60 font-bold"><Sparkles className="w-3.5 h-3.5 text-yellow-500" /> New: AI Resume Architect v4 Deployed</div>
           
-          {/* Repeating for seamless loop */}
-          <Link href="/career-agent" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><TrendingUp className="w-4 h-4 text-primary" /> New: AI Career Agent live with 2026 insights</Link>
-          <Link href="/ikigai" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><Briefcase className="w-4 h-4 text-sky-400" /> Premium "IKIGAI" Career Finder now active</Link>
-          <Link href="/resume-builder" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><Sparkles className="w-4 h-4 text-violet-400" /> AI Resume Builder: 100% Free for students</Link>
-          <Link href="/mental-health" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><HeartHandshake className="w-4 h-4 text-rose-400" /> Serenity AI now supports 11 Indian Languages</Link>
-          <Link href="/roadmap" className="flex items-center gap-2 hover:text-primary transition-colors cursor-pointer"><Map className="w-4 h-4 text-amber-400" /> Custom AI Career Roadmaps for 2026 roles</Link>
+          {/* Loop duplicates */}
+          <div className="flex items-center gap-3"><Zap className="w-3.5 h-3.5 text-[#3B82F6]" /> Protocol Updated: Next.js 16 + React 19 Architecture</div>
+          <div className="flex items-center gap-3"><Globe className="w-3.5 h-3.5 text-[#e11d48]" /> Node Synced: 11 Indian Languages Live in Serenity</div>
         </motion.div>
       </div>
 
-      {/* Hero Section */}
-      <section className="relative text-center space-y-8 py-16">
+      {/* 🔮 HERO SECTION: HIGH-FIDELITY ARCHITECTURE */}
+      <section className="relative pt-32 text-center space-y-12 max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+          className="space-y-8"
         >
-          {user && (
-            <div className="mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <h2 className="text-2xl font-black uppercase tracking-tighter text-blue-600">
-                Welcome back, {userData?.name || 'Dreamer'}!
-              </h2>
-            </div>
-          )}
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/5 border border-white/10 rounded-full backdrop-blur-xl shadow-2xl">
+            <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse" />
+            <span className="text-[10px] font-black tracking-[0.5em] uppercase text-white/50 leading-none">Intelligence. Sovereignty. Growth.</span>
+          </div>
           
-          <span className="inline-block py-1 px-3 border-2 border-black bg-accent text-accent-foreground font-bold text-sm mb-6 neo-box">
-             🔥 AI-Powered Career Growth
-          </span>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight max-w-4xl mx-auto">
-            {t('hero_title')}
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight leading-[0.95] text-white">
+             {t('hero_title').split(' ').map((word, i) => (
+                <span key={i} className={i > 1 ? "text-gradient-hero italic" : "block md:inline"}>{word} </span>
+             ))}
           </h1>
-          <p className="mt-6 text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto">
-            {t('hero_desc')}
+
+          <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/40 font-medium leading-relaxed px-4">
+             {t('hero_desc')}
           </p>
         </motion.div>
         
         <motion.div 
-          className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-8"
+          className="flex flex-col sm:flex-row justify-center items-center gap-6 pt-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
         >
-          <Link href="/dashboard" className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold text-lg border-4 border-black neo-box hover:-translate-y-1 active:translate-y-1 transition-all flex items-center justify-center gap-2">
-            {t('get_started')} <ArrowRight className="w-5 h-5" />
+          <Link href="/dashboard" className="w-full sm:w-auto px-10 py-5 btn-gradient text-white font-black text-sm uppercase tracking-[0.2em] shadow-[0_20px_50px_-20px_rgba(59,130,246,0.5)] active:scale-95 group">
+             Initialize Entry <ArrowRight className="w-4 h-4 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link href="/about" className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold text-lg border-4 border-black neo-box hover:-translate-y-1 active:translate-y-1 transition-all">
-            {t('how_it_works')}
+          <Link href="/about" className="w-full sm:w-auto px-10 py-5 bg-white/5 border border-white/10 text-white font-black text-sm uppercase tracking-[0.2em] rounded-full backdrop-blur-xl hover:bg-white/10 transition-all active:scale-95">
+             Explore Node Specs
           </Link>
         </motion.div>
+
+        {/* Identity Indicator */}
+        {user && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="pt-12 text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]"
+          >
+             Sovereign Identity Detected: <span className="text-[#3B82F6]">{userData?.name || user.email?.split('@')[0]}</span>
+          </motion.div>
+        )}
       </section>
 
-      {/* Features Grid */}
-      <section className="space-y-12 max-w-7xl mx-auto w-full">
-        <div className="text-center">
-          <h2 className="text-4xl font-black mb-4 inline-block border-b-4 border-black pb-2">{t('everything_you_need')}</h2>
+      {/* 🧬 CORE INFRASTRUCTURE MATRIX */}
+      <section className="space-y-20 max-w-7xl mx-auto w-full px-4 relative">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-12">
+           <div className="space-y-4">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white uppercase">Platform <br /> <span className="text-white/20">Protocols_</span></h2>
+           </div>
+           <p className="max-w-xs text-white/30 text-xs font-bold leading-relaxed uppercase tracking-widest">A multi-model AI ecosystem engineered for full-stack professional optimization and sovereign growth.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature, i) => (
-            <Link href={feature.href} key={i} className="block h-full">
-            <motion.div 
-              className="bg-white border-4 border-black p-6 neo-box flex flex-col items-start gap-4 cursor-pointer h-full"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div className={`p-3 border-2 border-black ${feature.color} inline-block shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}>
-                <feature.icon className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold">{feature.title}</h3>
-              <p className="text-muted-foreground font-medium">{feature.desc}</p>
-            </motion.div>
+            <Link href={feature.href} key={i}>
+              <motion.div 
+                className="glass-card p-8 group h-full relative overflow-hidden flex flex-col items-start gap-8 hover:border-[#3B82F6]/30 hover:bg-white/10 transition-all duration-500 cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <div className={`p-5 rounded-2xl bg-gradient-to-br ${feature.gradient} shadow-2xl relative z-10 group-hover:scale-110 transition-transform duration-500`}>
+                  <feature.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
+                </div>
+                
+                <div className="space-y-3 relative z-10 flex-grow">
+                   <h3 className="text-xl font-black uppercase text-white flex items-center justify-between group-hover:text-[#3B82F6] transition-colors">{feature.title} <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" /></h3>
+                   <p className="text-xs font-medium text-white/40 leading-relaxed uppercase tracking-wide group-hover:text-white/60 transition-colors">{feature.desc}</p>
+                </div>
+
+                {feature.premium && (
+                   <div className="absolute top-6 right-6 px-3 py-1 bg-[#3B82F6] text-[9px] font-black text-white rounded-full uppercase tracking-widest">Sovereign</div>
+                )}
+              </motion.div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* Support / Donation */}
-      <section className="max-w-3xl mx-auto w-full">
+      {/* 💎 SUSTAINABILITY UNIT */}
+      <section className="max-w-4xl mx-auto w-full pt-20">
         <motion.div
-          className="bg-white border-4 border-black neo-box p-10 text-center space-y-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="glass-card p-12 md:p-20 text-center space-y-10 relative overflow-hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <Coffee className="w-16 h-16 mx-auto mb-4" style={{ color: 'var(--foreground)' }} />
-          <h2 className="text-4xl font-black">Enjoying DreamSync?</h2>
-          <p className="text-xl text-muted-foreground font-medium max-w-xl mx-auto">
-            DreamSync is 100% free for students. If it helped your career journey, consider buying us a chai — every rupee keeps the servers running!
-          </p>
-          <Link
-            href="/donate"
-            className="inline-flex items-center gap-3 px-10 py-4 bg-primary text-white font-black text-lg border-4 border-black neo-box hover:-translate-y-1 active:translate-y-1 transition-all"
-          >
-            ❤️ Support Us via UPI
-          </Link>
-          <p className="text-sm text-muted-foreground font-medium">No subscriptions. No hidden fees. Just good vibes.</p>
+          {/* Subtle Decorative Orb */}
+          <div className="absolute top-[-20%] right-[-10%] w-[40%] h-[40%] bg-[#e11d48]/10 rounded-full blur-[80px]" />
+          
+          <div className="relative z-10 space-y-8">
+            <div className="inline-flex p-5 bg-white/5 rounded-3xl border border-white/10 shadow-2xl mx-auto">
+               <Coffee className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white uppercase">Sovereign <br /> <span className="text-[#e11d48]">Support_</span></h2>
+            <p className="text-lg text-white/40 font-medium max-w-xl mx-auto leading-relaxed uppercase tracking-wide text-xs">
+               DreamSync infrastructure is 100% autonomous and free for students. Sustain the mission via sovereign contributions.
+            </p>
+            <div className="pt-4">
+              <Link
+                href="/donate"
+                className="inline-flex items-center gap-4 px-12 py-5 btn-gradient text-white font-black text-xs uppercase tracking-[0.2em] shadow-2xl active:scale-95 group"
+              >
+                Authorize Protocol Support <Zap className="w-4 h-4" />
+              </Link>
+            </div>
+            <p className="text-[10px] text-white/20 font-black uppercase tracking-[0.4em]"> Zero Subscriptions // Peer-to-Peer Stability </p>
+          </div>
         </motion.div>
       </section>
+
+      {/* 🛸 CORE METRICS FOOTER */}
+      <div className="text-center pt-20 pb-12">
+         <p className="text-[11px] font-black text-white/10 uppercase tracking-[1em] mb-4">DreamSync AI Sovereignty // Node: 2026.01</p>
+         <div className="flex justify-center gap-8 opacity-20">
+            <Building2 className="w-5 h-5 text-white" />
+            <Globe className="w-5 h-5 text-white" />
+            <Zap className="w-5 h-5 text-white" />
+         </div>
+      </div>
     </div>
   );
 }
