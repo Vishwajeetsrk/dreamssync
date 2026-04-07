@@ -31,10 +31,10 @@ export const toolRateLimit = new Ratelimit({
   prefix: 'ds:ratelimit:tool',
 });
 
-// 3. Login/Auth Attempt Rate Limit (30 attempts per 15 minutes - Relaxed for testing)
+// 3. Login/Auth Attempt Rate Limit (1,000 attempts per 15 minutes - Relaxed for testing)
 export const authRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(30, '15 m'),
+  limiter: Ratelimit.slidingWindow(1000, '15 m'),
   analytics: true,
   prefix: 'ds:ratelimit:auth',
 });

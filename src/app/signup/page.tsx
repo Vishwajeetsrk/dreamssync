@@ -140,24 +140,7 @@ export default function Signup() {
           </button>
         </form>
 
-        <div className="relative my-8">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t-4 border-black border-dashed"></div>
-          </div>
-          <div className="relative flex justify-center text-[10px] uppercase">
-            <span className="bg-white px-4 font-black text-gray-500">OR CONTINUE WITH</span>
-          </div>
-        </div>
-
-        <button 
-          onClick={handleGoogleSignIn}
-          disabled={loading}
-          className="w-full py-4 bg-white text-black font-black text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50 mb-8"
-        >
-          <Globe className="w-6 h-6" /> GOOGLE ACCOUNT
-        </button>
-
-        <div className="text-center border-t-4 border-black border-dashed pt-6">
+        <div className="text-center border-t-4 border-black border-dashed pt-6 mt-8">
           <p className="font-black text-muted-foreground text-[10px] tracking-widest uppercase">
             ALREADY HAVE AN ACCOUNT?{' '}
             <Link href="/login" className="text-primary hover:underline underline-offset-4">

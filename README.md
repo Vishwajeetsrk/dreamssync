@@ -98,17 +98,26 @@ DreamSync features a custom-engineered **Neo-Brutalist** design system:
 - **Supabase Account**: Project URL & Anon Key.
 - **Upstash Redis**: URL/Token for rate limiting.
 
-### 🚀 Supabase Setup (Important)
+### 🛡️ Security & Edge Protection
+This platform implements **Next.js 16 (Turbopack)** edge-ready security:
+- **`src/proxy.ts`**: The centralized entry point for all edge security middleware.
+- **Rate Limiting**: Powered by **Upstash Redis**.
+- **Self-Configuration**: To adjust performance vs. security, edit `src/lib/ratelimit.ts`:
+  - `globalRateLimit`: General browsing speed.
+  - `toolRateLimit`: AI endpoint protection (ATS/Roadmap).
+  - `authRateLimit`: Signup/Login attempt limits.
 
+### 🚀 Supabase Setup (Important)
 To ensure the profile and storage systems work correctly:
 1. **Database**: Ensure a `profiles` table exists with columns: `id (uuid, primary key)`, `name (text)`, `email (text)`, `avatar_url (text)`, `plan (text)`, `created_at (timestamp)`.
 2. **Storage**: Create a **public** bucket named `avatars` in Supabase Storage.
-   - Set the bucket to **Public**.
-- Add an **INSERT** Policy for **authenticated** users to upload: `(bucket_id = 'avatars'::text)`.
-- Add a **SELECT** Policy for **anon and authenticated** roles to view: `(bucket_id = 'avatars'::text)`.
-
-### 🛡️ Deployment Convention (Next.js 16)
-This project uses the new **`src/proxy.ts`** standard for edge rate-limiting and security. Ensure your environment variables for Upstash are configured for the proxy to function correctly.
+   - Run this SQL in your [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql/new):
+   ```sql
+   -- Allow Public Read
+   CREATE POLICY "Allow Public View" ON storage.objects FOR SELECT TO public USING (bucket_id = 'avatars');
+   -- Allow Authenticated Upload
+   CREATE POLICY "Allow Authenticated Upload" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'avatars');
+   ```
 
 ### Installation
 
