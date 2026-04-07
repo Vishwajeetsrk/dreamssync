@@ -114,7 +114,22 @@ export default function Navbar() {
             <Coffee className="w-5 h-5" /> <span>Donate</span>
           </Link>
 
-          {user && (
+          {!user ? (
+            <div className="flex items-center gap-3">
+              <Link 
+                href="/login"
+                className="px-6 py-2.5 text-sm font-black text-black hover:text-blue-600 transition-colors uppercase tracking-tight"
+              >
+                Login
+              </Link>
+              <Link 
+                href="/signup"
+                className="px-6 py-2.5 bg-black text-white border-2 border-black text-sm font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
             <div className="flex items-center gap-3">
               <Link 
                 href="/dashboard"
@@ -123,27 +138,31 @@ export default function Navbar() {
                 Dashboard
               </Link>
               
-              <Link 
-                href="/profile"
-                title="Profile Settings"
-                className="p-2 border-2 border-black hover:bg-black group transition-all"
-              >
-                {userData?.photoURL ? (
-                  <div className="w-6 h-6 border border-black overflow-hidden relative">
-                    <Image src={userData.photoURL} alt="P" fill className="object-cover" />
-                  </div>
-                ) : (
-                  <UserIcon className="w-5 h-5 text-black group-hover:text-white" />
-                )}
-              </Link>
+              <div className="flex items-center bg-gray-100 border-2 border-black p-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <Link 
+                  href="/profile"
+                  title="Profile Settings"
+                  className="p-1.5 hover:bg-black group transition-all"
+                >
+                  {userData?.photoURL ? (
+                    <div className="w-6 h-6 border border-black overflow-hidden relative">
+                      <Image src={userData.photoURL} alt="P" fill className="object-cover" />
+                    </div>
+                  ) : (
+                    <UserIcon className="w-5 h-5 text-black group-hover:text-white" />
+                  )}
+                </Link>
 
-              <button 
-                onClick={handleLogout}
-                title="Logout"
-                className="p-2 border-2 border-transparent hover:border-black transition-all text-gray-400 hover:text-black"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
+                <div className="w-[2px] h-6 bg-black mx-1 opacity-20" />
+
+                <button 
+                  onClick={handleLogout}
+                  title="Logout"
+                  className="p-1.5 hover:bg-red-500 group transition-all text-gray-500 hover:text-white"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           )}
         </div>

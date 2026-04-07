@@ -8,6 +8,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -24,6 +25,9 @@ const BodySchema = z.object({
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are a world-class LinkedIn profile coach and personal branding expert.
+
+SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
+
 You have helped thousands of professionals land jobs at FAANG, top Indian IT companies, and funded startups.
 You MUST output ONLY valid JSON matching the exact schema. No markdown, no explanation, no extra keys.`;
 
@@ -97,6 +101,13 @@ export async function POST(req: NextRequest) {
       );
     }
     body = parsed.data;
+
+    // 4. Safety Guard
+    const combinedInput = `${body.targetRole} ${body.currentAbout || ''}`;
+    const safety = validateCareerInput(combinedInput);
+    if (!safety.allowed) {
+      return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+    }
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }

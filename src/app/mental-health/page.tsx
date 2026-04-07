@@ -7,6 +7,7 @@ import {
   RotateCcw, Phone, PlayCircle, StopCircle, MessageCircle, Globe, ChevronDown
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Types ─────────────────────────────────────────────────────────
 interface Message {
@@ -282,6 +283,22 @@ export default function MentalHealthAgent() {
   const sendMessage = async (text?: string) => {
     const userText = (text || input).trim();
     if (!userText || loading) return;
+
+    // 1. Safety Guard
+    const safety = validateCareerInput(userText);
+    if (!safety.allowed) {
+      setMessages(prev => [
+        ...prev, 
+        { role: 'user', content: userText },
+        { 
+          role: 'assistant', 
+          content: `⚠️ Safety Warning: ${safety.message}\n\nPlease talk about professional, safe, and ethical topics. I am here to support your mental well-being in a positive way.` 
+        }
+      ]);
+      setInput('');
+      if (voiceMode) await speak(safety.message);
+      return;
+    }
 
     const userMsg: Message = { role: 'user', content: userText };
     setMessages(prev => [...prev, userMsg]);

@@ -7,6 +7,7 @@ import {
   GraduationCap, Box, CheckCircle, ArrowRight, ShieldCheck,
   Star, Download, Printer, Wrench
 } from 'lucide-react';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 export default function Roadmap() {
   const [steps, setSteps] = useState<any[]>([]);
@@ -18,7 +19,26 @@ export default function Roadmap() {
 
   const generateRoadmap = async () => {
     if (!query.role) return alert("Role is required.");
+    
+    // 1. Client-Side Safety Guard
+    const safety = validateCareerInput(query.role);
+    if (!safety.allowed) {
+      setSafetyError({ 
+        message: safety.message, 
+        alternatives: [
+          "Software Developer", 
+          "Data Scientist", 
+          "UI/UX Designer", 
+          "Product Manager", 
+          "Cybersecurity Analyst (Ethical)"
+        ] 
+      });
+      return;
+    }
+
     setLoading(true);
+    setSafetyError(null);
+
     try {
       const res = await fetch('/api/roadmap', {
         method: 'POST',
@@ -26,18 +46,27 @@ export default function Roadmap() {
         body: JSON.stringify(query),
       });
       const data = await res.json();
+      
       if (!res.ok) {
-        if (data.error === 'Invalid role' && data.alternatives) {
-          setSafetyError({ message: data.details, alternatives: data.alternatives });
+        if (res.status === 400 && data.error === 'Safety Violation') {
+          setSafetyError({ 
+            message: data.details, 
+            alternatives: [
+              "Software Developer", 
+              "Data Scientist", 
+              "UI/UX Designer", 
+              "Product Manager", 
+              "Cybersecurity Analyst (Ethical)"
+            ] 
+          });
           return;
         }
-        throw new Error(data.error);
+        throw new Error(data.error || "Generation failed");
       }
       
       setSteps(data.timeline || []);
       setTotalTimeline(data.totalTimeline || '');
       setGlobalPrerequisites(data.globalPrerequisites || null);
-      setSafetyError(null);
     } catch (err: any) {
       alert("Error: " + err.message);
     } finally {

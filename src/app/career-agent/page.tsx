@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import CareerPathCard from '@/components/CareerPathCard';
 import { graphicDesignPath } from '@/data/careerPaths';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Types ─────────────────────────────────────────────────────────
 interface Role {
@@ -238,6 +239,21 @@ export default function CareerAgent() {
   const sendMessage = async (text?: string) => {
     const userText = text || input.trim();
     if (!userText || loading) return;
+
+    // 1. Safety Guard
+    const safety = validateCareerInput(userText);
+    if (!safety.allowed) {
+      setMessages(prev => [
+        ...prev, 
+        { role: 'user', content: userText },
+        { 
+          role: 'assistant', 
+          content: `⚠️ Safety Warning: ${safety.message}\n\nPlease ask about professional, legal, and ethical career paths. I am here to help with legitimate career growth.` 
+        }
+      ]);
+      setInput('');
+      return;
+    }
 
     const userMsg: Message = { role: 'user', content: userText };
     setMessages(prev => [...prev, userMsg]);

@@ -7,6 +7,7 @@ import {
   Sparkles, Monitor, Eye, Code2, Check, ArrowRight, Palette,
   User, Briefcase, BookOpen, FolderKanban, Award
 } from 'lucide-react';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ---------- TYPES ----------
 interface Project { topic: string; points: string; website: string; }
@@ -90,6 +91,14 @@ export default function PortfolioGenerator() {
   const updateWork = (i: number, f: keyof WorkExp, v: string | boolean) => setWorkExp(w => w.map((x, idx) => idx === i ? { ...x, [f]: v } : x));
 
   const generatePortfolio = async () => {
+    // 1. Safety Guard
+    const safetyInput = `${targetRole} ${summary}`;
+    const safety = validateCareerInput(safetyInput);
+    if (!safety.allowed) {
+      setGenError(safety.message);
+      return;
+    }
+
     setIsGenerating(true);
     setGenError('');
     try {

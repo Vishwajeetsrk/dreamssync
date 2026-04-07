@@ -3,8 +3,26 @@
 > **The all-in-one AI ecosystem for career growth and mental well-being.**
 > Precision-built for the high-depth Indian job market with a premium **Neo-Brutalist** aesthetic.
 
-- **Official Repository:** [Vishwajeetsrk/dreamssync](https://github.com/Vishwajeetsrk/dreamssync)
-- **Production Mirror:** [Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
+### 🛡 AI Safety & Security Architecture (v21.4)
+The DreamSync platform now features a centralized **Global AI Guard** layer, making it one of the most secure and professional career platforms on the market.
+
+*   **Centralized Validation (`/lib/aiGuard.ts`)**: Every user input across all AI modules (Roadmap, Portfolio, IKIGAI, ATS, Career Agent) is first scanned by our fuzzy-logic guard for harmful, illegal, or unethical intent.
+*   **API Level Hardening**: Strict validation sits at the gateway of every API route, immediately blocking (HTTP 400) requests involving violence, cybercrime, or dangerous activities.
+*   **Safety Mandate Injection**: All system prompts are injected with a 2026-standard Safety Mandate, ensuring AI models proactively refuse unethical requests even if they bypass keyword filters.
+*   **Professional Fallback System**: Users attempting to explore unsafe paths are gracefully redirected toward professional alternatives (e.g., Software Engineering or Cybersecurity Analyst) via an industrial-grade error handling UI.
+
+---
+
+### 📂 Repository Structure & Mirroring
+DreamSync utilizes a dual-repository structure for development and production synchronization:
+
+1.  **Primary Development (`DreamSync`)**: The official source of truth. All feature work and safety updates reside here.
+    *   [https://github.com/Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
+2.  **Production Mirror (`dreamssync`)**: The production-ready stable build, synchronized for Vercel deployment and scaling.
+    *   [https://github.com/Vishwajeetsrk/dreamssync](https://github.com/Vishwajeetsrk/dreamssync)
+
+---
+
 - **Live Deployment:** [dreamsync.vercel.app](https://dreamsync-ruddy.vercel.app/)
 
 ## 🎥 Live Portfolio Preview (Auto-Play)

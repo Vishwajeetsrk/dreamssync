@@ -8,6 +8,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -66,6 +67,7 @@ Return JSON: { "bullets": ["• Bullet 1", "• Bullet 2", "• Bullet 3"] }`;
 
 const SYSTEM_PROMPT =
   'You are an expert technical resume writer for the Indian job market. ' +
+  'SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance. ' +
   'You write ATS-optimized, impactful resume content. ' +
   'Always return strict JSON output matching the expected format. No markdown, no extra text.';
 
@@ -84,6 +86,13 @@ export async function POST(req: NextRequest) {
       );
     }
     body = parsed.data;
+
+    // 4. Safety Guard
+    const combinedInput = `${body.targetRole} ${body.projects || ''} ${body.experience || ''}`;
+    const safety = validateCareerInput(combinedInput);
+    if (!safety.allowed) {
+      return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+    }
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }

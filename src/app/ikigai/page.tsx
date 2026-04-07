@@ -8,6 +8,7 @@ import {
   RefreshCcw, Download, Share2, Rocket, Star, Target
 } from 'lucide-react';
 import { IkigaiDiagram } from '@/components/IkigaiDiagram';
+import { validateCareerInput } from '@/lib/aiGuard';
 import Link from 'next/link';
 
 // ── Types ─────────────────────────────────────────────────────────
@@ -107,6 +108,14 @@ export default function IkigaiPage() {
   };
 
   const analyzeIkigai = async () => {
+    // 1. Safety Guard
+    const combinedInput = `${form.passions.join(' ')} ${form.skills.join(' ')} ${form.marketNeeds.join(' ')} ${form.incomeGoals}`;
+    const safety = validateCareerInput(combinedInput);
+    if (!safety.allowed) {
+      setError(safety.message);
+      return;
+    }
+
     setIsAnalyzing(true);
     setError('');
     try {
@@ -116,7 +125,12 @@ export default function IkigaiPage() {
         body: JSON.stringify(form)
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to analyze Ikigai');
+      if (!res.ok) {
+        if (res.status === 400 && data.error === 'Safety Violation') {
+          throw new Error(data.details);
+        }
+        throw new Error(data.error || 'Failed to analyze Ikigai');
+      }
       setResult(data);
     } catch (err: any) {
       setError(err.message);

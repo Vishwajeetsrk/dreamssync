@@ -8,6 +8,7 @@ import {
   User, Briefcase, BookOpen, Award, RotateCcw, ExternalLink,
   PenLine, FileText, Wrench, Building2, GraduationCap, Trophy, Sliders
 } from 'lucide-react';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // --- Types ---
 interface HeadlineOption { text: string; focus: string; }
@@ -107,6 +108,15 @@ export default function LinkedInOptimizer() {
 
   const handleGenerate = async () => {
     if (!form.targetRole.trim()) { setError('Please enter your target role.'); return; }
+    
+    // 1. Safety Guard
+    const safetyInput = `${form.targetRole} ${form.currentAbout}`;
+    const safety = validateCareerInput(safetyInput);
+    if (!safety.allowed) {
+      setError(safety.message);
+      return;
+    }
+
     setIsGenerating(true);
     setError('');
     setResult(null);

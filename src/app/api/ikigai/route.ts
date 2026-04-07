@@ -7,6 +7,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -18,6 +19,9 @@ const BodySchema = z.object({
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are a Career Architect and Ikigai Master. Your goal is to help users find the intersection of:
+
+SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
+
 1. What they LOVE (Passion)
 2. What they are GOOD AT (Profession/Skills)
 3. What the WORLD NEEDS (Mission/Market)
@@ -65,6 +69,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid input', details: parsed.error.issues[0]?.message }, { status: 400 });
     }
     body = parsed.data;
+
+    // 4. Safety Guard
+    const combinedInput = [
+      ...body.passions,
+      ...body.skills,
+      ...body.marketNeeds,
+      body.incomeGoals || ''
+    ].join(' ');
+    
+    const safety = validateCareerInput(combinedInput);
+    if (!safety.allowed) {
+      return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+    }
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }

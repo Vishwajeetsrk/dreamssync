@@ -9,6 +9,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { callAI, parseJSON } from '@/lib/ai';
 import { createHash } from 'crypto';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── PDF Extraction ────────────────────────────────────────────────
 async function extractPdfText(buffer: Buffer): Promise<string> {
@@ -25,6 +26,9 @@ async function extractPdfText(buffer: Buffer): Promise<string> {
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are an expert ATS (Applicant Tracking System) resume reviewer for the Indian job market.
+
+SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
+
 Analyze the resume and return ONLY a JSON object with this exact schema — no markdown, no extra text:
 {
   "score": <number 0-100>,
@@ -96,6 +100,12 @@ export async function POST(req: NextRequest) {
       { error: 'Could not extract text from this PDF. Please ensure it is not a scanned image (use a text-based PDF).' },
       { status: 422 }
     );
+  }
+
+  // 6. Safety Guard
+  const safety = validateCareerInput(resumeText);
+  if (!safety.allowed) {
+    return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
   }
 
 

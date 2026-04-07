@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { Redis } from '@upstash/redis';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL || '',
@@ -75,18 +76,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid input', details: parsed.error.issues }, { status: 400 });
     }
 
+    const { theme, data } = parsed.data;
+
+    // 4. Safety Guard
+    const combinedInput = `${data?.targetRole || ''} ${data?.summary || ''}`;
+    const safety = validateCareerInput(combinedInput);
+    if (!safety.allowed) {
+      return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+    }
+
     const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
     if (!OPENROUTER_API_KEY) {
        return NextResponse.json({ error: 'OpenRouter API key missing' }, { status: 500 });
     }
 
-    const { theme, data } = parsed.data;
     const themeGuide = buildThemePrompt(theme);
 
     const name = data?.fullName?.trim() || 'Your Name';
     const role = data?.targetRole?.trim() || 'Software Engineer';
 
     const sysPrompt = `You are an expert frontend developer. Generate a self-contained single-page HTML portfolio.
+    
+SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
+
 Output ONLY this JSON: { "html": "<!DOCTYPE html>...</html>" }
 No markdown. No explanation. Just the JSON object.
 Use Tailwind CSS CDN: <script src="https://cdn.tailwindcss.com"></script>
