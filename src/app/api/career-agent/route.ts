@@ -53,7 +53,7 @@ FORMAT: Return ONLY this JSON:
   "roles": [],
   "roadmapNodes": [],
   "jobLinks": [
-    { "platform": "Naukri", "url": "https://www.naukri.com", "label": "Search on Naukri" }
+    { "platform": "ATS", "url": "/ats-check", "label": "Open ATS Checker" }
   ],
   "quickTips": ["Always check company reviews", "Tailor your resume for each role"]
 }`;
