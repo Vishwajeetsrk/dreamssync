@@ -29,7 +29,7 @@ const SAFE_EXEMPTIONS = [
   'compliance officer'
 ];
 
-export function validateCareerInput(input: string): GuardResult {
+export function validateCareerInput(input: string, maxLength: number = 2000): GuardResult {
   if (!input) {
     return { allowed: true, message: '' };
   }
@@ -56,10 +56,10 @@ export function validateCareerInput(input: string): GuardResult {
   }
 
   // 3. Length check
-  if (normalized.length > 100) {
+  if (normalized.length > maxLength) {
     return {
       allowed: false,
-      message: "⚠️ Input is abnormally long. Please enter a concise professional role name."
+      message: `⚠️ Input is abnormally long (max ${maxLength} characters). Please keep it concise.`
     };
   }
 
