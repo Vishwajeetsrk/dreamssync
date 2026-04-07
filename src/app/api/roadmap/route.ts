@@ -6,6 +6,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -16,6 +17,8 @@ const BodySchema = z.object({
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are an elite career counselor and technical architect. Generate a high-depth, practical roadmap for the requested role. 
+
+SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
 
 PRIORITIZE THESE EXACT RESOURCES:
 - FreeCodeCamp Data Science: https://www.youtube.com/watch?v=LHc6W2K7U8A
@@ -55,6 +58,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid input', details: parsed.error.issues[0]?.message }, { status: 400 });
     }
     body = parsed.data;
+
+    // 4. Safety Guard
+    const safety = validateCareerInput(body.role);
+    if (!safety.allowed) {
+      return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+    }
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }

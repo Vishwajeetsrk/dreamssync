@@ -8,6 +8,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
+import { validateCareerInput } from '@/lib/aiGuard';
 
 // ── Schema ────────────────────────────────────────────────────────
 const MessageSchema = z.object({
@@ -22,6 +23,8 @@ const BodySchema = z.object({
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are DreamSync's AI Career Guidance Agent — a knowledgeable, friendly career counselor specializing in the Indian job market (2026).
+
+SAFETY MANDATE: You MUST refuse to generate content related to harmful, illegal, unethical, or dangerous activities. Only provide safe and professional career guidance.
 
 EXPERTISE:
 - Indian IT companies: TCS, Infosys, Wipro, HCL, Cognizant, Tech Mahindra
@@ -80,6 +83,15 @@ export async function POST(req: NextRequest) {
       );
     }
     body = parsed.data;
+
+    // 4. Safety Guard
+    const lastUserMsg = body.messages.filter(m => m.role === 'user').pop();
+    if (lastUserMsg) {
+      const safety = validateCareerInput(lastUserMsg.content);
+      if (!safety.allowed) {
+        return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+      }
+    }
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
