@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-[var(--background)] flex flex-col font-sans text-[var(--foreground)] antialiased" suppressHydrationWarning>
         <AuthProvider>
-          <Navbar />
-          <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-24">
-            {children}
-          </main>
-          <Footer />
+          <LanguageProvider>
+            <Navbar />
+            <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-24">
+              {children}
+            </main>
+            <Footer />
+          </LanguageProvider>
         </AuthProvider>
       </body>
     </html>

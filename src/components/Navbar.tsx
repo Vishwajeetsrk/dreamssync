@@ -6,25 +6,15 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { auth, db } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
 import { handleGoogleSignIn } from '@/lib/auth-utils';
 import Image from 'next/image';
 
-const featureLinks = [
-  { name: 'Roadmap', href: '/roadmap' },
-  { name: 'Career Agent', href: '/career-agent' },
-  { name: 'Resume Builder', href: '/resume-builder' },
-  { name: 'ATS Check', href: '/ats-check' },
-  { name: 'LinkedIn Optimizer', href: '/linkedin' },
-  { name: 'Portfolio Gen', href: '/portfolio' },
-  { name: 'IKIGAI Finder', href: '/ikigai' },
-  { name: 'Serenity AI', href: '/mental-health' },
-  { name: 'Doc & Skill', href: '/documents' },
-];
-
 export default function Navbar() {
   const { user, userData } = useAuth();
+  const { t } = useLanguage();
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
@@ -49,6 +39,18 @@ export default function Navbar() {
       setLoading(false);
     }
   };
+
+  const featureLinks = [
+    { name: t('roadmap'), href: '/roadmap' },
+    { name: t('career_agent'), href: '/career-agent' },
+    { name: t('resume_builder'), href: '/resume-builder' },
+    { name: t('ats_check'), href: '/ats-check' },
+    { name: t('linkedin_optimizer'), href: '/linkedin' },
+    { name: t('portfolio_gen'), href: '/portfolio' },
+    { name: t('ikigai_finder'), href: '/ikigai' },
+    { name: t('serenity_ai'), href: '/mental-health' },
+    { name: t('doc_skill'), href: '/documents' },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b-4 border-black flex items-center h-20 overflow-visible">
@@ -75,7 +77,7 @@ export default function Navbar() {
                 onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
                 className="flex items-center gap-1.5 text-lg font-black text-gray-900 hover:text-blue-600 transition-colors group uppercase tracking-tight"
               >
-                Features <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                {t('features')} <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isFeaturesOpen ? 'rotate-180' : ''}`} />
               </button>
               <AnimatePresence>
                 {isFeaturesOpen && (
@@ -88,7 +90,7 @@ export default function Navbar() {
                   >
                     {featureLinks.map((item) => (
                       <Link 
-                        key={item.name}
+                        key={item.href}
                         href={item.href}
                         onClick={() => setIsFeaturesOpen(false)}
                         className="block px-4 py-3 text-[13px] font-black uppercase text-gray-900 hover:bg-blue-50 hover:text-blue-600 transition-all border-b-2 border-transparent hover:border-black last:border-none"
@@ -101,13 +103,13 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
             <Link href="/about" className="text-lg font-black text-gray-900 hover:text-blue-600 transition-colors uppercase tracking-tight">
-              About
+              {t('about')}
             </Link>
             <Link href="/team" className="text-lg font-black text-gray-900 hover:text-blue-600 transition-colors uppercase tracking-tight">
-              Team
+              {t('team')}
             </Link>
             <Link href="/contact" className="text-lg font-black text-gray-900 hover:text-blue-600 transition-colors uppercase tracking-tight">
-              Contact
+              {t('contact')}
             </Link>
           </div>
         </div>
@@ -117,7 +119,7 @@ export default function Navbar() {
             href="/donate"
             className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-[#fcc419] border-2 border-black text-black text-xs font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
           >
-            <Coffee className="w-5 h-5" /> <span>Donate</span>
+            <Coffee className="w-5 h-5" /> <span>{t('donate')}</span>
           </Link>
 
           {!user ? (
@@ -126,13 +128,13 @@ export default function Navbar() {
                 href="/login"
                 className="px-6 py-2.5 text-sm font-black text-black hover:text-blue-600 transition-colors uppercase tracking-tight"
               >
-                Login
+                {t('login')}
               </Link>
               <Link 
                 href="/signup"
                 className="px-6 py-2.5 bg-black text-white border-2 border-black text-sm font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
               >
-                Sign Up
+                {t('signup')}
               </Link>
             </div>
           ) : (
@@ -141,7 +143,7 @@ export default function Navbar() {
                 href="/dashboard"
                 className="px-6 py-2.5 bg-white border-2 border-black text-black text-sm font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all outline-none uppercase"
               >
-                Dashboard
+                {t('dashboard')}
               </Link>
               
               <div className="relative group">
@@ -177,14 +179,14 @@ export default function Navbar() {
                   
                   <div className="py-1">
                     <Link href="/profile" className="block px-4 py-2.5 text-sm font-black uppercase text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2">
-                      <UserIcon className="w-4 h-4" /> My Account
+                      <UserIcon className="w-4 h-4" /> {t('my_account')}
                     </Link>
                     <div className="h-[2px] bg-black mx-2 my-1" />
                     <button 
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2.5 text-sm font-black uppercase text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
                     >
-                      <LogOut className="w-4 h-4" /> Sign Out
+                      <LogOut className="w-4 h-4" /> {t('sign_out')}
                     </button>
                   </div>
                 </div>

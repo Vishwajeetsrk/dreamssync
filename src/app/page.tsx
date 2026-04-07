@@ -3,8 +3,23 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Brain, Briefcase, CheckCircle, FileText, HeartHandshake, Sparkles, Coffee, Map, TrendingUp, Building2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Home() {
+  const { t } = useLanguage();
+
+  const features = [
+    { title: t('ikigai_finder'), desc: t('ikigai_desc'), icon: Brain, color: "bg-black text-white", href: "/ikigai", premium: true },
+    { title: t('career_agent'), desc: t('career_desc'), icon: Briefcase, color: "bg-violet-100", href: "/career-agent" },
+    { title: t('resume_builder'), desc: t('resume_desc'), icon: FileText, color: "bg-green-100", href: "/resume-builder" },
+    { title: t('ats_check'), desc: t('ats_desc'), icon: CheckCircle, color: "bg-purple-100", href: "/ats-check" },
+    { title: t('linkedin_optimizer'), desc: t('linkedin_desc'), icon: Briefcase, color: "bg-yellow-100", href: "/linkedin" },
+    { title: t('portfolio_gen'), desc: t('portfolio_desc'), icon: Sparkles, color: "bg-pink-100", href: "/portfolio" },
+    { title: t('roadmap'), desc: t('roadmap_desc'), icon: Map, color: "bg-sky-100", href: "/roadmap" },
+    { title: t('doc_skill'), desc: t('doc_desc'), icon: BookOpen, color: "bg-orange-100", href: "/documents" },
+    { title: t('serenity_ai'), desc: t('serenity_desc'), icon: HeartHandshake, color: "bg-rose-100", href: "/mental-health" },
+  ];
+
   return (
     <div className="flex flex-col space-y-24 py-12 px-4 sm:px-6">
       {/* Latest Updates Ticker */}
@@ -37,14 +52,13 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <span className="inline-block py-1 px-3 border-2 border-black bg-accent text-accent-foreground font-bold text-sm mb-6 neo-box">
-            🔥 AI-Powered Career Growth
+             🔥 AI-Powered Career Growth
           </span>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight max-w-4xl mx-auto">
-            Your Dream Career, <br/>
-            <span className="text-primary underline decoration-8 underline-offset-4">Synced Perfectly.</span>
+            {t('hero_title')}
           </h1>
           <p className="mt-6 text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto">
-            Guidance, resumes, ATS checks, and custom roadmaps—all powered by AI. Designed explicitly for Indian students.
+            {t('hero_desc')}
           </p>
         </motion.div>
         
@@ -55,10 +69,10 @@ export default function Home() {
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <Link href="/dashboard" className="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold text-lg border-4 border-black neo-box hover:-translate-y-1 active:translate-y-1 transition-all flex items-center justify-center gap-2">
-            Get Started For Free <ArrowRight className="w-5 h-5" />
+            {t('get_started')} <ArrowRight className="w-5 h-5" />
           </Link>
           <Link href="/about" className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold text-lg border-4 border-black neo-box hover:-translate-y-1 active:translate-y-1 transition-all">
-            See How It Works
+            {t('how_it_works')}
           </Link>
         </motion.div>
       </section>
@@ -66,21 +80,11 @@ export default function Home() {
       {/* Features Grid */}
       <section className="space-y-12 max-w-7xl mx-auto w-full">
         <div className="text-center">
-          <h2 className="text-4xl font-black mb-4 inline-block border-b-4 border-black pb-2">Everything You Need</h2>
+          <h2 className="text-4xl font-black mb-4 inline-block border-b-4 border-black pb-2">{t('everything_you_need')}</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-8">
-          {[
-            { title: "IKIGAI Finder", desc: "Discover your true purpose and ideal career path using AI-powered Ikigai analysis.", icon: Brain, color: "bg-black text-white", href: "/ikigai", premium: true },
-            { title: "AI Career Agent", desc: "Detailed roadmaps, salary insights, role suggestions & real job links tailored for India.", icon: Briefcase, color: "bg-violet-100", href: "/career-agent" },
-            { title: "Resume Builder", desc: "Create ATS-friendly resumes that stand out to top recruiters instantly.", icon: FileText, color: "bg-green-100", href: "/resume-builder" },
-            { title: "ATS Checker", desc: "Upload your PDF and get instant ATS scoring and targeted resume feedback.", icon: CheckCircle, color: "bg-purple-100", href: "/ats-check" },
-            { title: "LinkedIn Optimizer", desc: "AI-generated headlines, summaries, and post ideas to boost your profile.", icon: Briefcase, color: "bg-yellow-100", href: "/linkedin" },
-            { title: "Portfolio Generator", desc: "Auto-generate a beautiful, deployed portfolio site with your details.", icon: Sparkles, color: "bg-pink-100", href: "/portfolio" },
-            { title: "AI Roadmap", desc: "Generate a personalized step-by-step career path based on your exact dream role.", icon: Map, color: "bg-sky-100", href: "/roadmap" },
-            { title: "Skill Roadmaps & Docs", desc: "Step-by-step skill guides, free resources, and essential government docs for India.", icon: BookOpen, color: "bg-orange-100", href: "/documents" },
-            { title: "Mental Health", desc: "Talk to Serenity — your empathetic AI companion for stress, anxiety & burnout.", icon: HeartHandshake, color: "bg-rose-100", href: "/mental-health" },
-          ].map((feature, i) => (
+          {features.map((feature, i) => (
             <Link href={feature.href} key={i} className="block h-full">
             <motion.div 
               className="bg-white border-4 border-black p-6 neo-box flex flex-col items-start gap-4 cursor-pointer h-full"

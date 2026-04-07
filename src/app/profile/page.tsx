@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { auth, db, storage } from '@/lib/firebase';
 import { updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -24,9 +25,12 @@ import Image from 'next/image';
 
 export default function ProfilePage() {
   const { user, userData } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'security' | 'settings'>('security');
   const [name, setName] = useState('');
   const [photoURL, setPhotoURL] = useState('');
+  const [lang, setLang] = useState('en');
+  const [timezone, setTimezone] = useState('IST');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,8 +43,10 @@ export default function ProfilePage() {
     if (userData) {
       setName(userData.name || '');
       setPhotoURL(userData.photoURL || user?.photoURL || '');
+      setLang(userData.language || language || 'en');
+      setTimezone(userData.timezone || 'IST');
     }
-  }, [userData, user]);
+  }, [userData, user, language]);
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,6 +103,26 @@ export default function ProfilePage() {
     }
   };
 
+  const handleUpdateSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    setLoading(true);
+    setMessage({ type: '', text: '' });
+    try {
+      await updateDoc(doc(db, 'users', user.uid), {
+        language: lang,
+        timezone,
+        updatedAt: new Date()
+      });
+      setLanguage(lang as 'en' | 'hi');
+      setMessage({ type: 'success', text: 'System settings synchronized!' });
+    } catch (err: any) {
+      setMessage({ type: 'error', text: 'Settings update failed' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user || !currentPassword || !newPassword) return;
@@ -145,14 +171,14 @@ export default function ProfilePage() {
           onClick={() => setActiveTab('security')}
           className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === 'security' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
         >
-          Security
+          {t('security')}
           {activeTab === 'security' && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-1 bg-black" />}
         </button>
         <button 
           onClick={() => setActiveTab('settings')}
           className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === 'settings' ? 'text-black' : 'text-gray-400 hover:text-gray-600'}`}
         >
-          Settings
+          {t('settings')}
           {activeTab === 'settings' && <motion.div layoutId="tab" className="absolute bottom-0 left-0 right-0 h-1 bg-black" />}
         </button>
       </div>
@@ -180,15 +206,20 @@ export default function ProfilePage() {
 
               <div className="md:col-span-2 space-y-6">
                 <h2 className="text-xl font-black uppercase flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-blue-600" /> Account Identity
+                  <Shield className="w-5 h-5 text-blue-600" /> {t('account_identity')}
                 </h2>
                 <form onSubmit={handleUpdateProfile} className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black uppercase text-gray-400">Full Name</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-gray-50 border-4 border-black p-3 font-black focus:bg-white outline-none" />
+                    <label className="text-[10px] font-black uppercase text-gray-400">{t('full_name')}</label>
+                    <input 
+                      type="text" 
+                      value={name} 
+                      onChange={(e) => setName(e.target.value)} 
+                      className="w-full bg-gray-50 border-4 border-black p-4 font-black outline-none focus:bg-white transition-colors" 
+                    />
                   </div>
                   <button type="submit" disabled={loading} className="px-8 py-3 bg-blue-600 border-4 border-black text-white font-black uppercase text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all flex items-center gap-2">
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Update Identity
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {t('save_identity')}
                   </button>
                 </form>
               </div>
@@ -220,29 +251,42 @@ export default function ProfilePage() {
             
             {/* System Settings matching provided design */}
             <section className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-              <h2 className="text-2xl font-black uppercase mb-8 border-b-4 border-black pb-2 inline-block">System Settings</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Language</label>
-                  <select className="w-full bg-gray-50 border-4 border-black p-3 font-black outline-none appearance-none cursor-pointer">
-                    <option>English (India)</option>
-                    <option>Hindi</option>
-                  </select>
+              <h2 className="text-2xl font-black uppercase mb-8 border-b-4 border-black pb-2 inline-block">{t('system_settings')}</h2>
+              <form onSubmit={handleUpdateSettings} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-gray-400">{t('language')}</label>
+                    <select 
+                      value={lang}
+                      onChange={(e) => setLang(e.target.value)}
+                      className="w-full bg-gray-50 border-4 border-black p-3 font-black outline-none appearance-none cursor-pointer"
+                    >
+                      <option value="en">English (India)</option>
+                      <option value="hi">Hindi</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-gray-400">{t('timezone')}</label>
+                    <select 
+                      value={timezone}
+                      onChange={(e) => setTimezone(e.target.value)}
+                      className="w-full bg-gray-50 border-4 border-black p-3 font-black outline-none appearance-none cursor-pointer"
+                    >
+                      <option value="IST">IST (UTC+5:30)</option>
+                      <option value="UTC">UTC</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Timezone</label>
-                  <select className="w-full bg-gray-50 border-4 border-black p-3 font-black outline-none appearance-none cursor-pointer">
-                    <option>IST (UTC+5:30)</option>
-                    <option>UTC</option>
-                  </select>
-                </div>
-              </div>
+                <button type="submit" disabled={loading} className="px-8 py-3 bg-black border-4 border-black text-white font-black uppercase text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all flex items-center gap-2">
+                  {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {t('save_settings')}
+                </button>
+              </form>
             </section>
 
             {/* Account Preferences matching provided design */}
             <section className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
-                <h2 className="text-2xl font-black uppercase text-red-600 mb-1">Delete Account</h2>
+                <h2 className="text-2xl font-black uppercase text-red-600 mb-1">{t('delete_account')}</h2>
                 <p className="text-sm font-bold text-gray-500 uppercase tracking-tight max-w-md">
                   Permanently remove all your data from DreamSync architecture. This action cannot be undone.
                 </p>
@@ -251,7 +295,7 @@ export default function ProfilePage() {
                 onClick={handleDeleteAccount}
                 className="px-10 py-4 bg-red-600 border-4 border-black text-white font-black uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center justify-center gap-2"
               >
-                <Trash2 className="w-5 h-5" /> Purge Account
+                <Trash2 className="w-5 h-5" /> {t('purge_account')}
               </button>
             </section>
 
