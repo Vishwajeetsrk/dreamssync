@@ -1,21 +1,20 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import { User, Session } from '@supabase/supabase-js';
+import { auth, db } from '@/lib/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 interface AuthContextType {
   user: User | null;
   userData: any | null;
   loading: boolean;
-  session: Session | null;
 }
 
 const AuthContext = createContext<AuthContextType>({ 
   user: null, 
   userData: null, 
-  loading: true,
-  session: null
+  loading: true 
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -23,62 +22,39 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Get initial session
-    const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
       
-      if (session?.user) {
-        await fetchUserData(session.user.id);
-      }
-      setLoading(false);
-    };
-
-    getInitialSession();
-
-    // 2. Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      
-      if (currentSession?.user) {
-        await fetchUserData(currentSession.user.id);
+      if (currentUser) {
+        // Fetch from Firestore (Firebase's profiles table)
+        const docRef = doc(db, 'users', currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          setUserData(docSnap.data());
+        } else {
+          // If Firestore profile doesn't exist, use Auth fallback
+          setUserData({
+            name: currentUser.displayName || currentUser.email?.split('@')[0],
+            email: currentUser.email,
+            avatar_url: currentUser.photoURL || '',
+            plan: 'free'
+          });
+        }
       } else {
         setUserData(null);
       }
       setLoading(false);
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
-  const fetchUserData = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
-      if (error) {
-        console.warn("Profile fetch error (possibly new user):", error.message);
-        return;
-      }
-      setUserData(data);
-    } catch (err) {
-      console.error("Profile sync error:", err);
-    }
-  };
-
   return (
-    <AuthContext.Provider value={{ user, userData, loading, session }}>
+    <AuthContext.Provider value={{ user, userData, loading }}>
       {children}
     </AuthContext.Provider>
   );

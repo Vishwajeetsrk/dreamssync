@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { supabase } from '@/lib/supabase';
+import { auth } from '@/lib/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, Lock, Globe, ShieldAlert } from 'lucide-react';
+import { ArrowRight, Lock, ShieldAlert } from 'lucide-react';
 
 function LoginContent() {
   const [email, setEmail] = useState('');
@@ -27,13 +28,7 @@ function LoginContent() {
     setLoading(true);
 
     try {
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (loginError) throw loginError;
-
+      await signInWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {
@@ -42,7 +37,6 @@ function LoginContent() {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="flex items-center justify-center min-h-[70vh]">
@@ -116,7 +110,7 @@ export default function Login() {
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center min-h-[70vh]">
-        <div className="animate-pulse font-black uppercase text-2xl">LOADING ARCHITECTURE...</div>
+        <div className="animate-pulse font-black uppercase text-2xl">LOADING...</div>
       </div>
     }>
       <LoginContent />

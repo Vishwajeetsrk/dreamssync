@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { auth, db } from '@/lib/firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, UserPlus, Globe } from 'lucide-react';
@@ -20,36 +22,20 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const { data, error: signupError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: name,
-          }
-        }
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      
+      await updateProfile(user, {
+        displayName: name
       });
 
-      if (signupError) throw signupError;
-
-      if (data.user) {
-        // Create profile in profiles table
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            { 
-              id: data.user.id, 
-              name: name, 
-              email: email, 
-              plan: 'free',
-              created_at: new Date().toISOString(),
-              auth_method: 'email',
-              avatar_url: '' 
-            }
-          ]);
-        
-        if (profileError) console.error("Profile creation error:", profileError.message);
-      }
+      // Create profile in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        name,
+        email,
+        plan: 'free',
+        created_at: new Date().toISOString(),
+        avatar_url: ''
+      });
 
       router.push('/dashboard');
       router.refresh();
@@ -59,7 +45,6 @@ export default function Signup() {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="flex items-center justify-center min-h-[70vh] py-12">
