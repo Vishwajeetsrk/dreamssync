@@ -64,16 +64,31 @@ export default function ProfilePage() {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
+
+    // Validation: Type (PNG, GIF, JPEG)
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+    if (!allowedTypes.includes(file.type)) {
+      setMessage({ type: 'error', text: 'Invalid format. Use PNG, GIF, or JPEG.' });
+      return;
+    }
+
+    // Validation: Size (Max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setMessage({ type: 'error', text: 'File too large. Max size is 5MB.' });
+      return;
+    }
+
     setUploading(true);
+    setMessage({ type: '', text: '' });
     try {
       const storageRef = ref(storage, `profile_photos/${user.uid}`);
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
       setPhotoURL(url);
       await updateDoc(doc(db, 'users', user.uid), { photoURL: url });
-      setMessage({ type: 'success', text: 'Photo uploaded!' });
+      setMessage({ type: 'success', text: 'Identity photo updated!' });
     } catch (err: any) {
-      setMessage({ type: 'error', text: 'Upload failed' });
+      setMessage({ type: 'error', text: 'Upload failed. Try again.' });
     } finally {
       setUploading(false);
     }

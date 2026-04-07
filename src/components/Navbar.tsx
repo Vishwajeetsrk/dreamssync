@@ -179,9 +179,6 @@ export default function Navbar() {
                     <Link href="/profile" className="block px-4 py-2.5 text-sm font-black uppercase text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2">
                       <UserIcon className="w-4 h-4" /> My Account
                     </Link>
-                    <Link href="/team" className="block px-4 py-2.5 text-sm font-black uppercase text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4" /> Manage Team
-                    </Link>
                     <div className="h-[2px] bg-black mx-2 my-1" />
                     <button 
                       onClick={handleLogout}
