@@ -55,17 +55,10 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           {user && (
-            <div className="flex flex-col items-center gap-2 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              {userData?.photoURL ? (
-                <div className="w-20 h-20 rounded-full border-4 border-black overflow-hidden relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                  <Image src={userData.photoURL} alt="Profile" fill className="object-cover" />
-                </div>
-              ) : (
-                <div className="w-20 h-20 rounded-full bg-blue-100 border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                  <User className="w-10 h-10 text-black" />
-                </div>
-              )}
-              <h2 className="text-xl font-black uppercase tracking-tighter">Welcome back, {userData?.name || 'Dreamer'}!</h2>
+            <div className="mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <h2 className="text-2xl font-black uppercase tracking-tighter text-blue-600">
+                Welcome back, {userData?.name || 'Dreamer'}!
+              </h2>
             </div>
           )}
           
