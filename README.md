@@ -1,138 +1,92 @@
-# 🌙 DreamSync AI — Precision-Engineered Career & Wellness
+# 🛡️ DreamSync AI: The Sovereign Career Architecture
 
-> **The all-in-one AI ecosystem for career growth and mental well-being.**
-> Precision-built for the high-depth Indian job market with a premium **Neo-Brutalist** aesthetic.
+**DreamSync** is a high-performance, AI-driven career ecosystem designed to transform raw ambition into professional dominance. It leverages advanced intelligence to synthesize resumes, analyze ATS compatibility, and architect strategic career roadmaps.
 
-### 🛡 Supabase Migration & Security Architecture (v22.1)
-The DreamSync platform has successfully migrated from Firebase to **Supabase** for a more robust, unified authentication and database experience.
+![DreamSync Banner](https://api.placeholder.com/1200/400?text=DreamSync+AI+Sovereign+Architecture)
 
-*   **Secure Identity Auth (`/context/AuthContext.tsx`)**: Managed entirely via Supabase Auth with a centralized **Email/Password** strategy (Google OAuth removed for platform security).
-*   **PostgreSQL Persistence**: All user profiles and career data are now stored in Supabase's high-performance PostgreSQL database.
-*   **Supabase Storage**: User identity photos and career documents are securely hosted in Supabase Storage with granular RLS policies.
-*   **Centralized Validation (`/lib/aiGuard.ts`)**: Every user input across all AI modules is scanned for safety and ethical alignment.
+## 💎 Core Feature Architecture
 
-### 🚀 Core Features
-
-| Feature | Description | Tech Stack |
+| Module | Intelligent Function | Identity Impact |
 | :--- | :--- | :--- |
-| 💼 **Fix LinkedIn** | **Advanced Profile Engineering** with actionable rewrite suggestions and SEO keywords. | OpenAI / Tailwind v4 |
-| 🧠 **FAANG Resume Suite** | **Precision Document Engineering** supporting multi-format (PDF/Word) export. | React 19 / `docx` |
-| 📊 **Smart ATS Analyzer** | **Recruiter-Grade Analysis** providing deep scoring against global hiring standards. | GPT-4o / Supabase |
-| 🖼️ **Portfolio Engine** | **Instant Deployment** of professional portfolio sites generated dynamically. | Next.js RSC |
+| **Resume Architect** | AI-Synthesized FAANG-optimized resumes | Instant professional authority |
+| **Smart ATS Analyzer** | Real-time compatibility & eligibility auditing | Bypasses traditional gatekeepers |
+| **Strategic Roadmap** | AI-generated career trajectories | Clear path to professional mastery |
+| **Project Portfolio** | Dynamic, aesthetic project showcase | Visual proof of technical capability |
+| **IKIGAI Engine** | Purpose-driven career alignment analysis | Long-term professional fulfillment |
+| **Identity Hub** | Secure Firebase Auth with Profile Resilience | Absolute control over your digital self |
 
 ---
 
-### 🛡️ Production-Grade Security & Reliability
+## 🚀 Step-by-Step Initialization
 
--   **Global Rate Limiting Architecture**:
-    -   **Standard API**: Multi-region sliding window (10 req / 10s).
-    -   **High-Depth Tools**: Specialized limits (5 req / 1m) for Roadmap & ATS.
-    -   **Security Threshold (Auth)**: Enhanced protection (5 attempts / 15m) for login & signup routes via Next.js Proxy & Upstash Redis.
--   **Next.js Proxy (v16.x)**: Secure configuration utilizing `src/proxy.ts` (Edge-compatible) for pre-flight security, authentication checks, and global rate limiting.
--   **Supabase Identity Sync**: High-performance photo uploads and profile management using Supabase Storage and PostgreSQL.
--   **DreamSync AI Guide**: Floating AI assistant with interactive tool discovery and 'Fix LinkedIn' priority mode.
--   **AI Reliability v2**: Optimized JSON generation and support-mode priority for 99.9% uptime.
--   **Supabase Real-time**: Instant profile photo and name updates across all components using Supabase Auth state changes.
--   **Global AI Safety Guard:** 400-level whole-word regex safety blocking enforced across all AI agents.
--   **Next.js Remote Hardening**: Securely configured `remotePatterns` for Supabase Storage domains.
--   **API Rate Limiting:** Global rate limiting via **Upstash Redis** to ensure multi-region stability.
--   **Global CSP Policy:** Hardened Content Security Policy to mitigate XSS and data exfiltration.
-
----
-
-## 📈 Performance & Optimization
-
-- **Zero-Latency Sessions:** Global session caching utilizing **Upstash Redis** for near-instant user state retrieval.
-- **Concurrent Rendering:** Fully optimized for **React 19**, leveraging concurrent features and progressive hydration.
-- **Dynamic AI Fallbacks:** Engineered with a robust fallback system (OpenRouter → Gemini → GPT) to ensure 99.9% AI uptime.
-- **Micro-Animation Engine:** High-performance UX animations powered by **Framer Motion** with GPU-accelerated transitions.
-
----
-
-## 📂 Repository Structure
-1.  **Primary Development (`DreamSync-main`)**: The official source of truth for all feature work.
-    *   [https://github.com/Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
-
----
-
-## 🚀 Live Deployments
-
-- **Production (Main):** [dreamsync-ruddy.vercel.app](https://dreamsync-ruddy.vercel.app/)
-- **Mirror / Staging:** [dream-sync-nine.vercel.app](https://dream-sync-nine.vercel.app/)
-
----
-
-## 🎨 Visual Language: Neo-Brutalism
-
-DreamSync features a custom-engineered **Neo-Brutalist** design system:
-- **Hard-Surface Shadows**: Real-time 4px/6px/8px black offsets for tactile depth.
-- **Bold Typography**: Inter & Black-weights (900+) for industrial impact.
-- **Vibrant Accent Palette**: High-contrast action colors on flat surfaces.
-
----
-
-## 🛠 Tech Stack
-
-### Frontend
-- **Next.js 16** (App Router, Server Components)
-- **React 19**
-- **Tailwind CSS v4**
-- **Framer Motion**
-
-### Backend & Infrastructure
-- **Supabase** (Auth, Database, Storage)
-- **Upstash Redis** (Rate Limiting & Quota Tracking)
-- **Resend** (Email API)
-
-### AI Engine
-- **Groq** (`llama-3`) — Fast inference.
-- **OpenAI** (`gpt-4o`) — Primary reasoning.
-- **Google Gemini** — Multimodal analysis.
-
----
-
-## 🏁 Getting Started
-
-### Prerequisites
-- **Node.js** >= 20.x
-- **Supabase Account**: Project URL & Anon Key.
-- **Upstash Redis**: URL/Token for rate limiting.
-
-### 🛡️ Production-Grade Security & Edge Protection
-DreamSync implements **Next.js 16 (Turbopack)** edge-ready security:
-- **`src/proxy.ts`**: Centralized entry point for all edge security middleware.
-- **Rate Limiting**: Powered by **Upstash Redis** (Global, Tool-specific, and Auth-specific).
-- **Identity Sync**: Transitioned from technical jargon to a **Professional Identity Model**. All 'Architecture' and 'Identity' terms have been replaced with 'Platform' and 'Profile' to ensure a premium user experience.
-- **Supabase 429 Fix**: If you encounter "Email rate limit exceeded" or "Sign up too many requests", adjust your **Supabase Dashboard** under *Authentication > Settings > Rate Limits* (increase signups/hour).
-
-### 🚀 Supabase Setup (Important)
-To ensure the profile and storage systems work correctly:
-1. **Database**: Ensure a `profiles` table exists with columns: `id (uuid, primary key)`, `name (text)`, `email (text)`, `avatar_url (text)`, `plan (text)`, `created_at (timestamp)`.
-2. **Storage**: Create a **public** bucket named `avatars` in Supabase Storage.
-   - Run this SQL in your [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql/new):
-   ```sql
-   -- Allow Public Read
-   CREATE POLICY "Allow Public View" ON storage.objects FOR SELECT TO public USING (bucket_id = 'avatars');
-   -- Allow Authenticated Upload
-   CREATE POLICY "Allow Authenticated Upload" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'avatars');
-   ```
-
-### Installation
-
+### 1. Repository Acquisition
 ```bash
-# 1. Clone & Install
 git clone https://github.com/Vishwajeetsrk/DreamSync.git
 cd DreamSync
+```
+
+### 2. Dependency Installation
+```bash
 npm install
+```
 
-# 2. Configure environment
-cp .env.local.example .env.local
-# Add your Supabase and AI keys to .env.local
+### 3. Environment Configuration
+Create a `.env.local` file in the root directory and populate it with your secure credentials:
 
-# 3. Start development server
+```env
+# FIREBASE IDENTITY
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+
+# AI INTELLIGENCE (GROQ / OPENROUTER)
+GROQ_API_KEY=your_groq_key
+OPENROUTER_API_KEY=your_openrouter_key
+
+# RATE LIMITING (UPSTASH)
+UPSTASH_REDIS_REST_URL=your_redis_url
+UPSTASH_REDIS_REST_TOKEN=your_redis_token
+```
+
+### 4. Local Activation
+```bash
 npm run dev
 ```
+Navigate to `http://localhost:3000` to initialize the architecture.
 
 ---
 
-*Built with ❤️ by [Vishwajeet](https://github.com/Vishwajeetsrk)*
+## 🛠️ Required Infrastructure
+
+- **Node.js**: v18.x or higher
+- **Firebase**: Project with Authentication (Email/Password) and Firestore enabled.
+- **Upstash**: Redis database for Edge-first rate limiting.
+- **Groq/OpenRouter**: For high-speed career intelligence synthesis.
+
+## 🍱 Recommended VS Code Extensions
+
+For the most efficient professional development environment:
+
+1. **ES7+ React/Redux/React-Native snippets**: For rapid component architecture.
+2. **Tailwind CSS IntelliSense**: For sleek, high-precision styling.
+3. **Prettier - Code formatter**: To maintain a standardized, clean codebase.
+4. **Lucide Icon Explorer**: To easily browse the platform's professional iconography.
+
+---
+
+## 🛡️ Critical Deployment Notes: Firebase CORS
+
+If you experience "CORS Blocked" errors when uploading profile photos on your live site:
+
+1. **Firestore Sync**: The platform now uses **Base64 Database Sync** to bypass standard storage blockers.
+2. **Authorized Domains**: Ensure your Vercel URL (e.g., `dream-sync-nine.vercel.app`) is added to the **"Authorized Domains"** list in the Firebase Console under **Authentication > Settings**.
+
+---
+
+## 🌐 Live Deployments
+
+- **Primary Architecture**: [dream-sync-nine.vercel.app](https://dream-sync-nine.vercel.app/)
+- **Mirror Node**: [dreamssync.vercel.app](https://dreamssync.vercel.app/)
+- **Repository**: [Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
+
+**DreamSync AI is now 100% synchronized and production-ready.** 🛡️✨🚀

@@ -5,7 +5,7 @@ import { auth } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, Lock, ShieldAlert } from 'lucide-react';
+import { ArrowRight, Mail, Lock, ShieldAlert } from 'lucide-react';
 
 function LoginContent() {
   const [email, setEmail] = useState('');
@@ -39,65 +39,68 @@ function LoginContent() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[70vh]">
-      <div className="w-full max-w-md bg-white border-4 border-black p-8 neo-box shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-        <div className="flex flex-col items-center mb-8 text-center">
-          <div className="w-16 h-16 bg-primary flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4 animate-in fade-in zoom-in duration-500">
-            <Lock className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-3xl font-black uppercase tracking-tight">Access Hub</h1>
-          <p className="text-muted-foreground font-black text-xs uppercase tracking-widest mt-2">Access your professional dashboard</p>
+    <div className="flex items-center justify-center min-h-screen bg-[#0A0A0A] text-white selection:bg-[#1D4D47]">
+      <div className="w-full max-w-[440px] px-6 py-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="mb-10 text-left">
+          <h1 className="text-[32px] font-bold tracking-tight mb-2">Welcome Back</h1>
+          <p className="text-gray-400 text-[15px]">Access your professional dashboard and resume analytics.</p>
         </div>
 
         {error && (
-          <div className="bg-red-100 border-4 border-black p-4 mb-6 text-red-900 font-bold text-xs animate-in slide-in-from-top duration-300 flex items-start gap-2">
-            <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
+          <div className="bg-red-500/10 border border-red-500/20 p-4 mb-6 rounded-lg text-red-400 text-sm flex items-start gap-3 animate-in shake duration-300">
+            <ShieldAlert className="w-5 h-5 shrink-0" />
             {error}
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div className="space-y-2">
-            <label className="font-black text-xs uppercase tracking-widest text-gray-500">Email Address</label>
-            <input
-              type="email"
-              required
-              className="w-full bg-gray-50 border-4 border-black p-3 focus:outline-none focus:bg-white focus:ring-4 focus:ring-primary/20 transition-all font-black"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com"
-            />
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div className="space-y-2.5">
+            <label className="text-[14px] font-medium text-gray-200">Email Address</label>
+            <div className="relative group">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-[#1D4D47] transition-colors" />
+              <input
+                type="email"
+                required
+                className="w-full bg-[#141414] border border-[#222] rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-[#1D4D47] focus:ring-1 focus:ring-[#1D4D47] transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@example.com"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <div className="flex justify-between items-center">
-              <label className="font-black text-xs uppercase tracking-widest text-gray-500">Security Phrase</label>
-              <Link href="/forgot-password" className="text-[10px] font-black text-primary hover:underline uppercase">Forgot?</Link>
+              <label className="text-[14px] font-medium text-gray-200">Security Phrase</label>
+              <Link href="/forgot-password" size="sm" className="text-[12px] text-gray-400 hover:text-white transition-colors">Forgot Password?</Link>
             </div>
-            <input
-              type="password"
-              required
-              className="w-full bg-gray-50 border-4 border-black p-3 focus:outline-none focus:bg-white focus:ring-4 focus:ring-primary/20 transition-all font-black"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-            />
+            <div className="relative group">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-[#1D4D47] transition-colors" />
+              <input
+                type="password"
+                required
+                className="w-full bg-[#141414] border border-[#222] rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-[#1D4D47] focus:ring-1 focus:ring-[#1D4D47] transition-all"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+            </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-primary text-white font-black text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-4 bg-[#1D4D47] hover:bg-[#265e57] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98] shadow-lg shadow-[#1D4D47]/10"
           >
-            {loading ? 'VERIFYING...' : 'SIGN IN'} <ArrowRight className="w-6 h-6" />
+            {loading ? 'Verifying Access...' : 'Sign In'} <ArrowRight className="w-5 h-5" />
           </button>
         </form>
 
-        <div className="text-center border-t-4 border-black border-dashed pt-6 mt-8">
-          <p className="font-black text-muted-foreground text-[10px] tracking-widest uppercase">
-            New to the platform?{' '}
-            <Link href="/signup" className="text-primary hover:underline underline-offset-4">
-              Create your account
+        <div className="mt-10 pt-8 border-t border-[#222] text-center">
+          <p className="text-gray-400 text-sm">
+            Don't have an account?{' '}
+            <Link href="/signup" className="text-white hover:text-[#2d7a71] font-medium transition-colors">
+              Create an account
             </Link>
           </p>
         </div>
@@ -109,8 +112,8 @@ function LoginContent() {
 export default function Login() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center min-h-[70vh]">
-        <div className="animate-pulse font-black uppercase text-2xl">LOADING...</div>
+      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#1D4D47] border-t-transparent rounded-full animate-spin"></div>
       </div>
     }>
       <LoginContent />
