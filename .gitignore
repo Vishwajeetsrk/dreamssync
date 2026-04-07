@@ -44,3 +44,18 @@ node_modules
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs, backups and test scripts
+*.log
+*.txt
+*.html
+test_*.js
+test_*.mjs
+.env.backup
+error_dump.html
+ts_errors.txt
+ts_errors2.txt
+build.log
+ts_error.log
+*test_backend*
+*test_security*

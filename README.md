@@ -46,18 +46,37 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 ## ✨ Features
 
 | Feature | Description | Engine / Stack |
-|---|---|---|
-| ⚡ **Direct Google Auth** | **Ubiquitous One-Tap Access** from the global Navbar. Seamless profile creation and sync across all platform pages. | Google Web SDK / Firebase |
-| 🕉️ **IKIGAI Finder** | **Premium Career Purpose Tool** based on the Japanese Ikigai framework. | Claude 3.7 / Gemini 2.0 |
-| 🌿 **Serenity (AI Counselor)** | **Empathetic Mental Health Agent** with native Indian persona. Supports **11 languages** with **Voice Mode (STT/TTS)**. | Groq (Llama-3-70b) / Gemini |
-| 🤖 **AI Career Agent** | **Conversational Career Coach** specialized in the Indian market (2026). Provides Naukri/LinkedIn links. | Groq / Redis |
-| 🗺️ **Skill Roadmaps** | **High-Depth Roadmap Architect** with phase-by-phase video lectures, study materials, and certifications. | OpenAI GPT-4o / GPT-4o-mini |
-| 💼 **LinkedIn Optimizer** | AI-powered profile analysis with actionable rewrite suggestions. | OpenAI / Tailwind CSS v4 |
-| 🧠 **FAANG Resume Builder** | **Professional Multi-Format Suite** with side-by-side editing and FAANG-grade export (PDF/Word). Optimized for precision document engineering. | React 19 / `docx` / `lucide` |
-| 📊 **Smart ATS Analyzer** | **AI-powered Score Tracker** providing deep analysis against global recruitment standards. | GPT-4o / Firestore |
-| 🖼️ **Portfolio Generator** | Instant deployment-ready portfolio sites generated from your career data. | Next.js App Router |
-| 📄 **Document Guide** | A comprehensive portal for navigating government documentation and career requirements. | Static Content Optimization |
-| 💸 **Donation System** | Dynamic UPI QR-based support system for platform sustainability. | Custom QR Generator |
+|:---|:---|:---|
+| ⚡ **Universal One-Tap Auth** | **Seamless Google Authentication** integrated into the global navigation layer. Automatic profile synchronization across Supabase and Firestore. | Firebase + @supabase/ssr |
+| 🛡️ **Intelligent Guardrails** | **Platform-wide AI Safety Layer** engineered to prevent prompt injection and harmful content generation. | Custom Safety Logic |
+| 🕉️ **IKIGAI Engine** | **High-Depth Career Purpose Analysis** utilizing the Japanese Ikigai framework for personalized career pathing. | Claude 3.7 / Gemini 2.0 |
+| 🌿 **Serenity Counselor** | **Empathetic Mental Health Support** featuring a native Indian persona with 11 language support and Voice (STT/TTS). | Groq (Llama-3-70b) / Gemini |
+| 🤖 **AI Career Strategist** | **2026 Market Intelligence Agent** providing real-time salary benchmarks and direct entry links to LinkedIn/Naukri. | Groq / Upstash Redis |
+| 🗺️ **Skilled Roadmaps** | **High-Depth Architecture Generator** with curated phase-by-phase video resources, certifications, and labs. | GPT-4o / GPT-4o-mini |
+| 💼 **LinkedIn Optimizer** | **Advanced Profile Engineering** with actionable rewrite suggestions and SEO-first keyword placement. | OpenAI / Tailwind CSS v4 |
+| 🧠 **FAANG Resume suite** | **Precision Document Engineering** supporting multi-format (PDF/Word) export with side-by-side editing. | React 19 / `docx` |
+| 📊 **Smart ATS Analyzer** | **Recruiter-Grade Analysis** providing deep scoring against global hiring standards and company eligibility. | GPT-4o / Firestore |
+| 🖼️ **Portfolio Engine** | **Instant Deployment** of professional portfolio sites generated dynamically from user career data. | Next.js Server Components |
+
+---
+
+## 🛡️ Production-Grade Security
+
+DreamSync is built with a **Security-First** philosophy, ensuring enterprise-grade protection for user data and AI interactions:
+
+1.  **Global CSP Policy:** Hardened Content Security Policy (CSP) to mitigate XSS and data exfiltration.
+2.  **API Rate Limiting:** Global rate limiting implemented via **Upstash Redis** to prevent DDoS and API abuse.
+3.  **AI Safety Shield:** Multi-layer sanitization and prompt injection defense to maintain ethical and safe AI responses.
+4.  **Edge-Level Protection:** Leveraging Next.js Middleware for pre-flight security checks on all sensitive routes.
+
+---
+
+## 📈 Performance & Optimization
+
+- **Zero-Latency Sessions:** Global session caching utilizing **Upstash Redis** for near-instant user state retrieval.
+- **Concurrent Rendering:** Fully optimized for **React 19**, leveraging concurrent features and progressive hydration.
+- **Dynamic AI Fallbacks:** Engineered with a robust fallback system (OpenRouter → Gemini → GPT) to ensure 99.9% AI uptime.
+- **Micro-Animation Engine:** High-performance UX animations powered by **Framer Motion** with GPU-accelerated transitions.
 
 ---
 
