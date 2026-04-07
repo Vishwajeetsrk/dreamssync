@@ -3,7 +3,7 @@
 > **The all-in-one AI ecosystem for career growth and mental well-being.**
 > Precision-built for the high-depth Indian job market with a premium **Neo-Brutalist** aesthetic.
 
-- **GitHub:** [Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
+- **GitHub:** [Vishwajeetsrk/dreamssync](https://github.com/Vishwajeetsrk/dreamssync)
 - **Live Site:** [dreamsync.vercel.app](https://dreamsync-ruddy.vercel.app/)
 
 ## 🎥 Live Portfolio Preview (Auto-Play)
