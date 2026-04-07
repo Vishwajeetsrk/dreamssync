@@ -195,6 +195,23 @@ dreamsync/
 - An **Upstash Redis** URL/Token
 - **API Keys:** OpenAI, Groq, or OpenRouter for AI features.
 
+### 🚀 Deployment & Troubleshooting
+
+### **Fixing Firebase Referer Blocked Error**
+If you encounter the error `auth/requests-from-referer-blocked`, follow these steps:
+1.  Go to the [Firebase Console](https://console.firebase.google.com/).
+2.  Navigate to **Authentication** > **Settings** > **Authorized Domains**.
+3.  Click **Add Domain** and enter your Vercel URL: `dream-sync-nine.vercel.app`.
+4.  Also add `dream-sync-v1.vercel.app` or any other custom domains you use.
+5.  Wait 1-2 minutes for the changes to propagate.
+
+### **Environment Configuration**
+Ensure your Vercel project has the following variables set identically to your `.env.local`:
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `GROQ_API_KEY`
+- `OPENROUTER_API_KEY`
+
 ### Installation
 
 ```bash
