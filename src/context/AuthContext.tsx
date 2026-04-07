@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, getDoc } from 'firebase/firestore';
 
 interface AuthContextType {
   user: User | null;
@@ -25,32 +25,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    let unsubscribeSnapshot: (() => void) | null = null;
+
+    const unsubscribeAuth = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       
       if (currentUser) {
-        // Fetch from Firestore (Firebase's profiles table)
+        // Real-time synchronization for identity updates
         const docRef = doc(db, 'users', currentUser.uid);
-        const docSnap = await getDoc(docRef);
         
-        if (docSnap.exists()) {
-          setUserData(docSnap.data());
-        } else {
-          // If Firestore profile doesn't exist, use Auth fallback
-          setUserData({
-            name: currentUser.displayName || currentUser.email?.split('@')[0],
-            email: currentUser.email,
-            avatar_url: currentUser.photoURL || '',
-            plan: 'free'
-          });
-        }
+        unsubscribeSnapshot = onSnapshot(docRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setUserData(docSnap.data());
+          } else {
+            // Initial fallback if Firestore record is still being constructed
+            setUserData({
+              name: currentUser.displayName || currentUser.email?.split('@')[0],
+              email: currentUser.email,
+              avatar_url: currentUser.photoURL || '',
+              plan: 'free'
+            });
+          }
+          setLoading(false);
+        }, (error) => {
+          console.error("Identity sync engine error:", error);
+          setLoading(false);
+        });
       } else {
         setUserData(null);
+        if (unsubscribeSnapshot) unsubscribeSnapshot();
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeSnapshot) unsubscribeSnapshot();
+    };
   }, []);
 
   return (

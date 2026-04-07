@@ -1,28 +1,29 @@
-# 🛡️ DreamSync AI: The Sovereign Career Architecture
+# 🛡️ DreamSync AI: The Sovereign Luxury Career Architecture
 
-**DreamSync** is a high-performance, AI-driven career ecosystem designed to transform raw ambition into professional dominance. It leverages advanced intelligence to synthesize resumes, analyze ATS compatibility, and architect strategic career roadmaps.
+**DreamSync** is a high-performance, AI-driven career ecosystem designed to transform raw ambition into professional dominance. It leverages advanced intelligence to synthesize resumes, analyze ATS compatibility, and architect strategic career roadmaps—all within a premium, high-fidelity **Luxury AI** design system.
 
-![DreamSync Banner](https://api.placeholder.com/1200/400?text=DreamSync+AI+Sovereign+Architecture)
+![DreamSync Banner](https://api.placeholder.com/1200/400?text=DreamSync+AI+Luxury+Architecture)
 
 ## 💎 Core Feature Architecture
 
 | Module | Intelligent Function | Identity Impact |
 | :--- | :--- | :--- |
-| **AI Strategist v2** | Headless Identity Sync & Career Guidance | Automated Profile Resilience |
+| **Real-time Identity Sync** | Firestore `onSnapshot` real-time profile updates | Instant UI-wide synchronization |
+| **Luxury PillNav** | Glassmorphic, floating navigation architecture | High-fidelity user experience |
 | **Resume Architect** | AI-Synthesized FAANG-optimized resumes | Instant professional authority |
 | **Smart ATS Analyzer** | Real-time compatibility & eligibility auditing | Bypasses traditional gatekeepers |
 | **Strategic Roadmap** | AI-generated career trajectories | Clear path to professional mastery |
-| **Project Portfolio** | Dynamic, aesthetic project showcase | Visual proof of technical capability |
+| **Project Portfolio** | Dynamic, luxury project showcase | Visual proof of technical capability |
 | **IKIGAI Engine** | Purpose-driven career alignment analysis | Long-term professional fulfillment |
-| **Identity Hub** | Premium Dark UI + Multi-Sync Auth (Base64) | Absolute identity security |
+| **Sovereign Profile** | Luxury Dark UI + Multi-Sync Auth (Storage/Base64) | Absolute identity security |
 
 ---
 
-## 🎨 Premium Dark Aesthetics
-DreamSync utilizes a high-fidelity **Dark-Teal Architecture** (`#0A0A0A` / `#1D4D47`). To maintain this:
-- Prioritize glassmorphic components (`backdrop-blur-xl`).
-- Use the **Headless Sync** trigger (`/profile?action=fix`) for rapid profile resolution.
-- Ensure all interactive elements utilize the unified Framer Motion transition protocol.
+## 🎨 Luxury AI Design System
+DreamSync utilizes a bespoke **Luxury AI** architecture (`#0F172A` / `#3B82F6` / `#e11d48`):
+- **Primary Palette**: Deep Navy (#0F172A), Electric Blue (#3B82F6), Accent Crimson (#e11d48).
+- **Core Utilities**: Glassmorphic cards (`glass-card`), Pill-shaped navigation (`pill-nav`), and signature Blue-to-Crimson gradients (`btn-gradient`).
+- **Real-time Sync**: Identity updates are now reactive, utilizing the `onSnapshot` protocol for zero-latency profile synchronization.
 
 ---
 
@@ -47,6 +48,7 @@ Create a `.env.local` file in the root directory and populate it with your secur
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 
 # AI INTELLIGENCE (GROQ / OPENROUTER)
 GROQ_API_KEY=your_groq_key
@@ -68,7 +70,7 @@ Navigate to `http://localhost:3000` to initialize the architecture.
 ## 🛠️ Required Infrastructure
 
 - **Node.js**: v18.x or higher
-- **Firebase**: Project with Authentication (Email/Password) and Firestore enabled.
+- **Firebase**: Project with Authentication (Email/Password), Firestore, and Storage enabled.
 - **Upstash**: Redis database for Edge-first rate limiting.
 - **Groq/OpenRouter**: For high-speed career intelligence synthesis.
 
@@ -83,12 +85,11 @@ For the most efficient professional development environment:
 
 ---
 
-## 🛡️ Critical Deployment Notes: Firebase CORS
-
-If you experience "CORS Blocked" errors when uploading profile photos on your live site:
-
-1. **Firestore Sync**: The platform now uses **Base64 Database Sync** to bypass standard storage blockers.
-2. **Authorized Domains**: Ensure your Vercel URL (e.g., `dream-sync-nine.vercel.app`) is added to the **"Authorized Domains"** list in the Firebase Console under **Authentication > Settings**.
+## 🛡️ Critical Identity Notes: Profile Sync
+The platform now uses a **Dual-Sync Protocol** for identity resolution:
+1. **Primary**: Firebase Storage (Ideal for high-res standard sync).
+2. **Fallback**: Sovereign Base64 Sync (Bypasses CORS/Firewall restrictions).
+3. **Real-time**: All updates are instantly propagated via the `AuthContext` snapshot listener.
 
 ---
 
@@ -98,4 +99,4 @@ If you experience "CORS Blocked" errors when uploading profile photos on your li
 - **Mirror Node**: [dreamssync.vercel.app](https://dreamssync.vercel.app/)
 - **Repository**: [Vishwajeetsrk/DreamSync](https://github.com/Vishwajeetsrk/DreamSync)
 
-**DreamSync AI is now 100% synchronized and production-ready.** 🛡️✨🚀
+**DreamSync AI is now 100% synchronized with the Luxury AI Design System.** 🛡️✨🚀

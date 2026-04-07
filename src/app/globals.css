@@ -4,102 +4,84 @@
 
 @layer base {
   :root {
-    /* PREMIUM FINTECH LIGHT (Default) */
-    --background: #F8FAFC;
-    --foreground: #0F172A;
-    --card: #FFFFFF;
-    --card-foreground: #1E293B;
-    --primary: #2563EB;
-    --primary-foreground: #FFFFFF;
-    --secondary: #7C3AED;
-    --secondary-foreground: #FFFFFF;
-    --accent: #3B82F6;
-    --accent-foreground: #FFFFFF;
-    --border: #E2E8F0;
-    --muted: #94A3B8;
-    --muted-foreground: #64748B;
-  }
-
-  .dark {
-    /* PREMIUM FINTECH DARK */
-    --background: #0F172A;
+    /* DREAM SYNC LUXURY AI THEME */
+    --background: #0F172A; /* Deep Navy */
     --foreground: #FFFFFF;
     --card: #1E293B;
-    --card-foreground: #F8FAFC;
-    --primary: #2563EB;
+    --card-foreground: #FFFFFF;
+    --primary: #3B82F6; /* Electric Blue */
     --primary-foreground: #FFFFFF;
-    --secondary: #7C3AED;
+    --secondary: #1E3A8A; /* Deep Blue */
     --secondary-foreground: #FFFFFF;
-    --accent: #3B82F6;
-    --accent-foreground: #FFFFFF;
-    --border: rgba(255, 255, 255, 0.08); /* Sophisticated borders */
+    --accent: #e11d48; /* Accent Crimson */
+    --accent-foreground: #000000;
+    --border: rgba(255, 255, 255, 0.05);
     --muted: #94A3B8;
     --muted-foreground: #64748B;
+
+    /* Custom Gradients */
+    --grad-hero: linear-gradient(135deg, #1E3A8A, #3B82F6, #e11d48);
+    --grad-button: linear-gradient(135deg, #3B82F6, #e11d48);
   }
 }
 
 @layer base {
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: 'Inter', 'Satoshi', system-ui, -apple-system, sans-serif;
+    @apply bg-[#0F172A] text-white;
+    font-family: 'Inter', 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.01em;
   }
 
-  * {
-    border-color: var(--border);
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
   }
 }
 
 @layer utilities {
-  .glass-premium {
-    @apply bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  .pill-nav {
+    @apply bg-[rgba(15,23,42,0.7)] backdrop-blur-xl border border-white/10 rounded-full px-6 py-2 transition-all duration-300;
   }
 
-  .glass-light {
-    @apply bg-white/40 backdrop-blur-lg border border-white/20;
+  .glass-card {
+    @apply bg-[#1E293B] border border-white/5 shadow-2xl backdrop-blur-md rounded-[24px] transition-all duration-300;
   }
 
-  /* Neo-Brutalism (Refined) */
-  .neo-brutalist-border {
-    @apply border-[1.5px] border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)];
+  .btn-gradient {
+    background: linear-gradient(135deg, #3B82F6 0%, #e11d48 100%);
+    @apply text-white font-bold rounded-full transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_0_20px_rgba(225,29,72,0.4)];
   }
 
-  .premium-gradient-primary {
-    background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  .premium-gradient-ai {
-    background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  .text-gradient-hero {
+    background: linear-gradient(135deg, #1E3A8A, #3B82F6, #e11d48);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  .text-premium-shimmer {
-    @apply animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400;
-    background-size: 200% 200%;
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.3)];
   }
 
-  .nav-blur {
-    @apply sticky top-0 z-50 w-full backdrop-blur-[12px] bg-white/60 dark:bg-[#0F172A]/70 border-b border-gray-200 dark:border-white/5;
+  .futuristic-glow {
+    @apply relative after:absolute after:inset-0 after:bg-blue-500/20 after:blur-[100px] after:-z-10;
   }
 
-  .hover-glow-blue {
-    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:scale-[1.02];
+  .marquee-logos {
+    @apply flex items-center gap-12 animate-scroll;
   }
 
-  .hover-glow-purple {
-    @apply transition-all duration-300 hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:scale-[1.02];
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
-}
 
-/* Shimmer Loading State */
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite linear;
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
 }
