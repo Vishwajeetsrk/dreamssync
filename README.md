@@ -55,7 +55,7 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 | 🗺️ **Skill Roadmaps** | **High-Depth Roadmap Architect** with phase-by-phase video lectures, study materials, and certifications. | OpenAI GPT-4o / GPT-4o-mini |
 | 💼 **LinkedIn Optimizer** | AI-powered profile analysis with actionable rewrite suggestions. | OpenAI / Tailwind CSS v4 |
 | 🧠 **FAANG Resume Builder** | **Professional Multi-Format Suite** with side-by-side editing and FAANG-grade export (PDF/Word). Optimized for precision document engineering. | React 19 / `docx` / `lucide` |
-| 📊 **Smart ATS Analyzer** | **FAANG+ Eligibility Tracker** providing deep analysis against Google, Microsoft, Amazon, Meta, and Netflix recruitment standards. | GPT-4o / Firestore |
+| 📊 **Smart ATS Analyzer** | **AI-powered Score Tracker** providing deep analysis against global recruitment standards. | GPT-4o / Firestore |
 | 🖼️ **Portfolio Generator** | Instant deployment-ready portfolio sites generated from your career data. | Next.js App Router |
 | 📄 **Document Guide** | A comprehensive portal for navigating government documentation and career requirements. | Static Content Optimization |
 | 💸 **Donation System** | Dynamic UPI QR-based support system for platform sustainability. | Custom QR Generator |
@@ -75,7 +75,7 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 ### Backend & Infrastructure
 - **Supabase** — *PostgreSQL database, storage, and server-side auth (@supabase/ssr).*
 - **Firebase** — *Optimized client-side auth for Google Sign-In and profile synchronization.*
-- **Upstash Redis** — *Global low-latency rate limiting and session caching.*
+- **Upstash Redis** — *Global low-latency session caching and performance optimization.*
 - **Resend** — *High-deliverability transactional email engine.*
 
 ### AI Engine
@@ -122,7 +122,7 @@ dreamsync/
 │   └── Footer.tsx              # Global footer with donate CTA
 │
 ├── context/                    # Auth and User Usage contexts
-└── lib/                        # Core AI logic, Firebase/Supabase, and Security utils
+└── lib/                        # Core AI logic, Firebase/Supabase, and API utils
 ```
 
 ---
@@ -135,7 +135,7 @@ dreamsync/
 - **npm** >= 10.x
 - A **Supabase** instance (Project URL & Anon Key)
 - A **Firebase** project (Client SDK config)
-- An **Upstash Redis** URL/Token (for rate limiting)
+- An **Upstash Redis** URL/Token
 - **API Keys:** OpenAI, Groq, or OpenRouter for AI features.
 
 ### Installation
@@ -157,8 +157,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the application.
-
----
 
 ---
 
