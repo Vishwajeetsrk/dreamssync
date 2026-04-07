@@ -26,7 +26,6 @@
 - [Getting Started](#-getting-started)
 - [Environment Variables](#-environment-variables)
 - [API Routes](#-api-routes)
-- [Security & Rate Limiting](#-security--rate-limiting)
 - [Deployment](#-deployment)
 
 ---
@@ -136,7 +135,6 @@ dreamsync/
 - **npm** >= 10.x
 - A **Supabase** instance (Project URL & Anon Key)
 - A **Firebase** project (Client SDK config)
-- A **Cloudflare Turnstile** site key/secret
 - An **Upstash Redis** URL/Token (for rate limiting)
 - **API Keys:** OpenAI, Groq, or OpenRouter for AI features.
 
