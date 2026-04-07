@@ -5,7 +5,7 @@ import { auth, db } from '@/lib/firebase';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, User, Chrome, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap } from 'lucide-react';
+import { Mail, Lock, User, Database, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
@@ -166,7 +166,7 @@ export default function Signup() {
               onClick={handleGoogleSignup} 
               className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-4 rounded-xl transition-all"
             >
-              <Chrome className="w-5 h-5" /> <span>Cloud Synchronization</span>
+              <Database className="w-5 h-5" /> <span>Cloud Synchronization</span>
             </button>
 
             <p className="text-sm text-[#9CA3AF]">

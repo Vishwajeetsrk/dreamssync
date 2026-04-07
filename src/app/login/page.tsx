@@ -5,7 +5,7 @@ import { auth, db } from '@/lib/firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, LogIn, Chrome, ArrowRight, ShieldCheck, AlertCircle, Sparkles } from 'lucide-react';
+import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -108,7 +108,7 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex justify-between items-center ml-1">
                 <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF]">Secret Protocol</label>
-                <Link href="/forgot-password" size="sm" className="text-xs text-[#2563EB] hover:text-[#06B6D4] transition-colors">Forgot Access?</Link>
+                <Link href="/forgot-password" title="Forgot Password" className="text-xs text-[#2563EB] hover:text-[#06B6D4] transition-colors">Forgot Access?</Link>
               </div>
               <div className="relative group">
                 <input 
@@ -142,7 +142,7 @@ export default function Login() {
               onClick={handleGoogleLogin} 
               className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-4 rounded-xl transition-all"
             >
-              <Chrome className="w-5 h-5" /> <span>Google Cloud Auth</span>
+              <Binary className="w-5 h-5" /> <span>Google Cloud Auth</span>
             </button>
 
             <p className="text-center text-sm text-[#9CA3AF]">
