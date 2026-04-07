@@ -80,16 +80,37 @@ export default function Profile() {
 
     setUploading(true);
     try {
+      // 1. Primary Attempt: Firebase Storage
       const storageRef = ref(storage, `avatars/${user.uid}`);
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
       setAvatarUrl(url);
       await updateDoc(doc(db, 'users', user.uid), { avatar_url: url });
-      setMessage({ type: 'success', text: 'Identity photo synced!' });
-    } catch (err: any) {
-      setMessage({ type: 'error', text: err.message });
-    } finally {
+      setMessage({ type: 'success', text: 'Identity photo synced to storage!' });
       setUploading(false);
+    } catch (err: any) {
+      console.warn('Storage blocked by CORS/Permissions, falling back to Base64 Database Sync...', err.message);
+      
+      // 2. Secondary Attempt: Base64 Sync (CORS Bypass)
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64data = reader.result as string;
+        if (base64data.length > 800000) { // Firestore limit check
+           setMessage({ type: 'error', text: 'Identity photo too large for database sync (Max 800KB). Please compress.' });
+           setUploading(false);
+           return;
+        }
+        try {
+          setAvatarUrl(base64data);
+          await updateDoc(doc(db, 'users', user.uid), { avatar_url: base64data });
+          setMessage({ type: 'success', text: 'Identity photo synced via Database (CORS Bypassed)!' });
+        } catch (dbErr: any) {
+          setMessage({ type: 'error', text: 'Database sync failed. Photo too large or network error.' });
+        } finally {
+          setUploading(false);
+        }
+      };
     }
   };
 
