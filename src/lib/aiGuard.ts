@@ -43,11 +43,11 @@ export function validateCareerInput(input: string): GuardResult {
     }
   }
 
-  // 2. Check for blocked keywords
+  // 2. Check for blocked keywords using whole-word matching
   for (const keyword of BLOCKED_KEYWORDS) {
-    // Exact or partial match
-    if (normalized.includes(keyword)) {
-      // Basic fuzzy check for common typos/variations (leaked via normalization)
+    // Create a regex for whole word match to avoid false positives (e.g., "bomb" in "bombay")
+    const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+    if (regex.test(normalized)) {
       return {
         allowed: false,
         message: "⚠️ DreamSync only supports safe, legal, and professional career paths. Please choose a valid role like Software Engineer, Data Analyst, Designer, etc."

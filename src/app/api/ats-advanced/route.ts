@@ -133,11 +133,19 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 5. Safety Guard
-  const safety = validateCareerInput(resumeText);
-  if (!safety.allowed) {
-    return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+  // 5. Safety Guard - Validate User Inputs (Job Role & Description)
+  const roleSafety = validateCareerInput(jobRole);
+  const descSafety = validateCareerInput(jobDescription);
+  
+  if (!roleSafety.allowed || !descSafety.allowed) {
+    return NextResponse.json({ 
+      error: 'Safety Violation', 
+      details: roleSafety.message || descSafety.message 
+    }, { status: 400 });
   }
+
+  // Optional: A lighter check on resumeText to prevent massive abuse, 
+  // but we mostly trust the role check + AI prompt safety.
 
   // 6. Call AI
   const truncatedText = resumeText.slice(0, 6000); // Stay within token limits
