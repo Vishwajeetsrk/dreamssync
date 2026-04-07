@@ -15,7 +15,8 @@ import {
   Lock, 
   Loader2, 
   LogOut,
-  AlertCircle
+  AlertCircle,
+  Fingerprint
 } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
 import Image from 'next/image';
@@ -254,7 +255,6 @@ export default function ProfilePage() {
                 />
                 <div className="text-center">
                   <h3 className="font-black text-2xl uppercase tracking-tighter">{name || 'ARCHITECT'}</h3>
-                  <h3 className="font-black text-2xl uppercase tracking-tighter">{name || 'USER'}</h3>
                   <p className="text-[10px] font-black text-gray-400 uppercase mt-1 tracking-[0.2em]">{user.email}</p>
                 </div>
               </div>
