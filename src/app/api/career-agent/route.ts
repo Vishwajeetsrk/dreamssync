@@ -37,17 +37,20 @@ PLATFORM NAVIGATION (PRIORITY):
 - Profile/Logout: Top-right 'Account' dropdown or https://dream-sync-v1.vercel.app/profile
 
 RULES:
-1. For support/navigation: Point users to the exact URL. Do NOT give generic advice.
-2. For career queries: Use ₹ and LPA. Focus on the 2026 Indian market.
-3. FORMAT: Return ONLY this JSON structure:
+1. For support/navigation: Point users to the exact tool. 
+2. NO PLAIN TEXT URLs: Do NOT put https://... links in the "reply" text. Instead, say "Click the button below to open [Tool]".
+3. BUTTONS: ALWAYS populate the "jobLinks" array with the tool's button when a tool is mentioned.
+4. For career queries: Use ₹ and LPA. Provide deep, specific steps, not just generic tips.
+
+FORMAT: Return ONLY this JSON:
 {
-  "reply": "Clear, direct guidance. Use \\n for newlines.",
+  "reply": "Warm, expert guidance. 'Click the button below for the Resume Builder!'",
   "roles": [],
   "roadmapNodes": [],
   "jobLinks": [
-    { "platform": "PlatformName", "url": "https://dream-sync-v1.vercel.app/target", "label": "Button Label" }
+    { "platform": "Resume Builder", "url": "https://dream-sync-v1.vercel.app/resume-builder", "label": "Open Resume Builder" }
   ],
-  "quickTips": []
+  "quickTips": ["Tip 1", "Tip 2"]
 }`;
 
 // ── Handler ───────────────────────────────────────────────────────
