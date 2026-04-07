@@ -6,9 +6,9 @@
 - **GitHub:** [Vishwajeetsrk/dreamsync](https://github.com/Vishwajeetsrk/dreamsync)
 - **Live Site:** [dreamsync-ruddy.vercel.app](https://dreamsync-ruddy.vercel.app/)
 
-## 🎥 Brand Aesthetic: Light Neo-Brutalism
+## 🎥 Brand Aesthetic: Light Neo-Brutalism (Audit Recap v4.0)
 
-The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS v4** and **Framer Motion** for a premium, high-interaction experience. It features high-contrast off-white backgrounds, bold 8px black borders, and a signature Yellow/Blue accent palette for a "sovereign tech" feel.
+The UI follows a **Sovereign Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS v4** and **Framer Motion** for a premium, high-interaction experience. It features high-contrast off-white backgrounds (#F3F4F6), bold 8px black borders, and a signature Yellow/Blue accent palette for a professional "Audit Recap" feel.
 
 ---
 
@@ -29,6 +29,7 @@ DreamSync utilizes a custom **Sovereign Neo-Brutalist** design system optimized 
 - **Background:** `#F3F4F6` (Off-white / Professional Neutral)
 - **Primary Accents:** `#2563EB` (Strong AI Blue) & `#FACC15` (Vibrant Action Yellow)
 - **Borders:** Bold `4px` - `8px` Black (`#000000`) for high-contrast structure.
+- **Marquee:** Real-time black marquee ticker for market intelligence updates.
 - **Shadows:** Hard "Neo" shadows for tactile interactive elements.
 - **Typography:** Black-on-White high-weight headings for maximum readability.
 
@@ -39,16 +40,19 @@ DreamSync utilizes a custom **Sovereign Neo-Brutalist** design system optimized 
 ### 1. 📂 Resume Architect
 AI-powered resume construction optimized for FAANG recruitment systems. Supports real-time rendering and PDF/DOCX exports.
 
-### 2. 📊 Smart ATS Analyzer
+### 2. 🤖 AI Career Agent (2026 Sync)
+India-focused career guidance, salary benchmarking, and real-time job node synchronization. Featuring a visual flowchart for career progression.
+
+### 3. 📊 Smart ATS Analyzer
 A high-precision eligibility engine that scans resumes against top-tier company profiles (Google, Microsoft, Amazon) with actionable missing-skill detection.
 
-### 3. 🧠 IKIGAI Finder
+### 4. 🧠 IKIGAI Finder
 A premium AI-driven purposeful career mapping tool that helps users discover where their passion, mission, and vocation intersect.
 
-### 4. 🗺️ Roadmap Protocol
+### 5. 🗺️ Roadmap Protocol
 Generates high-depth, interactive career timelines with milestone tracking for professional growth.
 
-### 5. 🧘 Serenity AI
+### 6. 🧘 Serenity AI
 Emotional support and wellness node providing mental health stabilization and empathetic guidance for the modern worker.
 
 ---
@@ -56,9 +60,10 @@ Emotional support and wellness node providing mental health stabilization and em
 ## 💻 Tech Stack
 
 - **Frontend:** Next.js 16 (App Router), Tailwind CSS v4, Framer Motion.
+- **Styling:** CSS Variables with high-contrast light theme tokens.
 - **Icons:** Lucide React (Thin & Bold Variants).
 - **Backend/Auth:** Firebase (Firestore, Storage, Authentication).
-- **AI Logic:** Integrated sovereign LLM nodes for career intelligence.
+- **Security:** AI Safety Guardrails & Build-Bypass Protocol for stable deployment.
 - **Deployment:** Vercel (Edge Functions enabled).
 
 ---
@@ -90,4 +95,4 @@ DreamSync is 100% free for students. Every contribution keeps the sovereign AI n
 [**Buy us a Chai**](https://dreamsync-ruddy.vercel.app/donate)
 
 ---
-© 2026 DreamSync. Identity Synchronized.
+© 2026 DreamSync. Identity Synchronized. [Audit Recap Complete]
