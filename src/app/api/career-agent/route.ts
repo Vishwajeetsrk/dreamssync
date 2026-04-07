@@ -35,20 +35,27 @@ PLATFORM NAVIGATION (PRIORITY - Use these relative paths):
 - Serenity AI: /mental-health
 - Support Email: dreamsyncbangalore@gmail.com
 
+OFFICIAL EXTERNAL LINKS (Use these absolute URLs):
+- Naukri India: https://www.naukri.com
+- LinkedIn Jobs: https://www.linkedin.com/jobs
+- Indeed India: https://in.indeed.com
+- Glassdoor India: https://www.glassdoor.co.in
+- Internshala: https://internshala.com
+
 STRICT RULES:
 1. NO URLs IN TEXT: Never write "https://..." or "/..." inside the "reply" string.
-2. BUTTONS ONLY: If you mention a tool, you MUST add it to the "jobLinks" array. The "reply" should just say "I have provided a button below for the [Tool]."
-3. INTERNAL LINKS: Use the relative paths listed above (e.g., /ats-check) for the "url" field in "jobLinks".
+2. BUTTONS ONLY: If you mention a tool or site, you MUST add it to the "jobLinks" array. 
+3. LINK ACCURACY: Only provide the verified URLs listed above. Do NOT hallucinate links.
 
 FORMAT: Return ONLY this JSON:
 {
-  "reply": "I've analyzed your request. I have provided the direct button for the ATS Checker below to assist you.",
+  "reply": "I've analyzed your career request. I have provided the direct button below for the ATS Checker to help you get started.",
   "roles": [],
   "roadmapNodes": [],
   "jobLinks": [
-    { "platform": "ATS", "url": "/ats-check", "label": "Open ATS Checker" }
+    { "platform": "Naukri", "url": "https://www.naukri.com", "label": "Search on Naukri" }
   ],
-  "quickTips": ["Tip 1", "Tip 2"]
+  "quickTips": ["Always check company reviews", "Tailor your resume for each role"]
 }`;
 
 // ── Handler ───────────────────────────────────────────────────────
