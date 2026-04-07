@@ -5,13 +5,13 @@ import { motion } from 'framer-motion';
 import { useReactToPrint } from 'react-to-print';
 import { 
   Plus, Trash2, Download, Printer, User, Briefcase, 
-  GraduationCap, Palette, Layout, Save, Sparkles, Send, FileText, Award
+  GraduationCap, Palette, Layout, Save, Sparkles, Send, FileText, Award,
+  Fingerprint, Zap, Coffee, ArrowRight, CheckCircle2, AlertCircle, BarChart3, Info, Upload
 } from 'lucide-react';
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, ExternalHyperlink, BorderStyle } from 'docx';
 import ResumePreview, { ResumeData } from '@/components/ResumePreview';
 import { calculateATSScore, ATSAnalysis } from '@/lib/atsScore';
-import { BarChart3, AlertCircle, CheckCircle2, Info, Upload } from 'lucide-react';
 
 const DEFAULT_RESUME: ResumeData = {
   personalInfo: {
@@ -127,7 +127,6 @@ export default function ResumeBuilder() {
       const parsedData = await res.json();
       if (!res.ok) throw new Error(parsedData.error);
       
-      // Ensure all fields exist to avoid UI crashes
       const formattedData: ResumeData = {
         ...parsedData,
         projects: parsedData.projects || [],
@@ -151,118 +150,36 @@ export default function ResumeBuilder() {
       sections: [{
         properties: {},
         children: [
-          new Paragraph({
-            text: data.personalInfo.fullName.toUpperCase(),
-            heading: HeadingLevel.HEADING_1,
-            alignment: AlignmentType.CENTER,
-          }),
-          new Paragraph({
-            text: data.personalInfo.role,
-            alignment: AlignmentType.CENTER,
-          }),
-          new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-              new TextRun(`${data.personalInfo.phone} | ${data.personalInfo.email} | ${data.personalInfo.location}`),
-            ],
-          }),
+          new Paragraph({ text: data.personalInfo.fullName.toUpperCase(), heading: HeadingLevel.HEADING_1, alignment: AlignmentType.CENTER }),
+          new Paragraph({ text: data.personalInfo.role, alignment: AlignmentType.CENTER }),
+          new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun(`${data.personalInfo.phone} | ${data.personalInfo.email} | ${data.personalInfo.location}`)] }),
           new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "PROFESSIONAL SUMMARY",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
+          new Paragraph({ text: "PROFESSIONAL SUMMARY", heading: HeadingLevel.HEADING_2, border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } } }),
           new Paragraph({ text: data.summary }),
           new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "WORK EXPERIENCE",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
+          new Paragraph({ text: "WORK EXPERIENCE", heading: HeadingLevel.HEADING_2, border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } } }),
           ...data.experience.flatMap(exp => [
-            new Paragraph({
-              children: [
-                new TextRun({ text: exp.role, bold: true }),
-                new TextRun({ text: ` | ${exp.company}`, bold: true }),
-                new TextRun({ text: `\t${exp.date}`, bold: false }),
-              ],
-            }),
-            ...exp.bullets.map(bullet => new Paragraph({
-              text: bullet,
-              bullet: { level: 0 },
-            }))
+            new Paragraph({ children: [new TextRun({ text: exp.role, bold: true }), new TextRun({ text: ` | ${exp.company}`, bold: true }), new TextRun({ text: `\t${exp.date}`, bold: false })] }),
+            ...exp.bullets.map(bullet => new Paragraph({ text: bullet, bullet: { level: 0 } }))
           ]),
           new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "TECHNICAL SKILLS",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
-          ...data.skills.map(skill => new Paragraph({
-            children: [
-              new TextRun({ text: `${skill.category}: `, bold: true }),
-              new TextRun(skill.items),
-            ],
-          })),
+          new Paragraph({ text: "TECHNICAL SKILLS", heading: HeadingLevel.HEADING_2, border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } } }),
+          ...data.skills.map(skill => new Paragraph({ children: [new TextRun({ text: `${skill.category}: `, bold: true }), new TextRun(skill.items)] })),
           new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "TECHNICAL PROJECTS",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
-          ...(data.projects || []).flatMap(proj => [
-            new Paragraph({
-              children: [
-                new TextRun({ text: proj.name, bold: true }),
-                new TextRun({ text: proj.link ? ` (${proj.link})` : "", color: "2563EB" }),
-              ],
-            }),
-            new Paragraph({ text: proj.description })
-          ]),
+          new Paragraph({ text: "TECHNICAL PROJECTS", heading: HeadingLevel.HEADING_2, border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } } }),
+          ...(data.projects || []).flatMap(proj => [new Paragraph({ children: [new TextRun({ text: proj.name, bold: true }), new TextRun({ text: proj.link ? ` (${proj.link})` : "", color: "2563EB" })] }), new Paragraph({ text: proj.description })]),
           new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "CERTIFICATIONS",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
-          ...(data.certifications || []).map(cert => new Paragraph({
-             children: [
-               new TextRun({ text: cert.name, bold: true }),
-               new TextRun(` — ${cert.issuer}\t${cert.date}`),
-             ],
-          })),
-          new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "AWARDS & ACHIEVEMENTS",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
-          ...(data.achievements || []).map(ach => new Paragraph({ text: ach, bullet: { level: 0 } })),
-          new Paragraph({ text: "", spacing: { before: 200 } }),
-          new Paragraph({
-            text: "EDUCATION",
-            heading: HeadingLevel.HEADING_2,
-            border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } },
-          }),
-          ...data.education.map(edu => new Paragraph({
-             children: [
-               new TextRun({ text: edu.school, bold: true }),
-               new TextRun(` | ${edu.degree}\t${edu.date}`),
-             ],
-          })),
+          new Paragraph({ text: "EDUCATION", heading: HeadingLevel.HEADING_2, border: { bottom: { color: "auto", space: 1, style: BorderStyle.SINGLE, size: 6 } } }),
+          ...data.education.map(edu => new Paragraph({ children: [new TextRun({ text: edu.school, bold: true }), new TextRun(` | ${edu.degree}\t${edu.date}`)] })),
         ],
       }],
     });
-
     const blob = await Packer.toBlob(doc);
     saveAs(blob, `${data.personalInfo.fullName.replace(/\s/g, '_')}_Resume.docx`);
   };
 
   const updatePersonalInfo = (field: string, value: string) => {
-    setData(prev => ({
-      ...prev,
-      personalInfo: { ...prev.personalInfo, [field]: value }
-    }));
+    setData(prev => ({ ...prev, personalInfo: { ...prev.personalInfo, [field]: value } }));
   };
 
   const updateSummary = (value: string) => {
@@ -276,17 +193,11 @@ export default function ResumeBuilder() {
   };
 
   const addSkill = () => {
-    setData(prev => ({
-      ...prev,
-      skills: [...prev.skills, { category: "", items: "" }]
-    }));
+    setData(prev => ({ ...prev, skills: [...prev.skills, { category: "", items: "" }] }));
   };
 
   const removeSkill = (index: number) => {
-    setData(prev => ({
-      ...prev,
-      skills: prev.skills.filter((_, i) => i !== index)
-    }));
+    setData(prev => ({ ...prev, skills: prev.skills.filter((_, i) => i !== index) }));
   };
 
   const updateExperience = (index: number, field: string, value: any) => {
@@ -296,17 +207,11 @@ export default function ResumeBuilder() {
   };
 
   const addExperience = () => {
-    setData(prev => ({
-      ...prev,
-      experience: [...prev.experience, { company: "", role: "", location: "", date: "", bullets: [""] }]
-    }));
+    setData(prev => ({ ...prev, experience: [...prev.experience, { company: "", role: "", location: "", date: "", bullets: [""] }] }));
   };
 
   const removeExperience = (index: number) => {
-    setData(prev => ({
-      ...prev,
-      experience: prev.experience.filter((_, i) => i !== index)
-    }));
+    setData(prev => ({ ...prev, experience: prev.experience.filter((_, i) => i !== index) }));
   };
 
   const updateEdu = (index: number, field: string, value: string) => {
@@ -338,497 +243,194 @@ export default function ResumeBuilder() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen bg-gray-50 text-gray-900 overflow-hidden">
-      {/* Sidebar - Form Editor */}
-      <aside className="w-full lg:w-[450px] bg-white border-r border-gray-200 overflow-y-auto p-6 lg:p-8 space-y-8 scrollbar-hide shadow-inner">
-        <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-extrabold flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-primary" /> Resume Builder
+    <div className="flex flex-col lg:flex-row h-screen bg-[#F3F4F6] text-black overflow-hidden selection:bg-[#FACC15]/40">
+      
+      {/* Sidebar - Neo-Brutalist Form Editor */}
+      <aside className="w-full lg:w-[500px] bg-white border-r-8 border-black overflow-y-auto p-10 space-y-12 scrollbar-hide shadow-[8px_0px_0px_0px_rgba(0,0,0,0.05)]">
+        
+        <div className="flex flex-col gap-6 mb-12">
+          <div className="flex items-center gap-3">
+             <div className="p-2 bg-black text-white shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]">
+                <FileText className="w-8 h-8" />
+             </div>
+             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Blueprint Architect v2.0</span>
+          </div>
+          <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">
+             Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder_</span>
           </h1>
         </div>
 
-        {/* Sections */}
-        <div className="space-y-10">
-          {/* Form: Personal Info */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b-2 border-black pb-2 mb-4">
-              <User className="w-5 h-5" />
-              <h2 className="text-lg font-black uppercase tracking-wider">Personal Details</h2>
+        {/* Action Protocol Panel */}
+        <div className="neo-box p-8 bg-[#F3F4F6] space-y-6">
+           <h3 className="text-xs font-black uppercase tracking-widest text-[#2563EB] flex items-center gap-3">
+              <Zap className="w-4 h-4 fill-current" /> EXECUTION_PROTOCOLS
+           </h3>
+           <div className="grid grid-cols-2 gap-6">
+              <button onClick={handlePrint} className="neo-btn-primary py-4 text-xs flex flex-col items-center gap-2">
+                 <Printer className="w-5 h-5" /> EXPORT PDF
+              </button>
+              <button onClick={generateWordDoc} className="neo-btn-secondary py-4 text-xs flex flex-col items-center gap-2">
+                 <FileText className="w-5 h-5" /> EXPORT DOCX
+              </button>
+           </div>
+           
+           <div className="pt-4">
+              <label className="neo-btn-secondary w-full py-4 text-xs flex items-center justify-center gap-3 cursor-pointer">
+                 <Upload className="w-5 h-5" /> {isParsing ? 'PARSING...' : 'IMPORT EXISTING PDF'}
+                 <input type="file" hidden accept=".pdf" onChange={handleImportPdf} />
+              </label>
+           </div>
+        </div>
+
+        {/* Form Sections */}
+        <div className="space-y-16">
+          
+          {/* Section: Personal Info */}
+          <section className="space-y-8">
+            <div className="flex items-center justify-between border-b-6 border-black pb-4">
+              <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-4 text-black">
+                <Fingerprint className="w-6 h-6 text-[#2563EB]" /> IDENTITY_
+              </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">Full Name</label>
-                <input 
-                   name="fullName"
-                  type="text" 
-                  value={data.personalInfo.fullName}
-                  onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none font-medium h-10"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">Professional Role</label>
-                <input 
-                  type="text" 
-                  value={data.personalInfo.role}
-                  onChange={(e) => updatePersonalInfo('role', e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none font-medium h-10"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">Email Address</label>
-                <input 
-                  type="email" 
-                  value={data.personalInfo.email}
-                  onChange={(e) => updatePersonalInfo('email', e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none h-10"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">Phone Number</label>
-                <input 
-                  type="text" 
-                  value={data.personalInfo.phone}
-                  onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none h-10"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">LinkedIn ID</label>
-                <input 
-                  type="text" 
-                  value={data.personalInfo.linkedin}
-                  onChange={(e) => updatePersonalInfo('linkedin', e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none h-10"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">GitHub ID</label>
-                <input 
-                  type="text" 
-                  value={data.personalInfo.github}
-                  onChange={(e) => updatePersonalInfo('github', e.target.value)}
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none h-10"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-xs font-bold uppercase text-gray-400">Portfolio URL</label>
-                <input 
-                  type="text" 
-                  value={data.personalInfo.portfolio || ""}
-                  onChange={(e) => updatePersonalInfo('portfolio', e.target.value)}
-                  placeholder="e.g. vashnavi.dev"
-                  className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none h-10 text-blue-600 font-bold"
-                />
-              </div>
-            </div>
-            <div className="space-y-1 col-span-2">
-              <label className="text-xs font-bold uppercase text-gray-400">Location</label>
-              <input 
-                type="text" 
-                value={data.personalInfo.location}
-                onChange={(e) => updatePersonalInfo('location', e.target.value)}
-                className="w-full p-2 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none h-10"
-              />
+            <div className="grid grid-cols-1 gap-8">
+               <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Full Legal Name</label>
+                  <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" />
+               </div>
+               <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Target Professional Role</label>
+                  <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" />
+               </div>
+               <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Email Node</label>
+                    <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Uplink Phone</label>
+                    <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" />
+                  </div>
+               </div>
+               <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Social Credentials (LinkedIn/GitHub)</label>
+                  <div className="flex gap-4">
+                     <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input flex-1" placeholder="LinkedIn" />
+                     <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input flex-1" placeholder="GitHub" />
+                  </div>
+               </div>
             </div>
           </section>
 
-          {/* Form: Summary */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b-2 border-black pb-2 mb-4">
-              <Layout className="w-5 h-5" />
-              <h2 className="text-lg font-black uppercase tracking-wider">Professional Summary</h2>
+          {/* Section: Summary */}
+          <section className="space-y-8">
+            <div className="flex items-center justify-between border-b-6 border-black pb-4">
+              <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-4 text-black">
+                <Info className="w-6 h-6 text-[#2563EB]" /> NARRATIVE_
+              </h2>
             </div>
             <textarea 
               value={data.summary}
               onChange={(e) => updateSummary(e.target.value)}
-              className="w-full p-3 border border-gray-200 rounded focus:ring-2 focus:ring-black outline-none min-h-[120px] text-sm leading-relaxed"
-              placeholder="Briefly describe your career achievements and goals..."
+              className="neo-input min-h-[150px] leading-relaxed py-6"
+              placeholder="Structure your professional narrative..."
             />
           </section>
 
-          {/* Form: Skills */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between border-b-2 border-black pb-2 mb-4">
-              <div className="flex items-center gap-2">
-                <Palette className="w-5 h-5" />
-                <h2 className="text-lg font-black uppercase tracking-wider">Skills</h2>
-              </div>
-              <button 
-                onClick={addSkill}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors text-primary"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            {data.skills.map((skill, idx) => (
-              <div key={idx} className="flex gap-2 items-start bg-gray-50 p-3 rounded-lg border border-gray-100 relative group">
-                <div className="flex-1 space-y-2">
-                  <input 
-                    type="text" 
-                    value={skill.category}
-                    onChange={(e) => updateSkill(idx, 'category', e.target.value)}
-                    placeholder="Category (e.g. Frontend)"
-                    className="w-full p-2 bg-transparent font-bold text-xs uppercase border-b border-gray-200 outline-none"
-                  />
-                  <input 
-                    type="text" 
-                    value={skill.items}
-                    onChange={(e) => updateSkill(idx, 'items', e.target.value)}
-                    placeholder="Skills (comma separated)"
-                    className="w-full p-2 bg-transparent text-sm outline-none"
-                  />
-                </div>
-                <button 
-                  onClick={() => removeSkill(idx)}
-                  className="p-1 text-red-500 hover:bg-red-50 rounded hidden group-hover:block"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            ))}
-          </section>
-
-          {/* Form: Experience */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between border-b-2 border-black pb-2 mb-4">
-              <div className="flex items-center gap-2">
-                <Briefcase className="w-5 h-5" />
-                <h2 className="text-lg font-black uppercase tracking-wider">Experience</h2>
-              </div>
-              <button 
-                onClick={addExperience}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors text-primary"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
+          {/* Section: Experience */}
+          <section className="space-y-8">
+            <div className="flex items-center justify-between border-b-6 border-black pb-4">
+              <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-4 text-black">
+                <Briefcase className="w-6 h-6 text-[#2563EB]" /> CHRONOLOGY_
+              </h2>
+              <button onClick={addExperience} className="neo-btn-secondary p-2"><Plus className="w-6 h-6" /></button>
             </div>
             {data.experience.map((exp, idx) => (
-              <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-gray-200 relative group space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <input 
-                    type="text" 
-                    value={exp.role}
-                    onChange={(e) => updateExperience(idx, 'role', e.target.value)}
-                    placeholder="Role"
-                    className="p-2 bg-white border border-gray-200 rounded text-sm font-bold h-9"
-                  />
-                  <input 
-                    type="text" 
-                    value={exp.company}
-                    onChange={(e) => updateExperience(idx, 'company', e.target.value)}
-                    placeholder="Company"
-                    className="p-2 bg-white border border-gray-200 rounded text-sm font-bold h-9"
-                  />
-                  <input 
-                    type="text" 
-                    value={exp.date}
-                    onChange={(e) => updateExperience(idx, 'date', e.target.value)}
-                    placeholder="Date Range"
-                    className="p-2 bg-white border border-gray-200 rounded text-xs h-9"
-                  />
-                  <input 
-                    type="text" 
-                    value={exp.location}
-                    onChange={(e) => updateExperience(idx, 'location', e.target.value)}
-                    placeholder="Location"
-                    className="p-2 bg-white border border-gray-200 rounded text-xs h-9"
-                  />
+              <div key={idx} className="neo-box p-8 bg-white relative group space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                   <input value={exp.role} onChange={(e) => updateExperience(idx, 'role', e.target.value)} placeholder="Role" className="neo-input text-sm font-black" />
+                   <input value={exp.company} onChange={(e) => updateExperience(idx, 'company', e.target.value)} placeholder="Company" className="neo-input text-sm font-black" />
                 </div>
-                <div className="space-y-2">
-                   <p className="text-[10px] font-black uppercase text-gray-400">Bullet Points</p>
+                <div className="space-y-4">
                    {exp.bullets.map((bullet, bIdx) => (
-                     <div key={bIdx} className="flex gap-2">
-                       <input 
-                         type="text" 
-                         value={bullet}
-                         onChange={(e) => {
-                           const newBullets = [...exp.bullets];
-                           newBullets[bIdx] = e.target.value;
-                           updateExperience(idx, 'bullets', newBullets);
-                         }}
-                         placeholder="Action verb + impact + result"
-                         className="flex-1 p-2 bg-white border border-gray-200 rounded text-xs min-h-[40px]"
-                       />
-                       <button 
-                         onClick={() => {
-                            const newBullets = exp.bullets.filter((_, i) => i !== bIdx);
-                            updateExperience(idx, 'bullets', newBullets.length ? newBullets : [""]);
-                         }}
-                         className="p-1 text-gray-300 hover:text-red-500"
-                       >
-                         <Trash2 className="w-4 h-4" />
-                       </button>
+                     <div key={bIdx} className="flex gap-4">
+                        <textarea 
+                          value={bullet}
+                          onChange={(e) => {
+                             const newBullets = [...exp.bullets];
+                             newBullets[bIdx] = e.target.value;
+                             updateExperience(idx, 'bullets', newBullets);
+                          }}
+                          className="neo-input text-xs min-h-[60px] py-4"
+                          placeholder="Action verb + impact"
+                        />
+                        <button onClick={() => {
+                           const newBullets = exp.bullets.filter((_, i) => i !== bIdx);
+                           updateExperience(idx, 'bullets', newBullets.length ? newBullets : [""]);
+                        }} className="text-red-500"><Trash2 className="w-5 h-5" /></button>
                      </div>
                    ))}
-                   <button 
-                    onClick={() => updateExperience(idx, 'bullets', [...exp.bullets, ""])}
-                    className="text-[10px] font-bold text-primary flex items-center gap-1 hover:underline mt-1"
-                   >
-                     <Plus className="w-3 h-3" /> Add Bullet Point
-                   </button>
+                   <button onClick={() => updateExperience(idx, 'bullets', [...exp.bullets, ""])} className="text-[10px] font-black text-[#2563EB] uppercase">+ Add Detail Node</button>
                 </div>
-                <button 
-                  onClick={() => removeExperience(idx)}
-                  className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full hidden group-hover:block shadow-sm"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <button onClick={() => removeExperience(idx)} className="absolute -top-4 -right-4 bg-red-600 text-white p-2 border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"><Trash2 className="w-5 h-5" /></button>
               </div>
             ))}
           </section>
 
-          {/* Form: Projects */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between border-b-2 border-black pb-2 mb-4">
-              <div className="flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                <h2 className="text-lg font-black uppercase tracking-wider">Technical Projects</h2>
-              </div>
-              <button 
-                onClick={() => setData(prev => ({ ...prev, projects: [...(prev.projects || []), { name: "", link: "", description: "" }] }))}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors text-primary"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            {(data.projects || []).map((proj, idx) => (
-              <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-gray-200 relative group space-y-3 shadow-sm">
-                <input 
-                  type="text" 
-                  value={proj.name}
-                  onChange={(e) => updateProjects(idx, 'name', e.target.value)}
-                  placeholder="Project Name"
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-sm font-bold"
-                />
-                <input 
-                  type="text" 
-                  value={proj.link}
-                  onChange={(e) => updateProjects(idx, 'link', e.target.value)}
-                  placeholder="Project Link (GitHub/Live)"
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-xs"
-                />
-                <textarea 
-                  value={proj.description}
-                  onChange={(e) => updateProjects(idx, 'description', e.target.value)}
-                  placeholder="Describe your role and metrics..."
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-xs min-h-[60px]"
-                />
-                <button 
-                  onClick={() => setData(prev => ({ ...prev, projects: (prev.projects || []).filter((_, i) => i !== idx) }))}
-                  className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full hidden group-hover:block border border-red-200 shadow-sm"
-                >
-                  <Trash2 className="w-4 h-4" />
+        </div>
+        
+        {/* Template Intelligence */}
+        <div className="border-t-8 border-black pt-12 space-y-8">
+           <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">RENDER TEMPLATE_</h3>
+           <div className="grid grid-cols-3 gap-6">
+              {['minimal', 'professional', 'modern'].map((t) => (
+                <button key={t} onClick={() => setTemplate(t as any)} className={`neo-btn-secondary py-4 text-[10px] uppercase font-black ${template === t ? 'bg-black text-white' : ''}`}>
+                   {t}
                 </button>
-              </div>
-            ))}
-          </section>
-
-          {/* Form: Certifications */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between border-b-2 border-black pb-2 mb-4">
-              <div className="flex items-center gap-2">
-                <Award className="w-5 h-5" />
-                <h2 className="text-lg font-black uppercase tracking-wider">Certifications</h2>
-              </div>
-              <button 
-                onClick={() => setData(prev => ({ ...prev, certifications: [...(prev.certifications || []), { name: "", issuer: "", date: "" }] }))}
-                className="p-1 hover:bg-gray-100 rounded-full transition-colors text-primary"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            {(data.certifications || []).map((cert, idx) => (
-              <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-gray-200 relative group space-y-2">
-                <input 
-                  type="text" 
-                  value={cert.name}
-                  onChange={(e) => updateCert(idx, 'name', e.target.value)}
-                  placeholder="Certificate Name"
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-xs font-bold"
-                />
-                <div className="grid grid-cols-2 gap-2">
-                  <input 
-                    type="text" 
-                    value={cert.issuer}
-                    onChange={(e) => updateCert(idx, 'issuer', e.target.value)}
-                    placeholder="Issuer"
-                    className="p-2 bg-white border border-gray-200 rounded text-[10px]"
-                  />
-                  <input 
-                    type="text" 
-                    value={cert.date}
-                    onChange={(e) => updateCert(idx, 'date', e.target.value)}
-                    placeholder="Date"
-                    className="p-2 bg-white border border-gray-200 rounded text-[10px]"
-                  />
-                </div>
-                <input 
-                  type="text" 
-                  value={cert.link}
-                  onChange={(e) => updateCert(idx, 'link', e.target.value)}
-                  placeholder="Certificate URL (Link)"
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-[10px]"
-                />
-                <button 
-                  onClick={() => setData(prev => ({ ...prev, certifications: (prev.certifications || []).filter((_, i) => i !== idx) }))}
-                  className="absolute -top-2 -right-2 p-1 text-red-500 hidden group-hover:block"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ))}
-          </section>
-
-          {/* Form: Others */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b-2 border-black pb-2 mb-4">
-              <Sparkles className="w-5 h-5" />
-              <h2 className="text-lg font-black uppercase tracking-wider">Others</h2>
-            </div>
-            
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase text-gray-400">Achievements</label>
-              {(data.achievements || []).map((ach, idx) => (
-                <div key={idx} className="flex gap-2 mb-2">
-                  <input 
-                    type="text" 
-                    value={ach}
-                    onChange={(e) => updateArrayField('achievements', idx, e.target.value)}
-                    className="flex-1 p-2 bg-white border border-gray-200 rounded text-xs"
-                  />
-                </div>
               ))}
-              <button 
-                onClick={() => addArrayItem('achievements')}
-                className="text-[10px] font-bold text-primary flex items-center gap-1 hover:underline"
-              >
-                <Plus className="w-3 h-3" /> Add Achievement
-              </button>
-            </div>
-
-            <div className="space-y-2 mt-4">
-              <label className="text-[10px] font-black uppercase text-gray-400">Languages (comma separated)</label>
-              <input 
-                type="text" 
-                value={data.languages?.join(", ")}
-                onChange={(e) => setData(prev => ({ ...prev, languages: e.target.value.split(",").map(s => s.trim()) }))}
-                className="w-full p-2 bg-white border border-gray-200 rounded text-xs"
-              />
-            </div>
-
-            <div className="space-y-2 mt-4">
-              <label className="text-[10px] font-black uppercase text-gray-400">Hobbies & Addition Extra</label>
-              <textarea 
-                value={data.extra}
-                onChange={(e) => setData(prev => ({ ...prev, extra: e.target.value }))}
-                className="w-full p-2 bg-white border border-gray-200 rounded text-xs min-h-[80px]"
-                placeholder="Share your interests or extra info..."
-              />
-            </div>
-          </section>
-
-          {/* Form: Education */}
-          <section className="space-y-4">
-            <div className="flex items-center gap-2 border-b-2 border-black pb-2 mb-4">
-              <GraduationCap className="w-5 h-5" />
-              <h2 className="text-lg font-black uppercase tracking-wider">Education</h2>
-            </div>
-            {data.education.map((edu, idx) => (
-              <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2">
-                <input 
-                  type="text" 
-                  value={edu.school}
-                  onChange={(e) => updateEdu(idx, 'school', e.target.value)}
-                  placeholder="University / School"
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-sm font-bold"
-                />
-                <input 
-                  type="text" 
-                  value={edu.degree}
-                  onChange={(e) => updateEdu(idx, 'degree', e.target.value)}
-                  placeholder="Degree"
-                  className="w-full p-2 bg-white border border-gray-200 rounded text-sm"
-                />
-                <div className="grid grid-cols-2 gap-2">
-                  <input 
-                    type="text" 
-                    value={edu.date}
-                    onChange={(e) => updateEdu(idx, 'date', e.target.value)}
-                    placeholder="Duration"
-                    className="p-2 bg-white border border-gray-200 rounded text-xs"
-                  />
-                  <input 
-                    type="text" 
-                    value={edu.location}
-                    onChange={(e) => updateEdu(idx, 'location', e.target.value)}
-                    placeholder="Location"
-                    className="p-2 bg-white border border-gray-200 rounded text-xs"
-                  />
-                </div>
-              </div>
-            ))}
-          </section>
+           </div>
         </div>
-        
-        {/* Layout Templates */}
-        <div className="border-t border-gray-200 pt-8 space-y-4">
-          <h3 className="text-sm font-black uppercase tracking-widest text-gray-400">Layout Templates</h3>
-          <div className="grid grid-cols-3 gap-3">
-            {['minimal', 'professional', 'modern'].map((t) => (
-              <button
-                key={t}
-                onClick={() => setTemplate(t as any)}
-                className={`py-2 px-3 rounded text-xs font-bold capitalize transition-all border-2 ${template === t ? 'bg-black text-white border-black shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'}`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
-        
-        {/* Footer info */}
-        <div className="bg-amber-50 border-2 border-amber-400 p-4 rounded-lg flex gap-3 items-start">
-          <Sparkles className="w-5 h-5 text-amber-600 shrink-0" />
-          <p className="text-xs font-medium text-amber-800 leading-relaxed">
-            <strong>ATS Tip:</strong> Use standard section headings and avoid complex graphics. Our templates are pre-optimized for FAANG recruitment systems.
-          </p>
+
+        {/* Global Security Disclaimer */}
+        <div className="bg-[#FACC15] neo-box p-8 flex gap-6 items-start">
+           <ShieldCheck className="w-8 h-8 text-black shrink-0" strokeWidth={3} />
+           <p className="text-xs font-black uppercase leading-relaxed">
+             ATS COMPLIANCE MODE: ACTIVE. Templates are pre-hardened for sovereign recruitment systems.
+           </p>
         </div>
       </aside>
 
-      {/* Main Content - Real-time Preview */}
-      <main className="flex-1 overflow-y-auto bg-gray-200 p-4 lg:p-12 xl:p-16 flex justify-center scrollbar-hide">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-[800px] h-fit"
-        >
-          <div className="mb-4 flex flex-col sm:flex-row justify-end items-end sm:items-center gap-4">
-            <div className="flex items-center gap-2">
-              <button 
-                onClick={generateWordDoc}
-                className="flex items-center gap-2 px-4 py-2.5 bg-white text-black border-2 border-black rounded-xl hover:bg-gray-50 transition-all font-black text-sm uppercase"
-              >
-                <FileText className="w-4 h-4" /> Word
-              </button>
-              <button 
-                onClick={handlePrint}
-                className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-xl hover:shadow-xl hover:-translate-y-0.5 transition-all font-black text-sm uppercase tracking-wider"
-              >
-                <Printer className="w-4 h-4" /> PDF
-              </button>
-            </div>
-          </div>
-          
-          <div className="shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-sm overflow-hidden transform-gpu transition-all">
-            <ResumePreview ref={componentRef} data={data} template={template} />
-          </div>
-          
-          <p className="text-center mt-8 text-gray-400 text-xs font-medium mb-12">
-            © 2026 DreamSync Resume Builder. Built for Tier-1 Companies.
-          </p>
-        </motion.div>
+      {/* Main Preview Region */}
+      <main className="flex-1 overflow-y-auto bg-gray-200 p-12 lg:p-20 flex justify-center scrollbar-hide relative">
+         <div className="absolute top-12 right-12 z-50">
+            <AnimatePresence>
+               {atsAnalysis && (
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="neo-box p-8 bg-white min-w-[300px] space-y-6">
+                     <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                        <span className="text-xs font-black uppercase tracking-widest text-[#2563EB]">ATS SCORE CORE_</span>
+                        <div className={`text-4xl font-black ${atsAnalysis.score >= 80 ? 'text-green-600' : 'text-amber-500'}`}>
+                           {atsAnalysis.score}%
+                        </div>
+                     </div>
+                     <div className="space-y-2">
+                        {atsAnalysis.feedback.slice(0, 3).map((f, i) => (
+                           <div key={i} className="flex gap-3 text-[10px] font-bold uppercase transition-all hover:translate-x-1">
+                              <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" /> {f}
+                           </div>
+                        ))}
+                     </div>
+                     <div className="pt-4 border-t-4 border-black">
+                        <Link href="/ats-check" className="text-[10px] font-black text-[#2563EB] uppercase flex items-center justify-between group">
+                           Advanced Analysis <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                        </Link>
+                     </div>
+                  </motion.div>
+               )}
+            </AnimatePresence>
+         </div>
+
+         <div className="w-full max-w-[850px] shadow-[20px_20px_0px_0px_rgba(0,0,0,0.1)]">
+            <ResumePreview data={data} template={template} innerRef={componentRef} />
+         </div>
       </main>
     </div>
   );

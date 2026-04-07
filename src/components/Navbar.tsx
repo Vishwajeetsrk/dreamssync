@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon, Menu, X, Sparkles, Orbit, Zap, LayoutDashboard, Fingerprint, Activity } from 'lucide-react';
+import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon, Menu, X, Sparkles, Orbit, Zap, LayoutDashboard, Fingerprint, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { auth } from '@/lib/firebase';
@@ -16,14 +16,7 @@ export default function Navbar() {
   const { t } = useLanguage();
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleLogout = async () => {
     try {
@@ -35,139 +28,121 @@ export default function Navbar() {
   };
 
   const featureLinks = [
-    { name: 'Roadmap', href: '/roadmap', icon: <Activity className="w-4 h-4 text-[#2563EB]" /> },
-    { name: 'AI Agent', href: '/career-agent', icon: <Sparkles className="w-4 h-4 text-[#7C3AED]" /> },
-    { name: 'Resume', href: '/resume-builder', icon: <Fingerprint className="w-4 h-4 text-[#06B6D4]" /> },
-    { name: 'ATS Scan', href: '/ats-check', icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
+    { name: 'ROADMAP', href: '/roadmap' },
+    { name: 'CAREER AGENT', href: '/career-agent' },
+    { name: 'RESUME BUILDER', href: '/resume-builder' },
+    { name: 'ATS CHECK', href: '/ats-check' },
   ];
 
   return (
-    <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
-      <nav className={`max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between gap-4 transition-all duration-500 border border-white/5 rounded-2xl mx-6 md:mx-auto ${scrolled ? 'bg-[#0B0F19]/80 backdrop-blur-xl shadow-2xl' : 'bg-transparent'}`}>
+    <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b-4 border-black px-6 md:px-12 py-5">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         
-        {/* Branding */}
+        {/* Branding (Historical State) */}
         <div className="flex items-center gap-12 shrink-0">
           <Link href="/" className="flex items-center group">
-            <div className="relative h-8 w-36 overflow-hidden">
+            <div className="relative h-10 w-44 overflow-hidden">
                <Image
                 src="/DreamSynclogo.png"
                 alt="DreamSync Logo"
                 fill
-                className="object-contain object-left dark:brightness-125 group-hover:scale-105 transition-transform"
+                className="object-contain object-left pointer-events-none"
                 priority
               />
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-8">
-            <div className="relative" onMouseLeave={() => setIsFeaturesOpen(false)}>
+          {/* Desktop Navigation (Neo Typography) */}
+          <div className="hidden lg:flex items-center gap-10">
+            <div className="relative group">
               <button
-                onMouseEnter={() => setIsFeaturesOpen(true)}
-                className="flex items-center gap-1.5 text-sm font-medium text-[#9CA3AF] hover:text-white transition-all py-2"
+                className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors"
               >
-                Features <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isFeaturesOpen ? 'rotate-180' : ''}`} />
+                FEATURES <ChevronDown className="w-4 h-4" />
               </button>
               
-              <AnimatePresence>
-                {isFeaturesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                    className="absolute top-full -left-4 w-64 bg-[#111827] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] mt-2 p-3 rounded-2xl backdrop-blur-3xl overflow-hidden"
-                  >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2563EB] to-[#7C3AED]" />
-                    <div className="grid gap-1 mt-1">
-                      {featureLinks.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setIsFeaturesOpen(false)}
-                          className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${pathname === item.href ? 'bg-white/5 text-white' : 'text-[#9CA3AF] hover:bg-white/5 hover:text-white'}`}
-                        >
-                          {item.icon}
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div className="absolute top-full left-0 mt-6 w-64 neo-box p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[60]">
+                 <div className="grid gap-1">
+                    {featureLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`block px-4 py-3 text-xs font-black uppercase tracking-widest transition-all hover:bg-[#2563EB]/10 border-2 border-transparent hover:border-black ${pathname === item.href ? 'text-[#2563EB]' : 'text-black'}`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                 </div>
+              </div>
             </div>
             
-            <Link href="/about" className="text-sm font-medium text-[#9CA3AF] hover:text-white transition-colors">About</Link>
-            <Link href="/team" className="text-sm font-medium text-[#9CA3AF] hover:text-white transition-colors">Engineers</Link>
+            <Link href="/about" className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">ABOUT</Link>
+            <Link href="/team" className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">TEAM</Link>
+            <Link href="/contact" className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">CONTACT</Link>
           </div>
         </div>
 
-        {/* Global Action & Identity */}
-        <div className="flex items-center gap-4 shrink-0">
+        {/* Action Group (Historical State) */}
+        <div className="flex items-center gap-4">
+          <Link 
+            href="/donate" 
+            className="hidden sm:flex items-center gap-2 bg-[#FACC15] border-4 border-black px-5 py-2 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
+          >
+            <Coffee className="w-4 h-4 fill-current" /> DONATE
+          </Link>
+
           {!user ? (
             <div className="flex items-center gap-4">
               <Link
                 href="/login"
-                className="hidden sm:block text-sm font-medium text-[#9CA3AF] hover:text-white transition-all px-4"
+                className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] px-4"
               >
-                Access
+                LOGIN
               </Link>
               <Link
                 href="/signup"
-                className="btn-primary text-sm px-6 py-2.5 h-auto rounded-full font-semibold"
+                className="bg-black text-white border-4 border-black px-6 py-2 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:bg-[#2563EB] transition-all"
               >
-                Establish Node
+                SIGN UP
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-4">
-               <Link href="/dashboard" className="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#2563EB] hover:text-[#06B6D4] transition-colors bg-[#2563EB]/5 px-4 py-2 rounded-full border border-[#2563EB]/10">
-                  <LayoutDashboard className="w-3.5 h-3.5" /> Matrix
-               </Link>
-
-               {/* Identity Capsule */}
-              <div className="relative group">
-                <button className="flex items-center gap-3 p-1 bg-white/5 border border-white/10 rounded-full focus:outline-none hover:border-[#2563EB] transition-all">
+            <div className="relative group">
+               <button className="neo-box p-1 rounded-none flex items-center gap-3 pr-4">
                   {userData?.avatar_url ? (
-                    <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10 shadow-lg">
+                    <div className="w-8 h-8 rounded-none border-2 border-black overflow-hidden relative">
                       <img src={userData.avatar_url} alt="U" className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-[#2563EB]/10 flex items-center justify-center">
+                    <div className="w-8 h-8 bg-[#2563EB]/10 flex items-center justify-center">
                       <UserIcon className="w-4 h-4 text-[#2563EB]" />
                     </div>
                   )}
-                  <div className="pr-2 hidden md:block">
-                      <span className="text-xs font-semibold text-white/50">{userData?.name?.split(' ')[0] || 'Member'}</span>
-                  </div>
-                </button>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-black hidden md:block">{userData?.name?.split(' ')[0]}</span>
+               </button>
 
-                {/* Identity Dropdown */}
-                <div className="absolute right-0 mt-3 w-64 glass-card rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] p-4 overflow-hidden">
-                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2563EB] to-[#7C3AED]" />
-                  
-                  <div className="flex items-center gap-4 mb-4 pb-4 border-b border-white/5">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-                        <UserIcon className="w-5 h-5 text-[#2563EB]" />
-                    </div>
-                    <div className="flex flex-col text-left overflow-hidden">
-                      <span className="font-bold text-sm text-white truncate">{userData?.name || 'DreamSync User'}</span>
-                      <span className="text-[10px] text-[#4B5563] truncate uppercase tracking-widest">{user?.email?.split('@')[0]}</span>
-                    </div>
+               <div className="absolute right-0 mt-4 w-64 neo-box p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[100]">
+                  <div className="flex items-center gap-3 mb-6 pb-6 border-b-2 border-dashed border-black/10">
+                     <div className="w-10 h-10 border-2 border-black overflow-hidden relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                       <img src={userData?.avatar_url || ''} alt="P" className="w-full h-full object-cover" />
+                     </div>
+                     <div className="flex flex-col text-left">
+                        <span className="font-black text-xs uppercase tracking-tighter text-black truncate w-40">{userData?.name || 'User Node'}</span>
+                        <span className="text-[10px] text-gray-400 font-bold uppercase truncate w-40">{user.email}</span>
+                     </div>
                   </div>
-
-                  <div className="space-y-1">
-                    <Link href="/profile" className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-[#9CA3AF] hover:text-white hover:bg-white/5 transition-all rounded-lg">
-                      <Fingerprint className="w-4 h-4 text-[#2563EB]" /> Profile Hub
+                  <div className="space-y-2">
+                    <Link href="/dashboard" className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-black hover:bg-[#2563EB] hover:text-white transition-all border-2 border-black">
+                      <LayoutDashboard className="w-4 h-4" /> DASHBOARD
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-500/5 transition-all rounded-lg"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-red-600 hover:bg-black hover:text-white transition-all border-2 border-black"
                     >
-                      <LogOut className="w-4 h-4" /> De-authorize
+                      <LogOut className="w-4 h-4" /> DE-ACTIVATE
                     </button>
                   </div>
-                </div>
-              </div>
+               </div>
             </div>
           )}
 
@@ -175,7 +150,7 @@ export default function Navbar() {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-[#9CA3AF] hover:text-white transition-all"
+              className="p-2 border-4 border-black bg-white hover:bg-gray-100 transition-all"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -183,61 +158,34 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Premium Mobile Menu */}
+      {/* Neo Mobile Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.98 }}
-            className="fixed inset-x-6 top-24 bg-[#0B0F19]/90 backdrop-blur-3xl border border-white/5 z-40 lg:hidden flex flex-col p-8 rounded-3xl shadow-2xl overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-x-6 top-32 neo-box z-40 lg:hidden flex flex-col p-8"
           >
-             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#2563EB] to-[#7C3AED]" />
-            
-            <div className="space-y-8">
-              <div className="grid grid-cols-1 gap-3">
-                {featureLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="p-4 bg-white/5 rounded-2xl font-bold text-sm tracking-tight text-[#9CA3AF] hover:text-white flex items-center justify-between transition-all"
-                  >
-                    <span className="flex items-center gap-3">{link.icon} {link.name}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                ))}
-              </div>
-
-              <div className="space-y-4">
-                {user ? (
-                   <div className="grid grid-cols-1 gap-3">
-                      <Link
-                        href="/profile"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="py-4 bg-white/5 text-white text-center font-bold text-sm rounded-2xl border border-white/5"
-                      >
-                         Profile Hub
-                      </Link>
-                   </div>
-                ) : (
-                  <div className="grid grid-cols-1 gap-3">
-                    <Link
-                      href="/login"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="py-4 bg-white/5 text-white text-center font-bold text-sm rounded-2xl border border-white/5"
-                    >
-                      Login Node
-                    </Link>
-                    <Link
-                      href="/signup"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="py-4 btn-primary text-white text-center font-bold text-sm rounded-2xl"
-                    >
-                      Establish Identity
-                    </Link>
-                  </div>
-                )}
+            <div className="space-y-4">
+              {featureLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-5 border-4 border-black font-black uppercase text-sm text-black hover:bg-[#2563EB] hover:text-white flex items-center justify-between transition-all"
+                >
+                  {link.name} <ArrowRight className="w-5 h-5" />
+                </Link>
+              ))}
+              <div className="pt-4 space-y-4">
+                <Link
+                  href="/donate"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full py-5 bg-[#FACC15] border-4 border-black text-black text-center font-black uppercase text-sm"
+                >
+                  DONATE HUB
+                </Link>
               </div>
             </div>
           </motion.div>

@@ -1,98 +1,110 @@
 'use client';
 
 import Link from 'next/link';
-import { Coffee, Globe, Shield, Zap, Sparkles, Fingerprint } from 'lucide-react';
+import { Coffee, Globe, Shield, Zap, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0B0F19] border-t border-white/5 pt-24 pb-12 px-6 md:px-10 overflow-hidden relative">
-      {/* Background Subtle Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-t from-[#2563EB]/5 to-transparent pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
-          
-          {/* Brand Identity */}
-          <div className="space-y-8">
-            <Link href="/" className="inline-block">
-              <div className="relative h-8 w-36 overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-                <Image 
-                  src="/DreamSynclogo.png" 
-                  alt="DreamSync" 
-                  fill
-                  className="object-contain object-left"
-                />
-              </div>
-            </Link>
-            <p className="text-sm font-medium text-[#9CA3AF] leading-relaxed max-w-xs">
-              Engineering the future of professional identity for the next generation of Indian talent. AI-driven, sovereign-focused.
-            </p>
-            <div className="flex items-center gap-4 text-[#4B5563]">
-               <Globe className="w-5 h-5 hover:text-white transition-colors cursor-pointer" />
-               <Shield className="w-5 h-5 hover:text-white transition-colors cursor-pointer" />
-               <Zap className="w-5 h-5 hover:text-white transition-colors cursor-pointer" />
+    <footer className="bg-white border-t-8 border-black pt-32 pb-20 px-6 md:px-12 text-black font-bold uppercase relative overflow-hidden">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
+        
+        {/* Brand Historical Identity */}
+        <div className="space-y-10">
+          <Link href="/" className="inline-block transform hover:scale-105 transition-transform">
+            <div className="relative h-10 w-44">
+              <Image 
+                src="/DreamSynclogo.png" 
+                alt="DreamSync Logo" 
+                fill
+                className="object-contain object-left"
+              />
             </div>
-          </div>
-          
-          {/* Engineering Verticals */}
-          <div className="space-y-6">
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Technological Stack_</h4>
-            <ul className="space-y-4">
-              <li><Link href="/resume-builder" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">Resume Architect</Link></li>
-              <li><Link href="/ats-check" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">ATS Sync Protocol</Link></li>
-              <li><Link href="/roadmap" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">Career Graph Engine</Link></li>
-              <li><Link href="/career-agent" className="text-sm font-medium text-[#4B5563] hover:text-[#2563EB] transition-all flex items-center gap-2 underline decoration-transparent hover:decoration-[#2563EB]/30 decoration-2 underline-offset-4">AI Cognition Agent</Link></li>
-            </ul>
-          </div>
-          
-          {/* Community Protocols */}
-          <div className="space-y-6">
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Infrastructure_</h4>
-            <ul className="space-y-4">
-              <li><Link href="/about" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Documentation</Link></li>
-              <li><Link href="/team" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Core Engineers</Link></li>
-              <li><Link href="/contact" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Support Comms</Link></li>
-              <li>
-                <Link 
-                  href="/donate" 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#F59E0B] hover:text-[#FBBF24] transition-all group"
-                >
-                  <Coffee className="w-4 h-4 group-hover:scale-110 transition-transform" /> Sponsor the Node
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Institutional Links */}
-          <div className="space-y-6">
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Terminal Access_</h4>
-            <ul className="space-y-4">
-              <li><a href="https://linkedin.com" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">LinkedIn Archive</a></li>
-              <li><a href="https://github.com" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Git Repositories</a></li>
-              <li><a href="https://twitter.com" className="text-sm font-medium text-[#4B5563] hover:text-white transition-all">Carrier X Dev</a></li>
-              <li className="flex items-center gap-2 pt-2 grayscale opacity-50">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Global Node Active</span>
-              </li>
-            </ul>
+          </Link>
+          <p className="text-sm font-black tracking-widest text-[#111827]/60 leading-relaxed uppercase">
+            Transforming professional aspirations into reality through synthetic intelligence and sovereign career engineering.
+          </p>
+          <div className="flex gap-6">
+             <div className="neo-box p-2 hover:bg-[#FACC15] transition-colors cursor-pointer"><Globe className="w-5 h-5" /></div>
+             <div className="neo-box p-2 hover:bg-[#FACC15] transition-colors cursor-pointer"><Shield className="w-5 h-5" /></div>
+             <div className="neo-box p-2 hover:bg-[#FACC15] transition-colors cursor-pointer"><Zap className="w-5 h-5" /></div>
           </div>
         </div>
         
-        {/* Footer Meta */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#4B5563]">
-          <div className="flex items-center gap-3">
-             <Fingerprint className="w-4 h-4 text-[#2563EB]" />
-             <span>© {currentYear} DreamSync. Intelligence Systems Synchronized.</span>
-          </div>
-          <div className="flex gap-10">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Protocol</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Service Terms</Link>
-          </div>
+        {/* Core Architectures */}
+        <div className="space-y-8">
+          <h4 className="text-xs font-black tracking-[0.3em] text-black">ARCHITECTURE_</h4>
+          <ul className="space-y-4 text-xs tracking-widest">
+            <li><Link href="/resume-builder" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> RESUME ARCHITECT</Link></li>
+            <li><Link href="/ats-check" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> ATS SYNC HUB</Link></li>
+            <li><Link href="/roadmap" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> CAREER GRAPH</Link></li>
+            <li><Link href="/career-agent" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> AI AGENT NODE</Link></li>
+          </ul>
+        </div>
+        
+        {/* Infrastructure Nodes */}
+        <div className="space-y-8">
+          <h4 className="text-xs font-black tracking-[0.3em] text-black">NODES_</h4>
+          <ul className="space-y-4 text-xs tracking-widest">
+            <li><Link href="/about" className="hover:text-[#2563EB] transition-colors">DOCUMENTATION</Link></li>
+            <li><Link href="/team" className="hover:text-[#2563EB] transition-colors">CORE ENGINEERS</Link></li>
+            <li><Link href="/contact" className="hover:text-[#2563EB] transition-colors">SUPPORT CHANNEL</Link></li>
+            <li>
+              <Link 
+                href="/donate" 
+                className="inline-flex items-center gap-3 bg-[#FACC15] border-4 border-black px-4 py-2 text-[10px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-all transform hover:scale-105"
+              >
+                <Coffee className="w-4 h-4" /> SPONSOR NODE
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Global Access Archives */}
+        <div className="space-y-8">
+          <h4 className="text-xs font-black tracking-[0.3em] text-black">ARCHIVES_</h4>
+          <ul className="space-y-4 text-xs tracking-widest">
+            <li><a href="https://linkedin.com" className="hover:text-[#2563EB] transition-colors underline decoration-4 decoration-black/10">LINKEDIN VAULT</a></li>
+            <li><a href="https://github.com" className="hover:text-[#2563EB] transition-colors underline decoration-4 decoration-black/10">GITHUB REPOSITORIES</a></li>
+            <li><a href="https://twitter.com" className="hover:text-[#2563EB] transition-colors underline decoration-4 decoration-black/10">MISSION X (TWITTER)</a></li>
+            <li className="flex items-center gap-3 text-[#111827]/40 pt-4">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse border border-black" />
+              <span className="text-[10px] font-black uppercase tracking-widest">Global Uplink Ready</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      {/* Footer Meta Hierarchy */}
+      <div className="max-w-7xl mx-auto mt-32 pt-12 border-t-8 border-black flex flex-col md:flex-row justify-between items-center gap-10 text-[10px] font-black tracking-[0.4em] text-black/40">
+        <span>© {currentYear} DREAMSYNC. IDENTITY SYNCHRONIZED.</span>
+        <div className="flex gap-12">
+          <Link href="/privacy" className="hover:text-black transition-colors">PRIVACY_PROTOCOL</Link>
+          <Link href="/terms" className="hover:text-black transition-colors">SERVICE_TERMS</Link>
         </div>
       </div>
     </footer>
+  );
+}
+
+function ArrowRight(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
   );
 }

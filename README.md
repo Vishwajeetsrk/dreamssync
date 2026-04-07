@@ -1,78 +1,93 @@
-# 💠 DreamSync AI — The Architecture of Professional Destiny
+# 🌙 DreamSync AI — Career & Wellness Platform
 
-> **A high-fidelity, multi-model AI ecosystem engineered for the next generation of professional excellence.**
-> Synthetic intelligence for Resume Architecture, ATS Synchronization, Strategic Roadmapping, and Sovereign Identity Generation — all within a premium, minimalist framework.
+> **The all-in-one AI ecosystem for career growth and mental well-being.**
+> Resume building, ATS optimization, LinkedIn profile enhancement, high-depth roadmap generation, interactive career coaching, and empathetic mental health support — all in one unified platform.
 
-[![Vercel Deployment](https://img.shields.io/badge/Ship-Vercel-000000?style=for-the-badge&logo=vercel)](https://dreamsync-ruddy.vercel.app/)
-[![Tech Stack](https://img.shields.io/badge/Stack-Next.js%2015%20%7C%20Tailwind%20v4-2563EB?style=for-the-badge)](https://github.com/Vishwajeetsrk/dreamsync)
+- **GitHub:** [Vishwajeetsrk/dreamsync](https://github.com/Vishwajeetsrk/dreamsync)
+- **Live Site:** [dreamsync-ruddy.vercel.app](https://dreamsync-ruddy.vercel.app/)
 
----
+## 🎥 Brand Aesthetic: Light Neo-Brutalism
 
-## 💎 Design Philosophy
-DreamSync utilizes a **Premium AI SaaS** aesthetic inspired by the minimalist excellence of Stripe, Vercel, and Linear.
-- **Visual Identity**: Dark Premium (`#0B0F19`) with Glassmorphic depth.
-- **Intelligence Accents**: AI Blue (`#2563EB`) and Purple Intelligence (`#7C3AED`) gradients.
-- **Typography**: Precision-engineered hierarchy using *Inter* and *Satoshi*.
+The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS v4** and **Framer Motion** for a premium, high-interaction experience. It features high-contrast off-white backgrounds, bold 8px black borders, and a signature Yellow/Blue accent palette for a "sovereign tech" feel.
 
 ---
 
-## 🧬 Technological Verticals
+## 📋 Table of Contents
 
-### 1. 🏗️ Resume Architect
-Autonomous document construction utilizing sovereign LLM protocols. Engineered for FAANG-level compatibility and real-time persona calibration.
-
-### 2. 🛡️ ATS Sync Protocol
-Automated compatibility analysis across enterprise nodes. Reveal the hidden "Matching Coefficient" of your professional identity.
-
-### 3. 📈 Strategic Graph Roadmap
-Multidimensional skill-acquisition mapping with AI foresight. Predict your professional trajectory with high-fidelity accuracy.
-
-### 4. 🌐 Portfolio Node Generation
-Establish your digital sovereignty with instantly generated, high-performance personal nodes.
-
-### 5. 🧠 Serenity AI
-Empathetic intelligence layer for professional mental well-being and stress-mitigation protocols.
+- [Overview](#-overview)
+- [Design Architecture](#-design-architecture)
+- [Core Nodes](#-core-nodes)
+- [Tech Stack](#-tech-stack)
+- [Deployment Protocol](#-deployment-protocol)
 
 ---
 
-## 🛠️ Infrastructure Stack
-- **Framework**: Next.js 15 (App Router / Turbopack)
-- **Styling**: Tailwind CSS v4 (Experimental Premium Tokens)
-- **Intelligence**: OpenAI G-Series / Anthropic Neural Architectures
-- **Database**: Firebase Sovereign Cloud Storage
-- **Identity**: Firebase Quantum Authentication
+## 🏗️ Design Architecture
+
+DreamSync utilizes a custom **Sovereign Neo-Brutalist** design system optimized for clarity and professional authority.
+
+- **Background:** `#F3F4F6` (Off-white / Professional Neutral)
+- **Primary Accents:** `#2563EB` (Strong AI Blue) & `#FACC15` (Vibrant Action Yellow)
+- **Borders:** Bold `4px` - `8px` Black (`#000000`) for high-contrast structure.
+- **Shadows:** Hard "Neo" shadows for tactile interactive elements.
+- **Typography:** Black-on-White high-weight headings for maximum readability.
 
 ---
 
-## 🚀 Deployment Instructions
+## 🛠️ Core Nodes (Features)
 
-### Initialization
+### 1. 📂 Resume Architect
+AI-powered resume construction optimized for FAANG recruitment systems. Supports real-time rendering and PDF/DOCX exports.
+
+### 2. 📊 Smart ATS Analyzer
+A high-precision eligibility engine that scans resumes against top-tier company profiles (Google, Microsoft, Amazon) with actionable missing-skill detection.
+
+### 3. 🧠 IKIGAI Finder
+A premium AI-driven purposeful career mapping tool that helps users discover where their passion, mission, and vocation intersect.
+
+### 4. 🗺️ Roadmap Protocol
+Generates high-depth, interactive career timelines with milestone tracking for professional growth.
+
+### 5. 🧘 Serenity AI
+Emotional support and wellness node providing mental health stabilization and empathetic guidance for the modern worker.
+
+---
+
+## 💻 Tech Stack
+
+- **Frontend:** Next.js 16 (App Router), Tailwind CSS v4, Framer Motion.
+- **Icons:** Lucide React (Thin & Bold Variants).
+- **Backend/Auth:** Firebase (Firestore, Storage, Authentication).
+- **AI Logic:** Integrated sovereign LLM nodes for career intelligence.
+- **Deployment:** Vercel (Edge Functions enabled).
+
+---
+
+## 🚀 Deployment Protocol
+
+To run the platform locally:
+
 ```bash
 # Clone the repository
 git clone https://github.com/Vishwajeetsrk/dreamsync.git
 
+# Navigate to directory
+cd dreamsync
+
 # Install dependencies
 npm install
 
-# Start the Command Center
+# Run development server
 npm run dev
 ```
 
-### Environment Synchronization
-Configure your `.env.local` with the following parameters:
-- `NEXT_PUBLIC_FIREBASE_API_KEY`
-- `OPENAI_API_KEY`
-- `NEXT_PUBLIC_BASE_URL`
-
 ---
 
-## 🤝 Sustain the Mission
-DreamSync is an autonomous node free for students. If this infrastructure helped your journey, consider contributing to maintain node stability.
+## 🤝 Support Node
 
-[❤️ Sponsor the Node](https://dreamsync-ruddy.vercel.app/donate)
+DreamSync is 100% free for students. Every contribution keeps the sovereign AI nodes running.
+
+[**Buy us a Chai**](https://dreamsync-ruddy.vercel.app/donate)
 
 ---
-
-### 🏛️ Engineering Team
-**DreamSync Architecture Group**  
-*Intelligence Synchronized. Destiny Autonomous.*
+© 2026 DreamSync. Identity Synchronized.

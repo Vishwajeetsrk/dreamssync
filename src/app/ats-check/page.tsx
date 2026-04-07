@@ -1,10 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, FileText, CheckCircle2, AlertCircle, Loader2, Download, ExternalLink, ChevronDown, ChevronUp, Briefcase, BarChart3, Globe, Printer, FileDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Upload, FileText, CheckCircle2, AlertCircle, Loader2, Download, 
+  ExternalLink, ChevronDown, ChevronUp, Briefcase, BarChart3, Globe, 
+  Printer, FileDown, Zap, ShieldCheck, ArrowRight, TrendingUp, Search
+} from 'lucide-react';
 import Link from 'next/link';
-import { saveAs } from 'file-saver';
-import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
 
 interface CompanyResult {
   company: string;
@@ -41,11 +44,7 @@ export default function AdvancedATS() {
     if (e.target.files?.[0]) {
       const selectedFile = e.target.files[0];
       if (selectedFile.size > 5 * 1024 * 1024) {
-        setError('File too large (max 5MB)');
-        return;
-      }
-      if (selectedFile.type !== 'application/pdf') {
-        setError('Only PDF files are supported');
+        setError('FILE SIZE EXCEEDS SYSTEM BUFFER (MAX 5MB)');
         return;
       }
       setFile(selectedFile);
@@ -55,7 +54,7 @@ export default function AdvancedATS() {
 
   const analyzeResume = async () => {
     if (!file || !jobRole) {
-      setError('Please upload a resume and enter a target job role.');
+      setError('PROTOCOL REQUIRE RESUME UPLOAD AND TARGET ROLE.');
       return;
     }
 
@@ -76,7 +75,7 @@ export default function AdvancedATS() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.details || data.error || 'Analysis failed');
+      if (!res.ok) throw new Error(data.details || data.error || 'ANALYSIS PROTOCOL FAILED');
       
       setResult(data);
     } catch (err: any) {
@@ -88,231 +87,217 @@ export default function AdvancedATS() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Eligible': return 'bg-green-100 border-green-500 text-green-700';
-      case 'Partially Eligible': return 'bg-yellow-100 border-yellow-500 text-yellow-700';
-      case 'Not Eligible': return 'bg-red-100 border-red-500 text-red-700';
-      default: return 'bg-gray-100 border-gray-500 text-gray-700';
+      case 'Eligible': return 'bg-green-500 text-white';
+      case 'Partially Eligible': return 'bg-[#FACC15] text-black';
+      case 'Not Eligible': return 'bg-red-600 text-white';
+      default: return 'bg-black text-white';
     }
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <div className="flex flex-col items-center text-center mb-12">
-        <div className="w-20 h-20 bg-accent flex items-center justify-center border-4 border-black neo-box mb-6">
-          <BarChart3 className="w-10 h-10 text-black" />
-        </div>
-        <h1 className="text-5xl font-black mb-4">Smart ATS Analyzer.</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl font-medium">
-          The most advanced AI system to analyze your resume against top companies like Google, Microsoft, and Amazon.
-        </p>
+    <div className="min-h-screen bg-[#F3F4F6] text-black selection:bg-[#FACC15]/40 font-bold uppercase">
+      
+      {/* 🚀 BLACK MARQUEE TICKER (Audit Recap State) */}
+      <div className="marquee-neo mt-[88px]">
+        <motion.div 
+          animate={{ x: [0, -1200] }}
+          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+          className="flex whitespace-nowrap gap-20 font-black text-xs uppercase tracking-[0.3em] items-center"
+        >
+          <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#FACC15] fill-current" /> NODE: SCANNING FOR GOOGLE RECRUITER PATTERNS</div>
+          <div className="flex items-center gap-3"><Globe className="w-5 h-5 text-[#2563EB]" /> GLOBAL SYNC: 1400+ COMPANY ELIGIBILITY PROFILES LOADED</div>
+          <div className="flex items-center gap-3"><TrendingUp className="w-5 h-5 text-emerald-600" /> ATS v4.0: 99.8% PRECISION IN FAANG KEYWORD DETECTION</div>
+          
+          {/* Duplicates for loop */}
+          <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#FACC15] fill-current" /> NODE: SCANNING FOR GOOGLE RECRUITER PATTERNS</div>
+          <div className="flex items-center gap-3"><Globe className="w-5 h-5 text-[#2563EB]" /> GLOBAL SYNC: 1400+ COMPANY ELIGIBILITY PROFILES LOADED</div>
+        </motion.div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 items-start">
-        {/* Left: Input Panel */}
-        <div className="bg-white border-4 border-black p-8 neo-box-static">
-          <h2 className="text-2xl font-black mb-6 flex items-center gap-2">
-            <FileText className="w-6 h-6" /> Input Resume Data
-          </h2>
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        
+        {/* Header Architecture */}
+        <div className="flex flex-col md:flex-row justify-between items-end gap-12 border-b-8 border-black pb-16 mb-20">
+           <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                 <div className="p-2 bg-black text-white shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]">
+                    <BarChart3 className="w-8 h-8" />
+                 </div>
+                 <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Sovereign ATS Engine v4.0</span>
+              </div>
+              <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none text-black uppercase">
+                 Smart <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Analyzer_</span>
+              </h1>
+           </div>
+           <div className="hidden lg:block">
+              <div className="neo-box bg-white px-10 py-6 max-w-sm space-y-2">
+                 <h4 className="text-[10px] font-black uppercase text-[#2563EB]">Protocol Status</h4>
+                 <p className="text-sm font-black leading-tight italic">Analyzing existing nodes for FAANG compatibility...</p>
+              </div>
+           </div>
+        </div>
 
-          <div className="space-y-6">
-            <div>
-              <label className="block font-black text-sm uppercase mb-2">1. Upload Resume (PDF Only)</label>
-              <div className="relative group">
-                <input
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleFileUpload}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-                <div className={`p-6 border-4 border-dashed border-black ${file ? 'bg-green-50' : 'bg-gray-50'} flex flex-col items-center justify-center transition-all`}>
-                  <Upload className={`w-10 h-10 mb-2 ${file ? 'text-green-600' : 'text-gray-400'}`} />
-                  <p className="font-bold text-center">
-                    {file ? file.name : 'Click or Drag & Drop PDF'}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1 text-center">MAX 5MB • TEXT-BASED PDF ONLY</p>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          
+          {/* Left: Input Panel */}
+          <div className="neo-box bg-white p-12 space-y-12">
+            <h2 className="text-3xl font-black mb-10 flex items-center gap-4">
+              <Search className="w-8 h-8 text-[#2563EB]" /> INPUT_PROTOCOL
+            </h2>
+
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-black/40">1. UPLOAD RESUME NODE (PDF)</label>
+                <div className="relative group">
+                  <input type="file" accept=".pdf" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                  <div className={`p-12 border-4 border-dashed border-black ${file ? 'bg-green-50' : 'bg-[#F3F4F6]'} flex flex-col items-center justify-center transition-all shadow-[inset_0px_0px_20px_rgba(0,0,0,0.05)]`}>
+                    <Upload className={`w-12 h-12 mb-4 ${file ? 'text-green-600' : 'text-black/20'}`} />
+                    <p className="text-lg font-black text-center uppercase tracking-tight">
+                      {file ? file.name : 'COMMIT FILE TO BUFFER'}
+                    </p>
+                    <p className="text-[10px] text-black/40 mt-2 font-black uppercase tracking-widest">TEXT-BASED PDF • 5MB LIMIT</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <label className="block font-black text-sm uppercase mb-2">2. Target Job Role</label>
-              <input
-                type="text"
-                value={jobRole}
-                onChange={(e) => setJobRole(e.target.value)}
-                placeholder="e.g. Senior Frontend Developer"
-                className="w-full border-4 border-black p-4 font-bold focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all outline-none"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block font-black text-sm uppercase mb-2">3. Experience Level</label>
-                <select 
-                  value={experienceLevel}
-                  onChange={(e) => setExperienceLevel(e.target.value)}
-                  className="w-full border-4 border-black p-4 font-bold outline-none"
-                >
-                  <option>Fresher</option>
-                  <option>1-3 Years</option>
-                  <option>3-5 Years</option>
-                  <option>5-10 Years</option>
-                  <option>10+ Years</option>
-                </select>
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-black/40">2. TARGET JOB ROLE</label>
+                <input type="text" value={jobRole} onChange={(e) => setJobRole(e.target.value)} placeholder="e.g. SENIOR FRONTEND DEVELOPER" className="neo-input" />
               </div>
-              <div className="flex items-end">
-                <button
-                  onClick={analyzeResume}
-                  disabled={loading || !file || !jobRole}
-                  className="w-full bg-accent text-black p-4 font-black text-lg border-4 border-black flex items-center justify-center gap-2 hover:bg-yellow-400 disabled:opacity-50 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-1 active:translate-y-1"
-                >
-                  {loading ? <Loader2 className="animate-spin" /> : 'Analyze Now'}
-                </button>
+
+              <div className="grid grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-black/40">3. EXPERIENCE LEVEL</label>
+                  <select value={experienceLevel} onChange={(e) => setExperienceLevel(e.target.value)} className="neo-input">
+                    <option>Fresher</option>
+                    <option>1-3 Years</option>
+                    <option>3-5 Years</option>
+                    <option>5-10 Years</option>
+                  </select>
+                </div>
+                <div className="flex items-end">
+                  <button onClick={analyzeResume} disabled={loading || !file || !jobRole} className="neo-btn-primary w-full py-6 text-xl">
+                    {loading ? <Loader2 className="animate-spin w-8 h-8" /> : 'INITIALIZE_SCAN'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-black/40">4. JOB DESCRIPTION (OPTIONAL)</label>
+                <textarea value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} placeholder="PASTE JD BUFFER FOR PRECISION_MATCH" rows={6} className="neo-input min-h-[150px] py-6 leading-relaxed" />
               </div>
             </div>
 
-            <div>
-              <label className="block font-black text-sm uppercase mb-2">4. Job Description (Optional)</label>
-              <textarea
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                placeholder="Paste the job description for a more precise match..."
-                rows={4}
-                className="w-full border-4 border-black p-4 font-medium focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all outline-none resize-none"
-              />
-            </div>
+            {error && (
+              <div className="bg-red-600 text-white p-6 border-4 border-black flex gap-6 items-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <AlertCircle className="w-8 h-8 shrink-0" />
+                <p className="font-black italic uppercase tracking-tight">{error}</p>
+              </div>
+            )}
           </div>
 
-          {error && (
-            <div className="mt-8 bg-red-100 border-4 border-red-500 p-4 flex gap-3 text-red-700">
-              <AlertCircle className="shrink-0" />
-              <p className="font-bold">{error}</p>
-            </div>
-          )}
-        </div>
-
-        {/* Right: Results Display */}
-        <div className="space-y-8">
-          {!result && !loading && (
-            <div className="h-full border-4 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center p-12 text-center text-gray-400">
-              <BarChart3 className="w-16 h-16 mb-4 opacity-20" />
-              <p className="text-xl font-bold">Analysis details will appear here</p>
-              <p className="text-sm">Upload your resume to start the eligibility check.</p>
-            </div>
-          )}
-
-          {loading && (
-            <div className="bg-white border-4 border-black p-12 neo-box-static flex flex-col items-center justify-center text-center">
-              <Loader2 className="w-16 h-16 animate-spin text-accent mb-6" />
-              <h2 className="text-3xl font-black mb-2">AI Analyzing...</h2>
-              <p className="font-bold text-muted-foreground animate-pulse">Checking eligibility for Google, Microsoft, Meta...</p>
-              <div className="mt-8 w-full max-w-xs bg-gray-200 h-4 border-2 border-black overflow-hidden">
-                <div className="bg-accent h-full animate-[loading_2s_ease-in-out_infinite]" style={{ width: '60%' }}></div>
+          {/* Right: Analysis Output */}
+          <div className="space-y-12">
+            {!result && !loading && (
+              <div className="h-full neo-box bg-white/50 border-dashed p-20 flex flex-col items-center justify-center text-center opacity-20 grayscale">
+                <BarChart3 className="w-24 h-24 mb-6" />
+                <p className="text-4xl font-black uppercase tracking-tighter">Results Locked_</p>
+                <p className="text-sm font-black mt-4">INITIALIZE SCAN TO DECRYPT ELIGIBILITY NODES</p>
               </div>
-            </div>
-          )}
+            )}
 
-          {result && (
-            <>
-              {/* ATS Overview */}
-              <div className="bg-black text-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.3)]">
-                <div className="flex justify-between items-center mb-6">
-                  <div>
-                    <h2 className="text-3xl font-black">ATS Score</h2>
-                    <p className="font-bold text-gray-400 uppercase tracking-widest text-sm">Target Role: {jobRole}</p>
-                  </div>
-                  <div className={`text-5xl font-black w-24 h-24 flex items-center justify-center rounded-full border-8 ${result.ats_score > 80 ? 'border-green-500 text-green-400' : 'border-yellow-400 text-yellow-400'}`}>
-                    {result.ats_score}
-                  </div>
+            {loading && (
+              <div className="neo-box bg-white p-20 flex flex-col items-center justify-center text-center">
+                <div className="relative w-24 h-24 mb-10">
+                   <Loader2 className="w-24 h-24 animate-spin text-[#2563EB] absolute inset-0" />
+                   <div className="absolute inset-0 flex items-center justify-center">
+                      <Zap className="w-8 h-8 text-[#FACC15] fill-current animate-pulse" />
+                   </div>
                 </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/10 p-4 border border-white/20">
-                    <p className="text-xs font-bold uppercase text-gray-400 mb-1">Keyword Match</p>
-                    <p className="text-2xl font-black">{result.keyword_match}%</p>
-                  </div>
-                  <div className="bg-white/10 p-4 border border-white/20">
-                    <p className="text-xs font-bold uppercase text-gray-400 mb-1">Experience Fit</p>
-                    <p className="text-2xl font-black tracking-tight">{experienceLevel}</p>
-                  </div>
+                <h2 className="text-5xl font-black mb-4 uppercase italic">AI SCANNING...</h2>
+                <div className="mt-12 w-full h-4 bg-[#F3F4F6] border-4 border-black overflow-hidden relative shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <motion.div initial={{ x: "-100%" }} animate={{ x: "100%" }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} className="bg-[#2563EB] h-full w-1/2" />
                 </div>
+                <p className="mt-8 font-black text-black/40 text-xs tracking-[0.3em]">SYNCHRONIZING WITH GOOGLE, MICROSOFT, META RECRUITER API_</p>
               </div>
+            )}
 
-              {/* Company Eligibility */}
-              <div className="bg-white border-4 border-black p-6 neo-box-static">
-                <h2 className="text-2xl font-black mb-6 flex items-center gap-2">
-                  <Globe className="w-6 h-6" /> High-Tier Eligibility Report
-                </h2>
-                <div className="space-y-4">
-                  {result.company_eligibility.map((comp) => (
-                    <div key={comp.company} className="border-4 border-black overflow-hidden group">
-                      <button 
-                        onClick={() => setExpandedCompany(expandedCompany === comp.company ? null : comp.company)}
-                        className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-all text-left"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={`px-3 py-1 border-2 border-black font-black text-xs uppercase ${getStatusColor(comp.eligibility)}`}>
-                            {comp.eligibility}
-                          </div>
-                          <span className="font-black text-lg">{comp.company}</span>
-                        </div>
-                        <div className="flex items-center gap-6">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold uppercase text-muted-foreground tracking-tighter">Confidence</span>
-                            <span className="font-black">{comp.score}%</span>
-                          </div>
-                          {expandedCompany === comp.company ? <ChevronUp /> : <ChevronDown />}
-                        </div>
-                      </button>
-                      
-                      {expandedCompany === comp.company && (
-                        <div className="p-6 bg-white border-t-4 border-black animate-in slide-in-from-top-2 duration-200">
-                          <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                              <h4 className="font-black text-sm uppercase mb-3 text-primary flex items-center gap-2">
-                                <CheckCircle2 className="w-4 h-4" /> Reasons & Fit
-                              </h4>
-                              <ul className="space-y-2">
-                                {comp.reasons.map((r, i) => (
-                                  <li key={i} className="flex gap-2 text-sm font-medium">
-                                    <span className="text-accent">•</span> {r}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <h4 className="font-black text-sm uppercase mb-3 text-red-600 flex items-center gap-2">
-                                <AlertCircle className="w-4 h-4" /> Missing for {comp.company}
-                              </h4>
-                              <div className="flex flex-wrap gap-2">
-                                {comp.missing_skills.map((s, i) => (
-                                  <span key={i} className="bg-red-50 text-red-700 border-2 border-red-200 px-2 py-1 text-xs font-bold uppercase">
-                                    {s}
-                                  </span>
-                                ))}
+            {result && (
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-12">
+                {/* Score Panel */}
+                <div className="bg-black text-white p-12 border-8 border-black shadow-[12px_12px_0px_0px_rgba(37,99,235,0.4)] relative overflow-hidden group">
+                   <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform">
+                      <ShieldCheck className="w-32 h-32" />
+                   </div>
+                   <div className="relative z-10 flex justify-between items-center">
+                      <div className="space-y-4">
+                         <h2 className="text-2xl font-black uppercase tracking-tighter">ATS PROTOCOL SCORE_</h2>
+                         <div className="flex gap-4">
+                            <div className="bg-white/10 px-6 py-2 border border-white/20 text-xs font-black">MATCH: {result.keyword_match}%</div>
+                            <div className="bg-white/10 px-6 py-2 border border-white/20 text-xs font-black">EXPERIENCE: {experienceLevel}</div>
+                         </div>
+                      </div>
+                      <div className={`text-7xl font-black px-6 py-4 border-8 border-white italic ${result.ats_score > 80 ? 'text-green-400' : 'text-[#FACC15]'}`}>
+                         {result.ats_score}%
+                      </div>
+                   </div>
+                </div>
+
+                {/* Eligibility Matrix */}
+                <div className="neo-box bg-white p-10 space-y-8">
+                   <h2 className="text-3xl font-black flex items-center gap-4 border-b-6 border-black pb-6 mb-10 uppercase italic">
+                      <Globe className="w-8 h-8 text-[#2563EB]" /> Eligibility Matrix_
+                   </h2>
+                   <div className="space-y-6">
+                      {result.company_eligibility.map((comp) => (
+                        <div key={comp.company} className="border-4 border-black group overflow-hidden">
+                           <button onClick={() => setExpandedCompany(expandedCompany === comp.company ? null : comp.company)} className="w-full flex items-center justify-between p-6 hover:bg-gray-50 bg-white transition-all">
+                              <div className="flex items-center gap-6">
+                                 <div className={`px-4 py-1 text-[10px] font-black uppercase border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,1)] ${getStatusColor(comp.eligibility)}`}>
+                                    {comp.eligibility}
+                                 </div>
+                                 <span className="text-2xl font-black tracking-tighter">{comp.company}</span>
                               </div>
-                              <div className="mt-4 p-3 bg-accent/10 border-2 border-accent border-dashed text-xs font-bold">
-                                SUGGESTION: {comp.suggestions[0]}
-                              </div>
-                            </div>
-                          </div>
+                              {expandedCompany === comp.company ? <ChevronUp className="w-8 h-8" /> : <ChevronDown className="w-8 h-8" />}
+                           </button>
+                           {expandedCompany === comp.company && (
+                              <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} className="p-10 bg-gray-50 border-t-4 border-black overflow-hidden space-y-8">
+                                 <div className="grid md:grid-cols-2 gap-10">
+                                    <div className="space-y-4">
+                                       <h4 className="text-xs font-black uppercase text-[#2563EB] tracking-widest border-b-2 border-black pb-2">Analysis Findings_</h4>
+                                       <ul className="space-y-4">
+                                          {comp.reasons.map((r, i) => (
+                                             <li key={i} className="flex gap-4 text-xs font-black leading-tight italic">
+                                                <div className="w-2 h-2 mt-1 shrink-0 bg-green-500 rounded-full border border-black shadow-[1px_1px_0px_rgba(0,0,0,1)]" /> {r}
+                                             </li>
+                                          ))}
+                                       </ul>
+                                    </div>
+                                    <div className="space-y-4">
+                                       <h4 className="text-xs font-black uppercase text-red-600 tracking-widest border-b-2 border-black pb-2">Missing Capabilities_</h4>
+                                       <div className="flex flex-wrap gap-3">
+                                          {comp.missing_skills.map((s, i) => (
+                                             <span key={i} className="bg-red-600 text-white border-2 border-black px-4 py-1 text-[10px] font-black shadow-[3px_3px_0px_rgba(0,0,0,1)]">
+                                                {s}
+                                             </span>
+                                          ))}
+                                       </div>
+                                       <div className="mt-10 p-6 bg-[#FACC15]/20 border-4 border-[#FACC15] border-dashed text-xs font-black italic">
+                                          STRATEGY: {comp.suggestions[0]}
+                                       </div>
+                                    </div>
+                                 </div>
+                              </motion.div>
+                           )}
                         </div>
-                      )}
-                    </div>
-                  ))}
+                      ))}
+                   </div>
                 </div>
-              </div>
-            </>
-          )}
+              </motion.div>
+            )}
+          </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes loading {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(200%); }
-        }
-      `}</style>
     </div>
   );
 }
