@@ -8,8 +8,7 @@ import { handleGoogleSignIn } from '@/lib/auth-utils';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, UserPlus, Mail, Lock, User, Sparkles, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Turnstile } from '@marsidev/react-turnstile';
+import { ArrowRight, UserPlus, Mail, Lock, User, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -18,19 +17,12 @@ export default function Signup() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [isSiteKeyValid, setIsSiteKeyValid] = useState(true);
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess(false);
-
-    if (process.env.NODE_ENV === 'production' && !turnstileToken) {
-      setError('Please complete the security check.');
-      return;
-    }
 
     if (password.length < 8) {
       setError('Password must be at least 8 characters.');
@@ -212,26 +204,9 @@ export default function Signup() {
                     />
                   </div>
 
-                  {/* Turnstile Authenticator */}
                   <div className="py-4 flex flex-col items-center gap-3">
-                     <div className="min-h-[65px] flex items-center justify-center">
-                       <Turnstile 
-                         siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'} 
-                         onSuccess={(token) => {
-                           setTurnstileToken(token);
-                           setIsSiteKeyValid(true);
-                         }}
-                         onError={() => setIsSiteKeyValid(false)}
-                         className="mx-auto"
-                       />
-                     </div>
-                     {!isSiteKeyValid && (
-                       <p className="text-[10px] font-black text-red-500 uppercase tracking-widest">
-                         Security network error. Please refresh.
-                       </p>
-                     )}
                      <div className="flex items-center gap-1.5 text-[8px] font-black uppercase text-gray-400">
-                       <ShieldCheck className="w-3 h-3" /> Secure Auth Environment 2026
+                       <Lock className="w-3 h-3" /> Secure Auth Environment 2026
                      </div>
                   </div>
                   

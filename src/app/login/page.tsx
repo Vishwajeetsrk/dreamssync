@@ -7,8 +7,7 @@ import { handleGoogleSignIn } from '@/lib/auth-utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Lock, Mail, Sparkles, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Turnstile } from '@marsidev/react-turnstile';
+import { ArrowRight, Lock, Mail, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -16,8 +15,6 @@ export default function Login() {
   const [error, setError] = useState('');
   const [info, setInfo] = useState('');
   const [loading, setLoading] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [isSiteKeyValid, setIsSiteKeyValid] = useState(true);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -31,11 +28,6 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setInfo('');
-
-    if (process.env.NODE_ENV === 'production' && !turnstileToken) {
-      setError('Please complete the security check.');
-      return;
-    }
 
     setLoading(true);
 
@@ -192,25 +184,9 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Turnstile Verification Layer */}
             <div className="pt-4 flex flex-col items-center gap-3">
-               <div className="min-h-[65px]">
-                 <Turnstile 
-                   siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'} 
-                   onSuccess={(token) => {
-                     setTurnstileToken(token);
-                     setIsSiteKeyValid(true);
-                   }}
-                   onError={() => setIsSiteKeyValid(false)}
-                 />
-               </div>
-               {!isSiteKeyValid && (
-                 <p className="text-[10px] font-black text-red-500 uppercase tracking-widest">
-                   Connection Error. Please refresh.
-                 </p>
-               )}
                <div className="flex items-center gap-1.5 text-[8px] font-black uppercase text-gray-400">
-                 <ShieldCheck className="w-3 h-3" /> 256-bit AES Authenticator
+                 <Lock className="w-3 h-3" /> Secure Sync Authenticator
                </div>
             </div>
             

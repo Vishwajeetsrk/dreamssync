@@ -48,8 +48,6 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 | Feature | Description | Engine / Stack |
 |---|---|---|
-| 🔐 **Secure Authentication** | **Multimodal Auth System** featuring Email/Password, Google OAuth, and secure session management. | Firebase Auth / Supabase |
-| 🛡️ **Bot Protection** | **Cloudflare Turnstile** integrated into all auth flows to prevent brute-force and bot attacks. | Turnstile / Security |
 | 📉 **Interactive News Ticker** | **Live-linked 2026 platform updates** and tool announcements. | Next.js Server Components |
 | ⚡ **Direct Google Auth** | **Ubiquitous One-Tap Access** from the global Navbar. Seamless profile creation and sync across all platform pages. | Google Web SDK / Firebase |
 | 🕉️ **IKIGAI Finder** | **Premium Career Purpose Tool** based on the Japanese Ikigai framework. | Claude 3.7 / Gemini 2.0 |
@@ -80,7 +78,6 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 - **Firebase** — *Optimized client-side auth for Google Sign-In and profile synchronization.*
 - **Upstash Redis** — *Global low-latency rate limiting and session caching.*
 - **Resend** — *High-deliverability transactional email engine.*
-- **Cloudflare Turnstile** — *Non-intrusive bot challenge for secure login/signup.*
 
 ### AI Engine
 - **Groq** (`llama-3-8b/70b`) — *Ultra-fast inference for Serenity and Career Agent chat.*
@@ -98,7 +95,7 @@ dreamsync/
 ├── src/
 ├── app/
 │   ├── (auth)/
-│   │   ├── login/              # Secure login with Turnstile + Google
+│   │   ├── login/              # Direct login with Firebase + Google
 │   │   ├── signup/             # Multi-step signup with Firestore sync
 │   │   └── forgot-password/    # Email-based password recovery
 │   │
@@ -164,27 +161,6 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) to see the application.
 
 ---
-
-## 🛡️ Production & Security Audit (2026 Ready)
-
-DreamSync has undergone a comprehensive full-stack security audit and hardening process to ensure it is production-ready for thousands of users:
-
-- [x] **Secure Auth Logic**: Implementation of 2026-standard Login, Signup, and Password Recovery with multi-provider support (Email/Google).
-- [x] **Premium Neo-Brutalism UI**: High-fidelity, bold interaction design restored and hardened across all authentication gateways for a FAANG-grade user experience.
-- [x] **One-Tap Unified Login**: Single, professional entry point architected for ultra-fast user onboarding without redundant navigation elements.
-- [x] **Cloudflare Turnstile**: Integrated smart challenges on all auth forms to prevent automated brute-force attacks.
-- [x] **Global AI Safety Guardrails**: Proactive input validation (leetspeak & typo detection) to block harmful, illegal, or unethical career paths (e.g., terrorist, weapon manufacturing).
-- [x] **Global Security Middleware**: Rigorous Content Security Policy (CSP), HSTS, and XSS headers injected into every request. *Updated 2026: Optimized for Firebase Authentication & Google Firestore (fixed auth/internal-error).*
-- [x] **Firebase/Google Integration**: Whitelisted `identitytoolkit.googleapis.com`, `*.firebaseio.com`, `apis.google.com`, and `www.gstatic.com` in CSP to ensure seamless, secure OAuth and real-time database connections.
-- [x] **Rate Limiting (Upstash)**: All AI routes are protected by distributed sliding-window rate limiting (5-20 req/min/user).
-- [x] **Schema Validation (Zod)**: Strict input validation for all API endpoints to prevent malformed data or buffer overflow attacks.
-- [x] **AI Safety Layer**: Real-time prompt injection detection and input sanitization to prevent jailbreaking or malicious AI hijacking.
-- [x] **Authentication Guards**: Centralized `ProtectedRoute` component and middleware-level session hints to prevent unauthorized access.
-- [x] **Next.js 16/17 Migration**: Full adoption of the `proxy.ts` convention for edge-ready middleware/routing logic.
-- [x] **Zero-Hardcoded Secrets**: Verified 100% environment-driven configuration for Firebase to resolve GitHub security alerts.
-- [x] **Environment Security**: Zero secrets exposed in the frontend. All AI and Database keys are securely managed via server-side environment variables.
-- [x] **DoS Prevention**: Implemented request body size limits and hashing-based IP fingerprinting for robust abuse detection.
-- [x] **PDF Security**: ATS checker validates MIME types, extensions, and file sizes (max 5MB) before processing.
 
 ---
 
