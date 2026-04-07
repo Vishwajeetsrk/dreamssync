@@ -98,7 +98,8 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ### 🛡️ Production-Grade Security & Reliability
 
--   **DreamSync AI Guide**: Floating AI assistant for real-time tool discovery and technical support.
+-   **DreamSync AI Guide**: Floating AI assistant with interactive **Close Assistant** controls and real-time tool discovery logic.
+-   **API Reliability**: Enhanced AI payload synchronization for zero-latency support interactions.
 -   **Multi-Language Sync (i18n)**: Global English/Hindi synchronization persisted via Firestore.
 -   **Real-Time Identity Hub**: Instant profile photo and name updates across all components using Firestore Snapshots.
 -   **Global AI Safety Guard:** 400-level whole-word regex safety blocking enforced across all AI agents.
