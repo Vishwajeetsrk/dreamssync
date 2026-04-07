@@ -97,7 +97,17 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
     });
 
-    const result = parseJSON<object>(content);
+    const result = parseJSON<any>(content);
+
+    // ── Double Protection: Strip URLs from the reply text ──────────
+    if (result.reply) {
+      // Remove any http/https links from the text to ensure only buttons are used
+      result.reply = result.reply.replace(/https?:\/\/[^\s]+/g, '').trim();
+      // Also remove relative paths if they appear as text
+      result.reply = result.reply.replace(/\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/g, '').trim();
+      result.reply = result.reply.replace(/\/(resume-builder|ats-check|career-agent|ikigai|roadmap|linkedin|portfolio|mental-health|profile)/g, '').trim();
+    }
+
     return NextResponse.json({ ...result, _provider: provider });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'AI service error';
