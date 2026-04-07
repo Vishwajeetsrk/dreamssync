@@ -8,8 +8,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI } from '@/lib/ai';
-import { rateLimit, checkBodySize, sanitize } from '@/lib/rateLimit';
-import { checkForInjection, extractUserIdHint, SECURITY_HEADERS } from '@/lib/security';
 
 // ── Schema ────────────────────────────────────────────────────────
 const MessageSchema = z.object({
@@ -60,14 +58,6 @@ const FALLBACK_RESPONSES = [
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Body size guard (30KB max — mental health messages are shorter)
-  const tooBig = checkBodySize(req, 30_000);
-  if (tooBig) return tooBig;
-
-  // 2. Rate limit — 10 req/min, IP + userId fingerprinted
-  const userId = extractUserIdHint(req);
-  const limited = await rateLimit(req, { prefix: 'mental-health', max: 10, window: 60, userId });
-  if (limited) return limited;
 
   // 2. Validate body
   let body: z.infer<typeof BodySchema>;
@@ -85,15 +75,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // 3. Sanitize + injection check
-  const messages = body.messages.map((m) => ({
-    role: m.role,
-    content: sanitize(m.content, 10000),
-  }));
-  const mood = sanitize(body.mood, 50) || 'not specified';
-
-  const injectionBlock = checkForInjection(messages);
-  if (injectionBlock) return injectionBlock;
+  const { messages, mood = 'not specified' } = body;
 
   // 4. Build AI messages
   const systemWithMood = `${SYSTEM_PROMPT}\n\nCurrent user mood: ${mood}`;
@@ -111,7 +93,7 @@ export async function POST(req: NextRequest) {
       temperature: 0.85, // Slightly more creative/warm
     });
 
-    return NextResponse.json({ reply: content.trim(), _provider: provider }, { headers: SECURITY_HEADERS });
+    return NextResponse.json({ reply: content.trim(), _provider: provider });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';
     console.error('[mental-health] All providers failed:', msg);

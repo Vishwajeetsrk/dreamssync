@@ -8,8 +8,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
-import { rateLimit, makeCacheKey, getCached, setCached, sanitize } from '@/lib/rateLimit';
-import { validateUserInput, AI_SAFETY_INSTRUCTION } from '@/lib/aiSafety';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -68,15 +66,11 @@ Return JSON: { "bullets": ["• Bullet 1", "• Bullet 2", "• Bullet 3"] }`;
 
 const SYSTEM_PROMPT =
   'You are an expert technical resume writer for the Indian job market. ' +
-  `${AI_SAFETY_INSTRUCTION} ` +
   'You write ATS-optimized, impactful resume content. ' +
   'Always return strict JSON output matching the expected format. No markdown, no extra text.';
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Rate limit — 15 req/min (used heavily during resume building)
-  const limited = await rateLimit(req, { prefix: 'resume', max: 15, window: 60 });
-  if (limited) return limited;
 
   // 2. Validate
   let body: z.infer<typeof BodySchema>;
@@ -94,30 +88,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // 3. AI Safety Validation
-  if (body.targetRole) {
-    const safetyStatus = validateUserInput(body.targetRole);
-    if (!safetyStatus.allowed) {
-      return NextResponse.json({ error: 'Invalid Job Role', details: safetyStatus.message }, { status: 400 });
-    }
-  }
 
-  // 4. Sanitize
-  const sanitized = {
-    ...body,
-    fullName: sanitize(body.fullName, 100),
-    targetRole: sanitize(body.targetRole, 100),
-    skills: sanitize(body.skills, 500),
-    education: sanitize(body.education, 400),
-    projects: sanitize(body.projects, 800),
-    achievements: sanitize(body.achievements, 400),
-    experience: sanitize(body.experience, 1500),
-  };
+  const sanitized = { ...body };
 
-  // 4. Cache
-  const cacheKey = makeCacheKey('resume', { action: sanitized.action, targetRole: sanitized.targetRole, experience: sanitized.experience, projects: sanitized.projects });
-  const cached = await getCached<object>(cacheKey);
-  if (cached) return NextResponse.json({ ...cached, _cache: true });
 
   // 5. Build prompt
   const userPrompt =
@@ -139,7 +112,6 @@ export async function POST(req: NextRequest) {
     });
 
     const result = parseJSON<object>(content);
-    await setCached(cacheKey, result, 60 * 60 * 12); // 12 hours
 
     return NextResponse.json({ ...result, _provider: provider });
   } catch (error: unknown) {

@@ -7,9 +7,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
-import { rateLimit, sanitize } from '@/lib/rateLimit';
-import { checkForInjection, extractUserIdHint, SECURITY_HEADERS } from '@/lib/security';
-import { validateUserInput, AI_SAFETY_INSTRUCTION } from '@/lib/aiSafety';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -21,7 +18,6 @@ const BodySchema = z.object({
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are a Career Architect and Ikigai Master. Your goal is to help users find the intersection of:
-${AI_SAFETY_INSTRUCTION}
 1. What they LOVE (Passion)
 2. What they are GOOD AT (Profession/Skills)
 3. What the WORLD NEEDS (Mission/Market)
@@ -59,10 +55,6 @@ RESPONSE FORMAT (Strict JSON):
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Rate limit (3 req/min - complex analysis)
-  const userId = extractUserIdHint(req);
-  const limited = await rateLimit(req, { prefix: 'ikigai', max: 3, window: 60, userId });
-  if (limited) return limited;
 
   // 2. Validate Body
   let body: z.infer<typeof BodySchema>;
@@ -77,28 +69,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // 3. Sanitize
-  const sanitized = {
-    passions: body.passions.map(p => sanitize(p, 50)),
-    skills: body.skills.map(s => sanitize(s, 50)),
-    marketNeeds: body.marketNeeds.map(m => sanitize(m, 50)),
-    incomeGoals: sanitize(body.incomeGoals || '', 500),
-  };
-
-  const injectionCheck = checkForInjection([
-    ...sanitized.passions.map(p => ({ role: 'user' as const, content: p })),
-    ...sanitized.skills.map(s => ({ role: 'user' as const, content: s })),
-    ...sanitized.marketNeeds.map(m => ({ role: 'user' as const, content: m })),
-    { role: 'user' as const, content: sanitized.incomeGoals }
-  ]);
-  if (injectionCheck) return injectionCheck;
-
-  // 4. AI Safety Validation
-  const combinedInput = `${sanitized.passions.join(' ')} ${sanitized.skills.join(' ')} ${sanitized.marketNeeds.join(' ')} ${sanitized.incomeGoals}`;
-  const safetyStatus = validateUserInput(combinedInput);
-  if (!safetyStatus.allowed) {
-    return NextResponse.json({ error: 'Invalid Input', details: safetyStatus.message }, { status: 400 });
-  }
+  const sanitized = { ...body };
 
   // 5. Build Prompt
   const userPrompt = `DISCOVER MY IKIGAI:
@@ -117,7 +88,7 @@ Analyze these and find my ideal Ikigai path for the 2026 Indian job market.`;
     ], { jsonMode: true, maxTokens: 2000, temperature: 0.8 });
 
     const result = parseJSON<object>(content);
-    return NextResponse.json({ ...result, _provider: provider }, { headers: SECURITY_HEADERS });
+    return NextResponse.json({ ...result, _provider: provider });
 
   } catch (error: unknown) {
     console.error('[ikigai] AI error:', error);

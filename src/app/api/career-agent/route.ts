@@ -8,8 +8,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
-import { rateLimit, checkBodySize, makeCacheKey, getCached, setCached, sanitize } from '@/lib/rateLimit';
-import { checkForInjection, extractUserIdHint, SECURITY_HEADERS } from '@/lib/security';
 
 // ── Schema ────────────────────────────────────────────────────────
 const MessageSchema = z.object({
@@ -69,14 +67,6 @@ RESPONSE FORMAT — Return ONLY this JSON, no markdown, no extra text:
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Body size guard (50KB max)
-  const tooBig = checkBodySize(req, 50_000);
-  if (tooBig) return tooBig;
-
-  // 2. Rate limit — 8 req/min, fingerprinted by IP + userId
-  const userId = extractUserIdHint(req);
-  const limited = await rateLimit(req, { prefix: 'career-agent', max: 8, window: 60, userId });
-  if (limited) return limited;
 
   // 2. Validate body
   let body: z.infer<typeof BodySchema>;
@@ -94,27 +84,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // 3. Sanitize + injection check
-  const messages = body.messages.map((m) => ({
-    role: m.role,
-    content: sanitize(m.content, 10000),
-  }));
+  const { messages, context = '' } = body;
 
-  const injectionBlock = checkForInjection(messages);
-  if (injectionBlock) return injectionBlock;
-
-  // 4. Cache lookup — use last user message as cache key
-  const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
-  const cacheKey = makeCacheKey('career-agent', lastUserMsg?.content ?? messages);
-  const cached = await getCached<object>(cacheKey);
-  if (cached) {
-    return NextResponse.json({ ...cached, _cache: true });
-  }
 
   // 5. Build messages for AI
   const aiMessages: { role: 'system' | 'user' | 'assistant'; content: string }[] = [
     { role: 'system', content: SYSTEM_PROMPT },
-    ...(body.context ? [{ role: 'user' as const, content: `Context: ${sanitize(body.context, 400)}` }] : []),
+    ...(context ? [{ role: 'user' as const, content: `Context: ${context}` }] : []),
     ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
   ];
 
@@ -127,11 +103,7 @@ export async function POST(req: NextRequest) {
     });
 
     const result = parseJSON<object>(content);
-
-    // 7. Cache the result (6 hours)
-    await setCached(cacheKey, result);
-
-    return NextResponse.json({ ...result, _provider: provider }, { headers: SECURITY_HEADERS });
+    return NextResponse.json({ ...result, _provider: provider });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'AI service error';
     console.error('[career-agent] All providers failed:', msg);
@@ -146,6 +118,6 @@ export async function POST(req: NextRequest) {
         { platform: 'LinkedIn', url: 'https://www.linkedin.com/jobs/', label: 'Browse LinkedIn Jobs' },
       ],
       quickTips: ['Keep your resume updated', 'Practice DSA daily', 'Build projects to showcase skills'],
-    }, { status: 200, headers: SECURITY_HEADERS });
+    }, { status: 200 });
   }
 }

@@ -8,9 +8,7 @@
 
 import { NextResponse, NextRequest } from 'next/server';
 import { callAI, parseJSON } from '@/lib/ai';
-import { rateLimit, makeCacheKey, getCached, setCached } from '@/lib/rateLimit';
 import { createHash } from 'crypto';
-import { validateUserInput, AI_SAFETY_INSTRUCTION } from '@/lib/aiSafety';
 
 // ── PDF Extraction ────────────────────────────────────────────────
 async function extractPdfText(buffer: Buffer): Promise<string> {
@@ -27,7 +25,6 @@ async function extractPdfText(buffer: Buffer): Promise<string> {
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are an expert ATS (Applicant Tracking System) resume reviewer for the Indian job market.
-${AI_SAFETY_INSTRUCTION}
 Analyze the resume and return ONLY a JSON object with this exact schema — no markdown, no extra text:
 {
   "score": <number 0-100>,
@@ -47,9 +44,6 @@ India context: check for CTC expectations, CGPA, relevant Indian certifications,
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Rate limit — 5 uploads/min (PDF processing is heavy)
-  const limited = await rateLimit(req, { prefix: 'ats', max: 5, window: 60 });
-  if (limited) return limited;
 
   // 2. Parse multipart form
   let formData: FormData;
@@ -84,13 +78,6 @@ export async function POST(req: NextRequest) {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  // 4. Cache by PDF content hash (SHA-256 of file bytes)
-  const pdfHash = createHash('sha256').update(buffer).digest('hex').slice(0, 16);
-  const cacheKey = makeCacheKey('ats', pdfHash);
-  const cached = await getCached<object>(cacheKey);
-  if (cached) {
-    return NextResponse.json({ ...cached, _cache: true });
-  }
 
   // 5. Extract text
   let resumeText: string;
@@ -111,15 +98,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 6. AI Safety Validation
-  // We check the extracted text for harmful keywords, and if a job role is provided (in formData)
-  const role = (formData.get('jobRole') as string) || '';
-  if (role) {
-    const safetyStatus = validateUserInput(role);
-    if (!safetyStatus.allowed) {
-      return NextResponse.json({ error: 'Invalid Job Role', details: safetyStatus.message }, { status: 400 });
-    }
-  }
 
   // 7. Call AI
   const truncatedText = resumeText.slice(0, 6000); // Stay within token limits
@@ -140,7 +118,6 @@ export async function POST(req: NextRequest) {
     });
 
     const result = parseJSON<object>(content);
-    await setCached(cacheKey, result, 60 * 60 * 24); // 24 hours (same PDF → same result)
 
     return NextResponse.json({ ...result, _provider: provider });
   } catch (error: unknown) {

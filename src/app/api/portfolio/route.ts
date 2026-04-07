@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { Redis } from '@upstash/redis';
-import { validateUserInput, AI_SAFETY_INSTRUCTION } from '@/lib/aiSafety';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL || '',
@@ -69,20 +68,6 @@ THEME: Minimal Dev Portfolio. Use these EXACT styles:
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limiting — only in production, fail open if Redis has issues
-    if (process.env.NODE_ENV === 'production') {
-      try {
-        const ip = req.headers.get('x-forwarded-for') || 'anonymous';
-        const rateLimitKey = `rate_limit_portfolio_${ip}`;
-        const requests = await redis.incr(rateLimitKey);
-        if (requests === 1) await redis.expire(rateLimitKey, 60);
-        if (requests > 8) {
-          return NextResponse.json({ error: 'Too many requests. Please wait a minute.' }, { status: 429 });
-        }
-      } catch (redisErr) {
-        console.warn('Redis rate limit unavailable, skipping:', redisErr);
-      }
-    }
 
     const body = await req.json();
     const parsed = portfolioSchema.safeParse(body);
@@ -101,14 +86,7 @@ export async function POST(req: NextRequest) {
     const name = data?.fullName?.trim() || 'Your Name';
     const role = data?.targetRole?.trim() || 'Software Engineer';
 
-    // AI Safety Validation
-    const safetyStatus = validateUserInput(role + " " + (data?.summary || ''));
-    if (!safetyStatus.allowed) {
-      return NextResponse.json({ error: 'Invalid Input', details: safetyStatus.message }, { status: 400 });
-    }
-
     const sysPrompt = `You are an expert frontend developer. Generate a self-contained single-page HTML portfolio.
-${AI_SAFETY_INSTRUCTION}
 Output ONLY this JSON: { "html": "<!DOCTYPE html>...</html>" }
 No markdown. No explanation. Just the JSON object.
 Use Tailwind CSS CDN: <script src="https://cdn.tailwindcss.com"></script>

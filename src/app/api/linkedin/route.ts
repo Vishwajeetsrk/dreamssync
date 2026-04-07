@@ -8,7 +8,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
-import { rateLimit, makeCacheKey, getCached, setCached, sanitize } from '@/lib/rateLimit';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -85,9 +84,6 @@ Return EXACTLY this JSON structure:
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Rate limit — 5 req/min (expensive operation)
-  const limited = await rateLimit(req, { prefix: 'linkedin', max: 5, window: 60 });
-  if (limited) return limited;
 
   // 2. Validate
   let body: z.infer<typeof BodySchema>;
@@ -105,25 +101,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // 3. Sanitize all string fields
-  const sanitized: z.infer<typeof BodySchema> = {
-    targetRole: sanitize(body.targetRole, 300),
-    currentRole: sanitize(body.currentRole, 500),
-    currentHeadline: sanitize(body.currentHeadline, 1000),
-    currentAbout: sanitize(body.currentAbout, 10000),
-    skills: sanitize(body.skills, 10000),
-    experience: sanitize(body.experience, 20000),
-    education: sanitize(body.education, 2000),
-    achievements: sanitize(body.achievements, 5000),
-    tone: body.tone,
-  };
+  const sanitized = { ...body };
 
-  // 4. Cache — based on full input hash
-  const cacheKey = makeCacheKey('linkedin', sanitized);
-  const cached = await getCached<object>(cacheKey);
-  if (cached) {
-    return NextResponse.json({ ...cached, _cache: true });
-  }
 
   // 5. Build AI messages
   const aiMessages = [
@@ -140,7 +119,6 @@ export async function POST(req: NextRequest) {
     });
 
     const result = parseJSON<object>(content);
-    await setCached(cacheKey, result, 60 * 60 * 4); // 4 hours
 
     return NextResponse.json({ ...result, _provider: provider });
   } catch (error: unknown) {

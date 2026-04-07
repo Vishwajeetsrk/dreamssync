@@ -6,9 +6,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
-import { rateLimit, checkBodySize, sanitize } from '@/lib/rateLimit';
-import { checkForInjection, extractUserIdHint, SECURITY_HEADERS } from '@/lib/security';
-import { validateUserInput, AI_SAFETY_INSTRUCTION } from '@/lib/aiSafety';
 
 // ── Schema ────────────────────────────────────────────────────────
 const BodySchema = z.object({
@@ -19,7 +16,6 @@ const BodySchema = z.object({
 
 // ── System Prompt ─────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are an elite career counselor and technical architect. Generate a high-depth, practical roadmap for the requested role. 
-${AI_SAFETY_INSTRUCTION}
 
 PRIORITIZE THESE EXACT RESOURCES:
 - FreeCodeCamp Data Science: https://www.youtube.com/watch?v=LHc6W2K7U8A
@@ -49,14 +45,6 @@ RETURN EXACT JSON STRUCTURE:
 
 // ── Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
-  // 1. Body size guard (20KB max — roadmap inputs are small)
-  const tooBig = checkBodySize(req, 20_000);
-  if (tooBig) return tooBig;
-
-  // 2. Rate limit — 5 per minute per user/IP
-  const userId = extractUserIdHint(req);
-  const limited = await rateLimit(req, { prefix: 'roadmap', max: 5, window: 60, userId });
-  if (limited) return limited;
 
   // 3. Validate
   let body: z.infer<typeof BodySchema>;
@@ -71,27 +59,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  // 4. Sanitize + injection check
-  const role = sanitize(body.role, 100);
-  const goal = sanitize(body.goal, 500) || 'Job ready';
-  const experience = sanitize(body.experience, 100);
+  const { role, goal = 'Job ready', experience } = body;
 
-  const injectionBlock = checkForInjection([
-    { role: 'user', content: role },
-    { role: 'user', content: goal },
-    { role: 'user', content: experience }
-  ]);
-  if (injectionBlock) return injectionBlock;
-
-  // 5. AI Safety Validation
-  const safetyStatus = validateUserInput(role);
-  if (!safetyStatus.allowed) {
-    return NextResponse.json({ 
-      error: 'Invalid role', 
-      details: safetyStatus.message,
-      alternatives: ['Software Developer', 'Data Analyst', 'Designer', 'Product Manager']
-    }, { status: 400 });
-  }
 
   // 6. Build AI messages
   const userPrompt = `Generate a high-grade career roadmap for: ${role}. 
@@ -110,7 +79,7 @@ REQUIREMENTS:
     ], { jsonMode: true, maxTokens: 2500, temperature: 0.7 });
 
     const result = parseJSON<object>(content);
-    return NextResponse.json({ ...result, _provider: provider }, { headers: SECURITY_HEADERS });
+    return NextResponse.json({ ...result, _provider: provider });
 
   } catch (error: unknown) {
     console.error('[roadmap] All providers failed:', error);
