@@ -178,6 +178,26 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 
 ---
 
+## 🚀 Deployment Checklist
+
+When deploying to **Vercel** or other production environments, ensure the following steps are completed:
+
+1.  **Firebase Authorized Domains**: 
+    - Go to [Firebase Console](https://console.firebase.google.com/) > **Authentication** > **Settings** > **Authorized domains**.
+    - Add your production domain (e.g., `dreamsync-ruddy.vercel.app`).
+    - Add any preview domains (e.g., `dream-sync-j3q6vao54-dreamssync.vercel.app`).
+    - *Failure to do this will result in 'auth/requests-from-referer-blocked' errors.*
+
+2.  **Environment Variables**:
+    - Ensure all keys from `.env.local` are added to Vercel/Production environment secrets.
+    - Specifically, ensure `FIREBASE_PRIVATE_KEY` handles newlines properly (Vercel handles this well, but some CI/CD might require escaping).
+
+3.  **Supabase & Upstash**:
+    - Whitelist your deployment IP/Domain in your Supabase project settings if using strict database access rules.
+    - Ensure your Upstash Redis URL is reachable from your production region.
+
+---
+
 ## 📄 License
 
 © 2026 DreamSync AI. All rights reserved. Private repository.
