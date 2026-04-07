@@ -66,8 +66,11 @@ export default function ProfilePage() {
     if (!file || !user) return;
 
     // Validation: Type (PNG, GIF, JPEG)
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
-    if (!allowedTypes.includes(file.type)) {
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
+    const fileExtension = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
+    const isAllowedExt = ['png', 'jpg', 'jpeg', 'gif'].includes(fileExtension);
+
+    if (!allowedTypes.includes(file.type) && !isAllowedExt) {
       setMessage({ type: 'error', text: 'Invalid format. Use PNG, GIF, or JPEG.' });
       return;
     }
@@ -168,7 +171,7 @@ export default function ProfilePage() {
                     <Camera className="w-8 h-8" />
                   </button>
                 </div>
-                <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
+                <input type="file" ref={fileInputRef} className="hidden" accept=".png,.jpg,.jpeg,.gif" onChange={handleFileUpload} />
                 <div className="text-center">
                   <h3 className="font-black text-xl uppercase">{userData?.name || 'DreamSync User'}</h3>
                   <p className="text-xs font-bold text-gray-500 uppercase mt-1 tracking-wider">{user.email}</p>
