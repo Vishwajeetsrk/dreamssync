@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { auth } from '@/lib/firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import Link from 'next/link';
-import { ArrowLeft, Mail, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Mail, CheckCircle2, AlertCircle, ShieldCheck, Loader2 } from 'lucide-react';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -17,11 +18,7 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/callback?next=/profile`,
-      });
-      
-      if (resetError) throw resetError;
+      await sendPasswordResetEmail(auth, email);
       setSuccess(true);
     } catch (err: any) {
       console.error('Password reset error:', err);

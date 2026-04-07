@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { auth } from '@/lib/firebase';
+import { updatePassword } from 'firebase/auth';
 import { motion } from 'framer-motion';
-import { Lock, Loader2, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Lock, Loader2, ShieldCheck, AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -26,14 +27,12 @@ export default function UpdatePasswordPage() {
     setError('');
 
     try {
-      const { error: updateError } = await supabase.auth.updateUser({
-        password: password
-      });
-
-      if (updateError) throw updateError;
+      const user = auth.currentUser;
+      if (!user) throw new Error('No active sovereign session found. Please re-authenticate.');
+      
+      await updatePassword(user, password);
       setSuccess(true);
       
-      // Auto-redirect to dashboard after 3 seconds
       setTimeout(() => {
         router.push('/dashboard');
       }, 3000);
