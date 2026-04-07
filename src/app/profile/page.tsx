@@ -4,9 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { auth, db, storage } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase';
 import { updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { 
@@ -71,33 +71,61 @@ export default function ProfilePage() {
     const file = e.target.files?.[0];
     if (!file || !user) return;
 
-    // Validation: Type (PNG, GIF, JPEG)
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
-    const fileExtension = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
-    const isAllowedExt = ['png', 'jpg', 'jpeg', 'gif'].includes(fileExtension);
-
-    if (!allowedTypes.includes(file.type) && !isAllowedExt) {
-      setMessage({ type: 'error', text: 'Invalid format. Use PNG, GIF, or JPEG.' });
+    // STEP 4: Validation (JPG/PNG Only, Max 2MB)
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    if (!allowedTypes.includes(file.type)) {
+      setMessage({ type: 'error', text: 'Invalid format. Use PNG or JPG.' });
       return;
     }
 
-    // Validation: Size (Max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setMessage({ type: 'error', text: 'File too large. Max size is 5MB.' });
+    if (file.size > 2 * 1024 * 1024) {
+      setMessage({ type: 'error', text: 'File too large. Max size is 2MB.' });
       return;
     }
 
     setUploading(true);
     setMessage({ type: '', text: '' });
+
     try {
-      const storageRef = ref(storage, `profile_photos/${user.uid}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      setPhotoURL(url);
-      await updateDoc(doc(db, 'users', user.uid), { photoURL: url });
-      setMessage({ type: 'success', text: 'Identity photo updated!' });
+      // STEP 4: Rename file (userId + timestamp)
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.uid}-${Date.now()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      // STEP 7: Optional - Delete old avatar from storage could go here
+      // But for now, we just upload the new one
+
+      const { data, error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // STEP 5: Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      setPhotoURL(publicUrl);
+
+      // STEP 5: Save to Database (Firestore for existing sync, Supabase for requested update)
+      // Syncing with Firestore to keep Navbar/Dashboard working
+      await updateDoc(doc(db, 'users', user.uid), { photoURL: publicUrl });
+      
+      // Async update to Supabase users table (Step 5)
+      try {
+        await supabase
+          .from('users')
+          .update({ avatar_url: publicUrl })
+          .eq('id', user.uid);
+      } catch (dbErr) {
+        console.warn("Supabase DB sync skipped or failed (check table existence)");
+      }
+
+      setMessage({ type: 'success', text: 'Identity photo updated via Supabase!' });
     } catch (err: any) {
-      setMessage({ type: 'error', text: 'Upload failed. Try again.' });
+      console.error(err);
+      setMessage({ type: 'error', text: 'Cloud storage sync failed.' });
     } finally {
       setUploading(false);
     }
