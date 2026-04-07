@@ -216,38 +216,74 @@ export default function ProfilePage() {
           <motion.div key="security" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-12">
             
             {/* Identity & Avatar Section */}
-            <section className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] grid grid-cols-1 md:grid-cols-3 gap-10">
+            <section className="bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] grid grid-cols-1 md:grid-cols-3 gap-10">
               <div className="flex flex-col items-center gap-6">
-                <div className="relative w-40 h-40 rounded-full border-8 border-black overflow-hidden bg-gray-50 flex items-center justify-center group">
-                  {photoURL ? <Image src={photoURL} alt="Profile" fill className="object-cover" /> : <User className="w-16 h-16 text-gray-300" />}
-                  {uploading && <div className="absolute inset-0 bg-black/60 flex items-center justify-center"><Loader2 className="w-8 h-8 text-white animate-spin" /></div>}
-                  <button onClick={() => fileInputRef.current?.click()} className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                    <Camera className="w-8 h-8" />
+                <div className="relative w-48 h-48 rounded-full border-[6px] border-black overflow-hidden bg-gray-50 flex items-center justify-center group shadow-[6px_6px_0px_0px_rgba(0,0,0,0.1)]">
+                  {photoURL ? (
+                    <Image src={photoURL} alt="Profile" fill className="object-cover transition-transform group-hover:scale-105" />
+                  ) : (
+                    <User className="w-20 h-20 text-gray-300" />
+                  )}
+                  {uploading && (
+                    <div className="absolute inset-0 bg-black/60 flex flex-center items-center justify-center backdrop-blur-[2px]">
+                      <Loader2 className="w-10 h-10 text-white animate-spin" />
+                    </div>
+                  )}
+                  <button 
+                    onClick={() => fileInputRef.current?.click()} 
+                    className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer"
+                  >
+                    <Camera className="w-10 h-10 mb-2" />
+                    <span className="text-[10px] font-black uppercase">Change Identity</span>
                   </button>
                 </div>
-                <input type="file" ref={fileInputRef} className="hidden" accept=".png,.jpg,.jpeg,.gif" onChange={handleFileUpload} />
+                <input type="file" ref={fileInputRef} className="hidden" accept=".png,.jpg,.jpeg" onChange={handleFileUpload} />
                 <div className="text-center">
-                  <h3 className="font-black text-xl uppercase">{userData?.name || 'DreamSync User'}</h3>
-                  <p className="text-xs font-bold text-gray-500 uppercase mt-1 tracking-wider">{user.email}</p>
+                  <h3 className="font-black text-2xl uppercase tracking-tighter">{userData?.name || 'Dreamer'}</h3>
+                  <div className="flex items-center justify-center gap-2 mt-1">
+                    <span className="px-2 py-0.5 bg-blue-100 text-blue-600 text-[10px] font-black uppercase border-2 border-blue-600 rounded">
+                      Verified Identity
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="md:col-span-2 space-y-6">
-                <h2 className="text-xl font-black uppercase flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-blue-600" /> {t('account_identity')}
-                </h2>
-                <form onSubmit={handleUpdateProfile} className="space-y-4">
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] font-black uppercase text-gray-400">{t('full_name')}</label>
+              <div className="md:col-span-2 space-y-8">
+                <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                  <h2 className="text-2xl font-black uppercase flex items-center gap-3">
+                    <Shield className="w-6 h-6 text-blue-600" /> {t('account_identity')}
+                  </h2>
+                </div>
+                
+                <form onSubmit={handleUpdateProfile} className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase text-gray-400 tracking-widest">{t('full_name')}</label>
                     <input 
                       type="text" 
                       value={name} 
                       onChange={(e) => setName(e.target.value)} 
-                      className="w-full bg-gray-50 border-4 border-black p-4 font-black outline-none focus:bg-white transition-colors" 
+                      className="w-full bg-gray-50 border-4 border-black p-5 font-black text-lg outline-none focus:bg-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]" 
+                      placeholder="Your Full Name"
                     />
                   </div>
-                  <button type="submit" disabled={loading} className="px-8 py-3 bg-blue-600 border-4 border-black text-white font-black uppercase text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all flex items-center gap-2">
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {t('save_identity')}
+                  
+                  <div className="space-y-2 opacity-60">
+                    <label className="text-xs font-black uppercase text-gray-400 tracking-widest">Verified Email</label>
+                    <input 
+                      type="text" 
+                      value={user.email || ''} 
+                      readOnly 
+                      className="w-full bg-gray-100 border-4 border-black p-5 font-black text-lg outline-none cursor-not-allowed"
+                    />
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    disabled={loading} 
+                    className="px-10 py-4 bg-blue-600 border-4 border-black text-white font-black uppercase text-sm shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-3 active:scale-95"
+                  >
+                    {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />} 
+                    {t('save_identity')}
                   </button>
                 </form>
               </div>
