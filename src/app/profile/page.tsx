@@ -99,33 +99,33 @@ export default function ProfilePage() {
         .from('avatars')
         .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) throw new Error(uploadError.message || 'Upload error');
 
       // STEP 5: Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('avatars')
         .getPublicUrl(filePath);
 
+      if (!publicUrl) throw new Error("Could not generate public URL");
+
       setPhotoURL(publicUrl);
 
       // STEP 5: Save to Database (Firestore for existing sync, Supabase for requested update)
-      // Syncing with Firestore to keep Navbar/Dashboard working
       await updateDoc(doc(db, 'users', user.uid), { photoURL: publicUrl });
       
-      // Async update to Supabase users table (Step 5)
       try {
         await supabase
           .from('users')
           .update({ avatar_url: publicUrl })
           .eq('id', user.uid);
       } catch (dbErr) {
-        console.warn("Supabase DB sync skipped or failed (check table existence)");
+        console.warn("Supabase DB sync skipped");
       }
 
       setMessage({ type: 'success', text: 'Identity photo updated via Supabase!' });
     } catch (err: any) {
-      console.error(err);
-      setMessage({ type: 'error', text: 'Cloud storage sync failed.' });
+      console.error('[STORAGE ERROR]:', err);
+      setMessage({ type: 'error', text: `Sync Failed: ${err.message || 'Check your Supabase bucket settings.'}` });
     } finally {
       setUploading(false);
     }
