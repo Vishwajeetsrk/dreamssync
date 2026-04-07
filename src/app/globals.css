@@ -15,46 +15,27 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
-  /* Neo-Brutalism shadow */
-  --shadow-neo: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-  --shadow-neo-hover: 6px 6px 0px 0px rgba(0, 0, 0, 1);
-  --shadow-neo-active: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  /* Neon Shadows */
+  --shadow-neon-primary: 0 0 15px rgba(79, 70, 229, 0.4);
+  --shadow-neon-accent: 0 0 15px rgba(34, 211, 238, 0.4);
 }
 
 @layer base {
-  :root {
-    --background: #f4f6f8; /* Soft off-white typical in fintech */
-    --foreground: #09090b; /* Near black */
-    --card: #ffffff;
-    --card-foreground: #09090b;
-    --primary: #2563eb; /* Strong Blue */
-    --primary-foreground: #ffffff;
-    --secondary: #e2e8f0;
-    --secondary-foreground: #0f172a;
-    --accent: #facc15; /* Warning/accent Yellow */
-    --accent-foreground: #000000;
-    --border: #000000;
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
-  }
-
-  .dark {
-    --background: #09090b;
-    --foreground: #fafafa;
-    --card: #141415;
-    --card-foreground: #fafafa;
-    --primary: #3b82f6; 
-    --primary-foreground: #ffffff;
-    --secondary: #1e293b;
-    --secondary-foreground: #f8fafc;
-    --accent: #facc15;
-    --accent-foreground: #000000;
-    --border: #334155;
-    --muted: #1e1e20;
-    --muted-foreground: #a1a1aa;
-    --shadow-neo: 4px 4px 0px 0px rgba(255, 255, 255, 0.2);
-    --shadow-neo-hover: 6px 6px 0px 0px rgba(255, 255, 255, 0.2);
-    --shadow-neo-active: 2px 2px 0px 0px rgba(255, 255, 255, 0.2);
+  :root, .dark {
+    /* DARK AI + NEON GLOW THEME */
+    --background: #0B0F1A;
+    --foreground: #FFFFFF;
+    --card: rgba(17, 24, 39, 0.7);
+    --card-foreground: #FFFFFF;
+    --primary: #4F46E5;
+    --primary-foreground: #FFFFFF;
+    --secondary: #A78BFA;
+    --secondary-foreground: #FFFFFF;
+    --accent: #22D3EE;
+    --accent-foreground: #0B0F1A;
+    --border: rgba(255, 255, 255, 0.1);
+    --muted: #1F2937;
+    --muted-foreground: #9CA3AF;
   }
 }
 
@@ -62,7 +43,8 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: var(--font-sans), system-ui, sans-serif;
+    font-family: 'Inter', 'Satoshi', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
   * {
@@ -70,42 +52,24 @@
   }
 }
 
-/* Neo-Brutalism Utilities */
 @layer utilities {
-  .neo-box {
-    border: 2px solid var(--border);
-    box-shadow: var(--shadow-neo);
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .neo-box:hover {
-    box-shadow: var(--shadow-neo-hover);
-    transform: translate(-2px, -2px);
-  }
-  
-  .neo-box:active {
-    box-shadow: var(--shadow-neo-active);
-    transform: translate(2px, 2px);
-  }
-  
-  .skeleton {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    background-image: linear-gradient(90deg, var(--muted) 0px, rgba(0,0,0,0.05) 40px, var(--muted) 80px);
-    background-size: 200% 100%;
+  .glass-card {
+    @apply bg-[rgba(17,24,39,0.7)] backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
 
-  .dark .skeleton {
-    background-image: linear-gradient(90deg, var(--muted) 0px, rgba(255,255,255,0.05) 40px, var(--muted) 80px);
+  .neon-glow-primary {
+    @apply shadow-[0_0_15px_rgba(79,70,229,0.4)] hover:shadow-[0_0_25px_rgba(79,70,229,0.6)] transition-all duration-300;
   }
 
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-      background-position: 100% 0;
-    }
-    50% {
-      opacity: .7;
-      background-position: 0 0;
-    }
+  .neon-glow-accent {
+    @apply shadow-[0_0_15px_rgba(34,211,238,0.4)] hover:shadow-[0_0_25px_rgba(34,211,238,0.6)] transition-all duration-300;
+  }
+
+  .text-neon-cyan {
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+  }
+
+  .text-neon-indigo {
+    text-shadow: 0 0 8px rgba(79, 70, 229, 0.5);
   }
 }
