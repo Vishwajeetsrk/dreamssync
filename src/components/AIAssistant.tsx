@@ -61,10 +61,13 @@ export default function AIAssistant() {
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-black text-white rounded-full border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center z-[9998] hover:bg-blue-600 transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 w-16 h-16 bg-black text-white rounded-full border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center z-[9998] hover:bg-blue-600 transition-colors group"
       >
-        <Sparkles className="w-8 h-8" />
+        <div className="relative">
+          <Sparkles className={`w-8 h-8 transition-transform duration-300 ${isOpen ? 'rotate-90 scale-0' : 'scale-100'}`} />
+          <X className={`w-8 h-8 absolute top-0 left-0 transition-transform duration-300 ${isOpen ? 'scale-100' : 'scale-0 -rotate-90'}`} />
+        </div>
       </motion.button>
 
       {/* Chat Window */}
@@ -79,8 +82,8 @@ export default function AIAssistant() {
             {/* Header */}
             <div className="bg-black text-white p-4 flex items-center justify-between border-b-4 border-black">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 bg-blue-600 border-2 border-white rounded-full flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(255,255,255,0.3)]">
+                  <span className="font-black text-xs">DS</span>
                 </div>
                 <div>
                   <h3 className="font-black text-sm uppercase tracking-tight">DreamSync AI Guide</h3>
