@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AIAssistant from "@/components/AIAssistant";
 import { AuthProvider } from "@/context/AuthContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 
@@ -28,6 +29,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <AIAssistant />
           </LanguageProvider>
         </AuthProvider>
       </body>

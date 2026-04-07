@@ -98,9 +98,11 @@ The UI follows a **Neo-Brutalism + Fintech** aesthetic, utilizing **Tailwind CSS
 
 ### 🛡️ Production-Grade Security & Reliability
 
+-   **DreamSync AI Guide**: Floating AI assistant for real-time tool discovery and technical support.
+-   **Multi-Language Sync (i18n)**: Global English/Hindi synchronization persisted via Firestore.
+-   **Real-Time Identity Hub**: Instant profile photo and name updates across all components using Firestore Snapshots.
 -   **Global AI Safety Guard:** 400-level whole-word regex safety blocking enforced across all AI agents.
--   **Smart ATS Analyzer v2:** FAANG-tier resume auditing with detailed eligibility logic for top firms.
--   **Next.js Remote Hardening:** Securely configured `remotePatterns` for asset visibility and security.
+-   **Next.js Remote Hardening:** Securely configured `remotePatterns` for `lh3.googleusercontent.com` and `*.firebasestorage.app`.
 -   **API Rate Limiting:** Global rate limiting via **Upstash Redis** to ensure multi-region stability.
 -   **Edge Routing:** Next.js Middleware for pre-flight security and authentication checks.
 -   **Global CSP Policy:** Hardened Content Security Policy to mitigate XSS and data exfiltration.

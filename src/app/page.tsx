@@ -2,11 +2,14 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Brain, Briefcase, CheckCircle, FileText, HeartHandshake, Sparkles, Coffee, Map, TrendingUp, Building2 } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Briefcase, CheckCircle, FileText, HeartHandshake, Sparkles, Coffee, Map, TrendingUp, Building2, User } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/context/AuthContext';
+import Image from 'next/image';
 
 export default function Home() {
   const { t } = useLanguage();
+  const { user, userData } = useAuth();
 
   const features = [
     { title: t('ikigai_finder'), desc: t('ikigai_desc'), icon: Brain, color: "bg-black text-white", href: "/ikigai", premium: true },
@@ -51,6 +54,21 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          {user && (
+            <div className="flex flex-col items-center gap-2 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              {userData?.photoURL ? (
+                <div className="w-20 h-20 rounded-full border-4 border-black overflow-hidden relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <Image src={userData.photoURL} alt="Profile" fill className="object-cover" />
+                </div>
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-blue-100 border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <User className="w-10 h-10 text-black" />
+                </div>
+              )}
+              <h2 className="text-xl font-black uppercase tracking-tighter">Welcome back, {userData?.name || 'Dreamer'}!</h2>
+            </div>
+          )}
+          
           <span className="inline-block py-1 px-3 border-2 border-black bg-accent text-accent-foreground font-bold text-sm mb-6 neo-box">
              🔥 AI-Powered Career Growth
           </span>
