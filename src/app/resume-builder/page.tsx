@@ -251,13 +251,13 @@ export default function ResumeBuilder() {
         
         <div className="flex flex-col gap-6 mb-12">
           <div className="flex items-center gap-3">
-             <div className="p-2 bg-black text-white shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]">
+             <div className="p-2 bg-[#2563EB] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <FileText className="w-8 h-8" />
              </div>
              <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Blueprint Architect v2.0</span>
           </div>
           <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">
-             Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder_</span>
+             Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder</span>
           </h1>
         </div>
 
@@ -433,32 +433,6 @@ export default function ResumeBuilder() {
       {/* Main Preview Region */}
       <main className="flex-1 overflow-y-auto bg-gray-200 p-12 lg:p-20 flex justify-center scrollbar-hide relative">
 
-         <div className="absolute top-12 right-12 z-50">
-            <AnimatePresence>
-               {atsAnalysis && (
-                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="neo-box p-8 bg-white min-w-[300px] space-y-6">
-                     <div className="flex items-center justify-between border-b-4 border-black pb-4">
-                        <span className="text-xs font-black uppercase tracking-widest text-[#2563EB]">ATS SCORE CORE_</span>
-                        <div className={`text-4xl font-black ${atsAnalysis.score >= 80 ? 'text-green-600' : 'text-amber-500'}`}>
-                           {atsAnalysis.score}%
-                        </div>
-                     </div>
-                     <div className="space-y-2">
-                        {atsAnalysis.suggestions.slice(0, 3).map((s, i) => (
-                           <div key={i} className="flex gap-3 text-[10px] font-bold uppercase transition-all hover:translate-x-1">
-                              <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" /> {s}
-                           </div>
-                        ))}
-                     </div>
-                     <div className="pt-4 border-t-4 border-black">
-                        <Link href="/ats-check" className="text-[10px] font-black text-[#2563EB] uppercase flex items-center justify-between group">
-                           Advanced Analysis <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                        </Link>
-                     </div>
-                  </motion.div>
-               )}
-            </AnimatePresence>
-         </div>
 
          <div className="w-full max-w-[850px] shadow-[20px_20px_0px_0px_rgba(0,0,0,0.1)]">
             <ResumePreview data={data} template={template} ref={componentRef} />
