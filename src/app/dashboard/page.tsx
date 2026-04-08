@@ -56,7 +56,7 @@ export default function Dashboard() {
               <span className="text-sm font-black uppercase tracking-[0.4em] text-black/40">Command Center v4.0</span>
             </div>
             <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-none text-[#111827] uppercase">
-              Welcome, <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic">{userName}_</span>
+              Welcome, <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic">{userName}</span>
             </h1>
           </div>
           

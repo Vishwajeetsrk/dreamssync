@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon, Menu, X, Sparkles, Orbit, Zap, LayoutDashboard, Fingerprint, ArrowRight } from 'lucide-react';
+import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon, Menu, X, Sparkles, Orbit, Zap, LayoutDashboard, Fingerprint, ArrowRight, Settings } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { auth } from '@/lib/firebase';
@@ -110,11 +110,14 @@ export default function Navbar() {
                 <div className="absolute right-0 mt-4 w-60 neo-box p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[100]">
                   <div className="flex flex-col gap-4">
                     <div className="border-b-2 border-black/10 pb-4">
-                      <p className="font-black text-[10px] text-gray-400 uppercase tracking-widest mb-1">Authenticated Node_</p>
+                      <p className="font-black text-[10px] text-gray-400 uppercase tracking-widest mb-1">Authenticated Node</p>
                       <p className="font-black text-sm uppercase truncate">{userData?.name || 'User'}</p>
                     </div>
+                    <Link href="/profile" className="w-full flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase tracking-widest text-[#2563EB] border-2 border-[#2563EB] hover:bg-[#2563EB] hover:text-white transition-all">
+                      <Settings className="w-4 h-4" /> IDENTITY SETTINGS
+                    </Link>
                     <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase tracking-widest text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white transition-all">
-                      <LogOut className="w-4 h-4" /> TERMINATE SESSION
+                      <LogOut className="w-4 h-4" /> LOGOUT
                     </button>
                   </div>
                 </div>

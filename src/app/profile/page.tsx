@@ -202,7 +202,7 @@ function ProfileContent() {
               <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Identity Node Protocol</span>
             </div>
             <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none text-black uppercase">
-              Sovereign <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Profile_</span>
+              Sovereign <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Profile</span>
             </h1>
           </div>
           
@@ -285,7 +285,7 @@ function ProfileContent() {
               <div className="lg:col-span-8 space-y-12">
                 <div className="neo-box p-16 bg-white">
                   <h3 className="text-sm font-black uppercase tracking-[0.4em] text-black/30 mb-12 flex items-center gap-4">
-                    <Settings className="w-6 h-6 text-black" /> PERSONNEL PROTOCOL_
+                    <Settings className="w-6 h-6 text-black" /> PERSONNEL PROTOCOL
                   </h3>
                   
                   <form onSubmit={handleUpdateProfile} className="space-y-12">
@@ -329,7 +329,7 @@ function ProfileContent() {
             >
               <div className="neo-box p-16 bg-white">
                 <h2 className="text-3xl font-black uppercase mb-16 flex items-center gap-6 tracking-tighter">
-                  <Lock className="w-10 h-10 text-[#2563EB]" /> SECURITY HARDENING_
+                  <Lock className="w-10 h-10 text-[#2563EB]" /> SECURITY HARDENING
                 </h2>
                 <form onSubmit={handleChangePassword} className="space-y-12 max-w-2xl">
                   <div className="space-y-6">
@@ -351,7 +351,7 @@ function ProfileContent() {
               {/* Termination Zone Architecture */}
               <div className="neo-box p-16 bg-red-50 border-red-600 flex flex-col xl:flex-row xl:items-center justify-between gap-16">
                 <div className="space-y-6">
-                  <h3 className="text-4xl font-black uppercase tracking-tighter text-red-600">CRITICAL TERMINATION_</h3>
+                  <h3 className="text-4xl font-black uppercase tracking-tighter text-red-600">CRITICAL TERMINATION</h3>
                   <p className="text-lg font-bold text-red-600/60 max-w-xl leading-snug uppercase">
                     WARNING: Full de-authorization of identity node and permanent erasure of all career synchronization logs within the infrastructure.
                   </p>
