@@ -46,12 +46,13 @@ export default function Navbar() {
         {/* Branding (Historical State) */}
         <div className="flex items-center gap-12 shrink-0">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="p-2 bg-black text-white shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] group-hover:bg-[#2563EB] transition-colors">
-              <Sparkles className="w-6 h-6" />
-            </div>
-            <div className="flex flex-col -space-y-1">
-              <span className="text-xl font-black uppercase tracking-tighter text-black">DreamSync</span>
-              <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[#2563EB]">DREAMS COMES TOGETHER</span>
+            <div className="relative h-10 w-44">
+               <Image 
+                 src="/DreamSynclogo.png" 
+                 alt="DreamSync Logo" 
+                 fill
+                 className="object-contain object-left"
+               />
             </div>
           </Link>
 
