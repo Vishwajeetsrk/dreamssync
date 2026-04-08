@@ -5,7 +5,7 @@ import { auth, db } from '@/lib/firebase';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, User, Database, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap } from 'lucide-react';
+import { Mail, Lock, User, Database, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
@@ -68,116 +68,96 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center relative overflow-hidden px-6">
+    <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center px-6 selection:bg-[#FACC15]/40 font-bold uppercase">
       
-      {/* Premium Background Glows */}
-      <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#7C3AED]/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#06B6D4]/10 blur-[120px] rounded-full pointer-events-none" />
-
       <motion.div 
-        initial={{ opacity: 0, scale: 0.98 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-lg relative z-10"
+        className="w-full max-w-lg"
       >
-        <div className="glass-card rounded-[2rem] p-12 border border-white/5 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
-          {/* Subtle Accent Glow */}
-          <div className="absolute top-0 right-0 w-1/2 h-px bg-gradient-to-l from-[#7C3AED] to-transparent opacity-50" />
-          
-          <div className="text-center mb-10">
-            <div className="inline-flex p-4 bg-white/5 border border-white/10 rounded-2xl mb-6">
-               <Zap className="w-8 h-8 text-[#7C3AED]" />
+        <div className="neo-box p-12 bg-white space-y-10">
+          <div className="text-center space-y-4">
+            <div className="inline-block p-4 bg-[#FACC15] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
+               <Zap className="w-10 h-10" />
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Initialize Identity</h1>
-            <p className="text-[#9CA3AF] text-sm">Synchronize with the DreamSync career grid.</p>
+            <h1 className="text-4xl font-black tracking-tighter text-black">Create Identity_</h1>
+            <p className="text-gray-400 text-xs tracking-[0.2em]">Synchronize with the Grid</p>
           </div>
 
           {error && (
-            <motion.div 
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="mb-8 p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl flex items-center gap-3"
-            >
-              <AlertCircle className="w-5 h-5" /> {error}
-            </motion.div>
+            <div className="p-5 bg-red-100 border-4 border-black text-red-600 text-xs font-black flex items-center gap-4 animate-shake shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <AlertCircle className="w-6 h-6 flex-shrink-0" /> {error}
+            </div>
           )}
 
-          <form onSubmit={handleSignup} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF] ml-1">Full Signature</label>
-              <div className="relative group">
-                <input 
-                  type="text" 
-                  required 
-                  className="input-premium w-full pl-12"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                />
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#7C3AED] transition-colors" />
-              </div>
+          <form onSubmit={handleSignup} className="space-y-6 text-black">
+            <div className="space-y-3">
+              <label className="text-xs font-black tracking-widest ml-1">FULL_SIGNATURE</label>
+              <input 
+                type="text" 
+                required 
+                className="neo-input"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="YOUR NAME"
+              />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF] ml-1">Network Address</label>
-              <div className="relative group">
-                <input 
-                  type="email" 
-                  required 
-                  className="input-premium w-full pl-12"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="identity@network.ai"
-                />
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#7C3AED] transition-colors" />
-              </div>
+            <div className="space-y-3">
+              <label className="text-xs font-black tracking-widest ml-1">NETWORK_ADDRESS</label>
+              <input 
+                type="email" 
+                required 
+                className="neo-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="NAME@EMAIL.COM"
+              />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF] ml-1">Secret Access Cipher</label>
-              <div className="relative group">
-                <input 
-                  type="password" 
-                  required 
-                  className="input-premium w-full pl-12"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                />
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#7C3AED] transition-colors" />
-              </div>
+            <div className="space-y-3">
+              <label className="text-xs font-black tracking-widest ml-1">SECRET_CIPHER</label>
+              <input 
+                type="password" 
+                required 
+                className="neo-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className="btn-primary w-full flex items-center justify-center gap-3 group h-14 bg-gradient-to-r from-[#7C3AED] to-[#2563EB]"
+              className="neo-btn-primary w-full h-16 text-lg mt-4 flex items-center justify-center gap-4"
             >
               {loading ? (
-                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                 <div className="w-8 h-8 border-4 border-white/30 border-t-white animate-spin" />
               ) : (
-                <>Establish Node <ArrowRight className="w-5 h-5 group-hover:translate-x- group-hover:scale-110 transition-all border border-[#7C3AED]/30 rounded-full" /></>
+                <>Establish Node <ArrowRight className="w-6 h-6" /></>
               )}
             </button>
           </form>
 
-          <div className="mt-10 pt-10 border-t border-white/5 space-y-6 text-center">
-            <p className="text-xs font-medium text-[#4B5563] uppercase tracking-[0.2em]">Synchronize via Provider</p>
+          <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-8">
             <button 
               onClick={handleGoogleSignup} 
-              className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-4 rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-4 bg-white border-4 border-black py-4 font-black text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FACC15] transition-all"
             >
-              <Database className="w-5 h-5" /> <span>Cloud Synchronization</span>
+              <Database className="w-5 h-5" /> <span>CLOUD SYNC</span>
             </button>
 
-            <p className="text-sm text-[#9CA3AF]">
-              Already integrated? <Link href="/login" className="text-[#7C3AED] hover:text-[#06B6D4] font-semibold transition-colors">Sign In Hub</Link>
+            <p className="text-center text-xs text-gray-400 font-bold tracking-widest">
+              Already integrated? <Link href="/login" className="text-[#2563EB] hover:underline">Sign In Hub</Link>
             </p>
           </div>
         </div>
 
-        <div className="mt-8 flex justify-center items-center gap-3 opacity-20">
-           <ShieldCheck className="w-4 h-4 text-[#7C3AED]" />
-           <span className="text-[10px] font-black uppercase tracking-[0.6em] text-white">Quantum Encryption Standard</span>
+        <div className="mt-12 flex justify-center items-center gap-4 opacity-30 grayscale">
+           <ShieldCheck className="w-5 h-5" />
+           <span className="text-[10px] font-black tracking-[0.6em]">SOVEREIGN SECURITY LAYER 4.0</span>
+           <Globe className="w-5 h-5" />
         </div>
       </motion.div>
     </div>

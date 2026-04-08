@@ -5,7 +5,7 @@ import { auth, db } from '@/lib/firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles } from 'lucide-react';
+import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -56,105 +56,92 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] flex items-center justify-center relative overflow-hidden px-6">
+    <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center px-6 selection:bg-[#FACC15]/40 font-bold uppercase">
       
-      {/* Premium Background Glows */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#2563EB]/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#7C3AED]/10 blur-[120px] rounded-full pointer-events-none" />
-
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md relative z-10"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="w-full max-w-lg"
       >
-        <div className="glass-card rounded-3xl p-10 border border-white/5 relative overflow-hidden backdrop-blur-3xl">
-          {/* Subtle Accent Glow */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#2563EB] to-transparent opacity-50" />
-          
-          <div className="text-center mb-10">
-            <div className="inline-flex p-3 bg-white/5 border border-white/10 rounded-2xl mb-6 shadow-inner">
-               <ShieldCheck className="w-8 h-8 text-[#2563EB]" />
+        <div className="neo-box p-12 bg-white space-y-10">
+          <div className="text-center space-y-4">
+            <div className="inline-block p-4 bg-[#2563EB] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
+               <ShieldCheck className="w-10 h-10" />
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Welcome Back</h1>
-            <p className="text-[#9CA3AF] text-sm">Secure authorization for your career hub.</p>
+            <h1 className="text-4xl font-black tracking-tighter text-black">Hub Authentication_</h1>
+            <p className="text-gray-400 text-xs tracking-[0.2em]">Secure Access Required</p>
           </div>
 
           {error && (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="mb-8 p-4 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl flex items-center gap-3"
-            >
-              <AlertCircle className="w-5 h-5 flex-shrink-0" /> {error}
-            </motion.div>
+            <div className="p-5 bg-red-100 border-4 border-black text-red-600 text-xs font-black flex items-center gap-4 animate-shake shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <AlertCircle className="w-6 h-6 flex-shrink-0" /> {error}
+            </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF] ml-1">Identity Mail</label>
+          <form onSubmit={handleLogin} className="space-y-8 text-black">
+            <div className="space-y-4">
+              <label className="text-xs font-black tracking-widest ml-1">IDENTITY_MAIL</label>
               <div className="relative group">
                 <input 
                   type="email" 
                   required 
-                  className="input-premium w-full pl-12"
+                  className="neo-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@email.com"
+                  placeholder="NAME@EMAIL.COM"
                 />
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#2563EB] transition-colors" />
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-4">
               <div className="flex justify-between items-center ml-1">
-                <label className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF]">Secret Protocol</label>
-                <Link href="/forgot-password" title="Forgot Password" className="text-xs text-[#2563EB] hover:text-[#06B6D4] transition-colors">Forgot Access?</Link>
+                <label className="text-xs font-black tracking-widest">SECRET_PROTOCOL</label>
+                <Link href="/forgot-password" title="Forgot Password" className="text-[10px] text-[#2563EB] hover:underline">RECOVER ACCESS?</Link>
               </div>
               <div className="relative group">
                 <input 
                   type="password" 
                   required 
-                  className="input-premium w-full pl-12"
+                  className="neo-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                 />
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4B5563] group-focus-within:text-[#2563EB] transition-colors" />
               </div>
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className="btn-primary w-full flex items-center justify-center gap-3 group h-14"
+              className="neo-btn-primary w-full h-16 text-lg flex items-center justify-center gap-4"
             >
               {loading ? (
-                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                 <div className="w-8 h-8 border-4 border-white/30 border-t-white animate-spin" />
               ) : (
-                <>Authorize Hub <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>
+                <>Sign In <ArrowRight className="w-6 h-6" /></>
               )}
             </button>
           </form>
 
-          <div className="mt-10 pt-10 border-t border-white/5 space-y-6">
-            <p className="text-center text-xs font-medium text-[#4B5563] uppercase tracking-[0.2em]">External Synchronization</p>
+          <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-8">
             <button 
               onClick={handleGoogleLogin} 
-              className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold py-4 rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-4 bg-white border-4 border-black py-4 font-black text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FACC15] transition-all"
             >
-              <Binary className="w-5 h-5" /> <span>Google Cloud Auth</span>
+              <Mail className="w-5 h-5" /> <span>SYNC WITH GOOGLE</span>
             </button>
 
-            <p className="text-center text-sm text-[#9CA3AF]">
-              New to the system? <Link href="/signup" className="text-[#2563EB] hover:text-[#06B6D4] font-semibold transition-colors">Create Identity</Link>
+            <p className="text-center text-xs text-gray-400 font-bold tracking-widest">
+              Don't have an account? <Link href="/signup" className="text-[#2563EB] hover:underline">Create one for free!</Link>
             </p>
           </div>
         </div>
 
-        {/* Security Badge */}
-        <div className="mt-8 flex justify-center items-center gap-2 opacity-30">
-           <Sparkles className="w-4 h-4 text-[#2563EB]" />
-           <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white">Sovereign Layer 4 Architecture</span>
+        {/* Security Meta */}
+        <div className="mt-12 flex justify-center items-center gap-4 opacity-30 grayscale">
+           <Zap className="w-5 h-5" />
+           <span className="text-[10px] font-black tracking-[0.6em]">SOVEREIGN ACCESS TERMINAL v4.0</span>
+           <Globe className="w-5 h-5" />
         </div>
       </motion.div>
     </div>

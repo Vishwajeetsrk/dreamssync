@@ -73,32 +73,36 @@ export default function Dashboard() {
              <div className="h-2 flex-grow mx-8 bg-black/5" />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {tools.map((tool, i) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="neo-box p-12 relative overflow-hidden group hover:bg-black hover:text-white transition-all duration-300"
+                className="neo-box relative overflow-hidden group bg-white hover:bg-white transition-all duration-300 flex flex-col h-full"
               >
-                <div className={`p-6 border-4 border-black ${tool.color} inline-block mb-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:bg-white group-hover:text-black transition-colors`}>
-                  <tool.icon className="w-10 h-10" strokeWidth={3} />
+                {/* Tool Header Bar (Restored from Image 4) */}
+                <div className={`h-16 border-b-4 border-black ${tool.color} flex items-center px-6 gap-4`}>
+                   <tool.icon className="w-6 h-6 stroke-[3px]" />
+                   <div className="flex-grow" />
+                   {tool.premium && <span className="text-[8px] font-black bg-[#FACC15] text-black px-3 py-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-widest">Sovereign</span>}
                 </div>
                 
-                <div className="space-y-4 mb-12">
-                   <h3 className="text-3xl font-black uppercase tracking-tight flex items-center justify-between">
+                <div className="p-8 flex flex-col flex-grow space-y-4">
+                   <h3 className="text-2xl font-black uppercase tracking-tight text-black">
                       {tool.name}
-                      {tool.premium && <span className="text-[10px] font-black bg-[#FACC15] text-black px-4 py-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ml-auto">SOVEREIGN</span>}
                    </h3>
-                   <p className="text-sm font-bold text-gray-400 group-hover:text-gray-300 leading-relaxed uppercase">
+                   <p className="text-xs font-bold text-gray-500 leading-relaxed uppercase">
                       {tool.desc}
                    </p>
+                   
+                   <div className="mt-auto pt-8">
+                     <Link href={tool.href} className="flex items-center justify-between w-full px-5 py-3 bg-white border-4 border-black text-[10px] font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
+                        OPEN TOOL <ArrowRight className="w-5 h-5 text-[#2563EB]" />
+                     </Link>
+                   </div>
                 </div>
-                
-                <Link href={tool.href} className="flex items-center justify-between py-6 border-t-4 border-black/10 group-hover:border-white/20 text-xs font-black uppercase tracking-[0.2em] transition-all">
-                  INITIALIZE ACCESS <ArrowRight className="w-6 h-6 text-[#2563EB] group-hover:translate-x-2 transition-transform" />
-                </Link>
               </motion.div>
             ))}
           </div>

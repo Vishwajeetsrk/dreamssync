@@ -28,10 +28,15 @@ export default function Navbar() {
   };
 
   const featureLinks = [
-    { name: 'ROADMAP', href: '/roadmap' },
+    { name: 'CAREER ROADMAP', href: '/roadmap' },
     { name: 'CAREER AGENT', href: '/career-agent' },
     { name: 'RESUME BUILDER', href: '/resume-builder' },
     { name: 'ATS CHECK', href: '/ats-check' },
+    { name: 'IKIGAI FINDER', href: '/ikigai' },
+    { name: 'PORTFOLIO GEN', href: '/portfolio' },
+    { name: 'LINKEDIN OPTIMIZER', href: '/linkedin' },
+    { name: 'SERENITY AI', href: '/mental-health' },
+    { name: 'DOCS & SKILLS', href: '/documents' },
   ];
 
   return (
@@ -40,15 +45,13 @@ export default function Navbar() {
         
         {/* Branding (Historical State) */}
         <div className="flex items-center gap-12 shrink-0">
-          <Link href="/" className="flex items-center group">
-            <div className="relative h-10 w-44 overflow-hidden">
-               <Image
-                src="/DreamSynclogo.png"
-                alt="DreamSync Logo"
-                fill
-                className="object-contain object-left pointer-events-none"
-                priority
-              />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="p-2 bg-black text-white shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] group-hover:bg-[#2563EB] transition-colors">
+              <Orbit className="w-6 h-6" />
+            </div>
+            <div className="flex flex-col -space-y-1">
+              <span className="text-xl font-black uppercase tracking-tighter text-black">DreamSync</span>
+              <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[#2563EB]">Dreams Sync Together_</span>
             </div>
           </Link>
 
@@ -126,10 +129,11 @@ export default function Navbar() {
                      <div className="w-10 h-10 border-2 border-black overflow-hidden relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                        <img src={userData?.avatar_url || ''} alt="P" className="w-full h-full object-cover" />
                      </div>
-                     <div className="flex flex-col text-left">
-                        <span className="font-black text-xs uppercase tracking-tighter text-black truncate w-40">{userData?.name || 'User Node'}</span>
+                      <div className="flex flex-col text-left">
+                        <span className="font-black text-xs uppercase tracking-tighter text-black/40">HI,</span>
+                        <span className="font-black text-sm uppercase tracking-tighter text-[#2563EB] truncate w-40">{userData?.name || 'USER_NODE'}</span>
                         <span className="text-[10px] text-gray-400 font-bold uppercase truncate w-40">{user.email}</span>
-                     </div>
+                      </div>
                   </div>
                   <div className="space-y-2">
                     <Link href="/dashboard" className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-black hover:bg-[#2563EB] hover:text-white transition-all border-2 border-black">
@@ -137,9 +141,9 @@ export default function Navbar() {
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-red-600 hover:bg-black hover:text-white transition-all border-2 border-black"
+                      className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-[#E11D48] hover:bg-black hover:text-white transition-all border-2 border-black"
                     >
-                      <LogOut className="w-4 h-4" /> DE-ACTIVATE
+                      <LogOut className="w-4 h-4" /> SIGN OUT
                     </button>
                   </div>
                </div>

@@ -18,6 +18,7 @@ export default function Home() {
     { title: 'ATS CHECKER', desc: 'Scan existing resumes for optimization.', icon: CheckCircle, color: "bg-purple-100 text-purple-700", href: "/ats-check" },
     { title: 'PORTFOLIO GEN', desc: 'Auto-generate a personal site.', icon: Sparkles, color: "bg-pink-100 text-pink-700", href: "/portfolio" },
     { title: 'ROADMAP PROTOCOL', desc: 'Plan your professional timeline.', icon: Map, color: "bg-sky-100 text-sky-700", href: "/roadmap" },
+    { title: 'LINKEDIN PRO', desc: 'AI headlines & keyword optimization.', icon: Zap, color: "bg-blue-100 text-blue-700", href: "/linkedin" },
     { title: 'SERENITY AI', desc: 'Emotional support & wellness.', icon: HeartHandshake, color: "bg-rose-100 text-rose-700", href: "/mental-health" },
   ];
 

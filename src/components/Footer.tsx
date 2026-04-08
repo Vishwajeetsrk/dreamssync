@@ -35,28 +35,29 @@ export default function Footer() {
         
         {/* Core Architectures */}
         <div className="space-y-8">
-          <h4 className="text-xs font-black tracking-[0.3em] text-black">ARCHITECTURE_</h4>
-          <ul className="space-y-4 text-xs tracking-widest">
-            <li><Link href="/resume-builder" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> RESUME ARCHITECT</Link></li>
-            <li><Link href="/ats-check" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> ATS SYNC HUB</Link></li>
-            <li><Link href="/roadmap" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> CAREER GRAPH</Link></li>
-            <li><Link href="/career-agent" className="hover:text-[#2563EB] transition-colors flex items-center gap-3"><ArrowRight className="w-4 h-4" /> AI AGENT NODE</Link></li>
+          <h4 className="text-xs font-black tracking-[0.3em] text-black">FEATURES_</h4>
+          <ul className="space-y-4 text-[10px] tracking-widest">
+            <li><Link href="/resume-builder" className="hover:text-[#2563EB] transition-colors border-b-2 border-black/5">RESUME BUILDER</Link></li>
+            <li><Link href="/ats-check" className="hover:text-[#2563EB] transition-colors border-b-2 border-black/5">ATS CHECK</Link></li>
+            <li><Link href="/roadmap" className="hover:text-[#2563EB] transition-colors border-b-2 border-black/5">CAREER ROADMAP</Link></li>
+            <li><Link href="/portfolio" className="hover:text-[#2563EB] transition-colors border-b-2 border-black/5">PORTFOLIO GEN</Link></li>
+            <li><Link href="/linkedin" className="hover:text-[#2563EB] transition-colors border-b-2 border-black/5">LINKEDIN OPTIMIZER</Link></li>
           </ul>
         </div>
         
         {/* Infrastructure Nodes */}
         <div className="space-y-8">
-          <h4 className="text-xs font-black tracking-[0.3em] text-black">NODES_</h4>
-          <ul className="space-y-4 text-xs tracking-widest">
-            <li><Link href="/about" className="hover:text-[#2563EB] transition-colors">DOCUMENTATION</Link></li>
-            <li><Link href="/team" className="hover:text-[#2563EB] transition-colors">CORE ENGINEERS</Link></li>
-            <li><Link href="/contact" className="hover:text-[#2563EB] transition-colors">SUPPORT CHANNEL</Link></li>
-            <li>
+          <h4 className="text-xs font-black tracking-[0.3em] text-black">COMPANY_</h4>
+          <ul className="space-y-4 text-[10px] tracking-widest">
+            <li><Link href="/about" className="hover:text-[#2563EB] transition-colors">ABOUT US</Link></li>
+            <li><Link href="/team" className="hover:text-[#2563EB] transition-colors">TEAM</Link></li>
+            <li><Link href="/contact" className="hover:text-[#2563EB] transition-colors">CONTACT</Link></li>
+            <li className="pt-4">
               <Link 
                 href="/donate" 
-                className="inline-flex items-center gap-3 bg-[#FACC15] border-4 border-black px-4 py-2 text-[10px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-all transform hover:scale-105"
+                className="inline-flex items-center gap-2 bg-[#FACC15] border-2 border-black px-4 py-2 text-[10px] font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-all"
               >
-                <Coffee className="w-4 h-4" /> SPONSOR NODE
+                <Coffee className="w-4 h-4 fill-current" /> SUPPORT US
               </Link>
             </li>
           </ul>
@@ -64,15 +65,12 @@ export default function Footer() {
 
         {/* Global Access Archives */}
         <div className="space-y-8">
-          <h4 className="text-xs font-black tracking-[0.3em] text-black">ARCHIVES_</h4>
-          <ul className="space-y-4 text-xs tracking-widest">
-            <li><a href="https://linkedin.com" className="hover:text-[#2563EB] transition-colors underline decoration-4 decoration-black/10">LINKEDIN VAULT</a></li>
-            <li><a href="https://github.com" className="hover:text-[#2563EB] transition-colors underline decoration-4 decoration-black/10">GITHUB REPOSITORIES</a></li>
-            <li><a href="https://twitter.com" className="hover:text-[#2563EB] transition-colors underline decoration-4 decoration-black/10">MISSION X (TWITTER)</a></li>
-            <li className="flex items-center gap-3 text-[#111827]/40 pt-4">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse border border-black" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Global Uplink Ready</span>
-            </li>
+          <h4 className="text-xs font-black tracking-[0.3em] text-black">CONNECT_</h4>
+          <ul className="space-y-4 text-[10px] tracking-widest">
+            <li><a href="https://linkedin.com" className="hover:text-[#2563EB] transition-colors">LINKEDIN</a></li>
+            <li><a href="https://instagram.com" className="hover:text-[#2563EB] transition-colors">INSTAGRAM</a></li>
+            <li><a href="https://twitter.com" className="hover:text-[#2563EB] transition-colors">TWITTER / X</a></li>
+            <li><a href="mailto:support@dreamsync.ai" className="hover:text-[#2563EB] transition-colors">EMAIL US</a></li>
           </ul>
         </div>
       </div>
