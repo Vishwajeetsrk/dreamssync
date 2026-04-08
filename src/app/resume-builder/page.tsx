@@ -23,6 +23,7 @@ const DEFAULT_RESUME: ResumeData = {
     location: "Bengaluru, India",
     linkedin: "vashnavichauhan18",
     github: "vashnavichauhan18",
+    portfolio: "vashnavi.dev"
   },
   summary: "Self-taught Frontend Engineer with hands-on production experience in modern JavaScript frameworks. Proven track record in developing scalable frontend features and optimizing web performance for high-growth startups.",
   skills: [
@@ -262,91 +263,106 @@ export default function ResumeBuilder() {
         </div>
 
         {/* Action Protocol Panel */}
-        <div className="neo-box p-8 bg-[#F3F4F6] space-y-6">
-           <h3 className="text-xs font-black uppercase tracking-widest text-[#2563EB] flex items-center gap-3">
-              <Zap className="w-4 h-4 fill-current" /> EXECUTION_PROTOCOLS
+        <motion.div 
+          whileHover={{ y: -2 }}
+          className="neo-box p-8 bg-black text-white space-y-6 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)]"
+        >
+           <h3 className="text-xs font-black uppercase tracking-widest text-[#FACC15] flex items-center gap-3">
+              <Zap className="w-4 h-4 fill-current animate-pulse" /> EXECUTION_PROTOCOLS
            </h3>
            <div className="grid grid-cols-2 gap-6">
-              <button onClick={handlePrint} className="neo-btn-primary py-4 text-xs flex flex-col items-center gap-2">
-                 <Printer className="w-5 h-5" /> EXPORT PDF
+              <button 
+                onClick={handlePrint} 
+                className="w-full bg-white text-black border-4 border-black py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#FACC15] transition-all"
+              >
+                 <Printer className="w-5 h-5" /> PDF
               </button>
-              <button onClick={generateWordDoc} className="neo-btn-secondary py-4 text-xs flex flex-col items-center gap-2">
-                 <FileText className="w-5 h-5" /> EXPORT DOCX
+              <button 
+                onClick={generateWordDoc} 
+                className="w-full bg-white text-black border-4 border-black py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#FACC15] transition-all"
+              >
+                 <FileText className="w-5 h-5" /> DOCX
               </button>
            </div>
            
-           <div className="pt-4">
-              <label className="neo-btn-secondary w-full py-4 text-xs flex items-center justify-center gap-3 cursor-pointer">
-                 <Upload className="w-5 h-5" /> {isParsing ? 'PARSING...' : 'IMPORT EXISTING PDF'}
+           <div className="pt-2">
+              <label className="w-full border-4 border-white/20 hover:border-[#2563EB] py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-4 cursor-pointer transition-all">
+                 <Upload className="w-5 h-5 text-[#2563EB]" /> {isParsing ? 'SYNCHRONIZING...' : 'IMPORT SOURCE PDF'}
                  <input type="file" hidden accept=".pdf" onChange={handleImportPdf} />
               </label>
            </div>
-        </div>
+        </motion.div>
 
         {/* Form Sections */}
         <div className="space-y-12">
           
           {/* Section: Personal Info */}
-          <section className="space-y-6">
-            <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
-              👤 PERSONAL DETAILS
+          <section className="space-y-8">
+            <h2 className="text-lg font-black uppercase tracking-tight flex items-center gap-4 border-b-4 border-black pb-4">
+              <User className="w-6 h-6 text-[#2563EB]" /> PERSONAL DETAILS
             </h2>
-            <div className="grid grid-cols-2 gap-4">
-               <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Full Name</label>
-                  <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" placeholder="Arjun Sharma" />
+            <div className="grid grid-cols-2 gap-6">
+               <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Full Identity Name</label>
+                  <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" placeholder="Vashnavi Chauhan" />
                </div>
-               <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Professional Role</label>
-                  <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" placeholder="Full Stack Developer" />
-               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-               <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Email Address</label>
-                  <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" placeholder="arjun@example.com" />
-               </div>
-               <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Phone Number</label>
-                  <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" placeholder="+91 98765 43210" />
+               <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Occupational Node</label>
+                  <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" placeholder="Frontend Developer" />
                </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-               <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">LinkedIn ID</label>
-                  <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input" placeholder="linkedin.com/in/arjun" />
+            <div className="grid grid-cols-2 gap-6">
+               <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Email Protocol</label>
+                  <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" placeholder="vashnavichauhan1@gmail.com" />
                </div>
-               <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">GitHub ID</label>
-                  <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input" placeholder="github.com/arjun" />
+               <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Direct Signal Line</label>
+                  <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" placeholder="+91 9174403667" />
                </div>
             </div>
-            <div className="space-y-1">
-               <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Location</label>
-               <input value={data.personalInfo.location} onChange={(e) => updatePersonalInfo('location', e.target.value)} className="neo-input" placeholder="Bengaluru, India" />
+            <div className="grid grid-cols-2 gap-6">
+               <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">LinkedIn Node</label>
+                  <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input" placeholder="vashnavichauhan18" />
+               </div>
+               <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">GitHub Manifest</label>
+                  <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input" placeholder="vashnavichauhan18" />
+               </div>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Portfolio Signal</label>
+                <input value={data.personalInfo.portfolio || ''} onChange={(e) => updatePersonalInfo('portfolio', e.target.value)} className="neo-input" placeholder="vashnavi.dev" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Physical Node Location</label>
+                <input value={data.personalInfo.location} onChange={(e) => updatePersonalInfo('location', e.target.value)} className="neo-input" placeholder="Bengaluru, India" />
+              </div>
             </div>
           </section>
 
           {/* Section: Summary */}
-          <section className="space-y-6">
-            <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
-              📰 PROFESSIONAL SUMMARY
+          <section className="space-y-8">
+            <h2 className="text-lg font-black uppercase tracking-tight flex items-center gap-4 border-b-4 border-black pb-4">
+              <FileText className="w-6 h-6 text-[#2563EB]" /> PROFESSIONAL SUMMARY
             </h2>
             <textarea 
               value={data.summary}
               onChange={(e) => updateSummary(e.target.value)}
-              className="neo-input min-h-[120px] leading-relaxed py-4"
-              placeholder="I'm a passionate Full Stack Developer who loves building products..."
+              className="neo-input min-h-[140px] leading-relaxed py-6 text-sm"
+              placeholder="Self-taught Frontend Engineer with hands-on production experience..."
             />
           </section>
 
           {/* Section: Skills */}
-          <section className="space-y-6">
-            <div className="flex justify-between items-center">
-               <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
-                 ⚙️ SKILLS
+          <section className="space-y-8">
+            <div className="flex justify-between items-center border-b-4 border-black pb-4">
+               <h2 className="text-lg font-black uppercase tracking-tight flex items-center gap-4 text-black">
+                 <Zap className="w-6 h-6 text-[#2563EB]" /> SKILLS
                </h2>
-               <button onClick={addSkill} className="text-[#2563EB]"><Plus className="w-5 h-5" /></button>
+               <button onClick={addSkill} className="p-2 bg-black text-white hover:bg-[#2563EB] transition-colors shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"><Plus className="w-5 h-5" /></button>
             </div>
             <div className="space-y-4">
                {data.skills.map((skill, idx) => (
@@ -360,12 +376,12 @@ export default function ResumeBuilder() {
           </section>
 
           {/* Section: Experience */}
-          <section className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
-                💼 EXPERIENCE
+          <section className="space-y-8">
+            <div className="flex justify-between items-center border-b-4 border-black pb-4">
+              <h2 className="text-lg font-black uppercase tracking-tight flex items-center gap-4 text-black">
+                <Briefcase className="w-6 h-6 text-[#2563EB]" /> EXPERIENCE
               </h2>
-              <button onClick={addExperience} className="text-[#2563EB]"><Plus className="w-5 h-5" /></button>
+              <button onClick={addExperience} className="p-2 bg-black text-white hover:bg-[#2563EB] transition-colors shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"><Plus className="w-5 h-5" /></button>
             </div>
             {data.experience.map((exp, idx) => (
               <div key={idx} className="bg-white border-2 border-black p-6 relative group space-y-4">
@@ -422,12 +438,15 @@ export default function ResumeBuilder() {
         </div>
 
         {/* Global Security Disclaimer */}
-        <div className="bg-[#FACC15] neo-box p-8 flex gap-6 items-start">
-           <ShieldCheck className="w-8 h-8 text-black shrink-0" strokeWidth={3} />
-           <p className="text-xs font-black uppercase leading-relaxed">
-             ATS COMPLIANCE MODE: ACTIVE. Templates are pre-hardened for sovereign recruitment systems.
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="bg-[#FACC15] neo-box p-8 flex gap-6 items-start border-4 border-black"
+        >
+           <ShieldCheck className="w-10 h-10 text-black shrink-0" strokeWidth={3} />
+           <p className="text-xs font-black uppercase leading-relaxed tracking-tight">
+             ATS COMPLIANCE MODE: ACTIVE. Templates are pre-hardened for sovereign recruitment systems. Verified 2026 Protocols.
            </p>
-        </div>
+        </motion.div>
       </aside>
 
       {/* Main Preview Region */}
