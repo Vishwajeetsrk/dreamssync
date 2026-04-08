@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useReactToPrint } from 'react-to-print';
 import { 
   Plus, Trash2, Download, Printer, User, Briefcase, 
   GraduationCap, Palette, Layout, Save, Sparkles, Send, FileText, Award,
-  Fingerprint, Zap, Coffee, ArrowRight, CheckCircle2, AlertCircle, BarChart3, Info, Upload
+  Fingerprint, Zap, Coffee, ArrowRight, CheckCircle2, AlertCircle, BarChart3, Info, Upload, ShieldCheck
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useReactToPrint } from 'react-to-print';
+import Link from 'next/link';
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, ExternalHyperlink, BorderStyle } from 'docx';
 import ResumePreview, { ResumeData } from '@/components/ResumePreview';
@@ -283,95 +284,125 @@ export default function ResumeBuilder() {
         </div>
 
         {/* Form Sections */}
-        <div className="space-y-16">
+        <div className="space-y-12">
           
           {/* Section: Personal Info */}
-          <section className="space-y-8">
-            <div className="flex items-center justify-between border-b-6 border-black pb-4">
-              <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-4 text-black">
-                <Fingerprint className="w-6 h-6 text-[#2563EB]" /> IDENTITY_
-              </h2>
+          <section className="space-y-6">
+            <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
+              👤 PERSONAL DETAILS
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+               <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Full Name</label>
+                  <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" placeholder="Arjun Sharma" />
+               </div>
+               <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Professional Role</label>
+                  <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" placeholder="Full Stack Developer" />
+               </div>
             </div>
-            <div className="grid grid-cols-1 gap-8">
-               <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Full Legal Name</label>
-                  <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" />
+            <div className="grid grid-cols-2 gap-4">
+               <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Email Address</label>
+                  <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" placeholder="arjun@example.com" />
                </div>
-               <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Target Professional Role</label>
-                  <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" />
+               <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Phone Number</label>
+                  <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" placeholder="+91 98765 43210" />
                </div>
-               <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Email Node</label>
-                    <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" />
-                  </div>
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Uplink Phone</label>
-                    <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" />
-                  </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+               <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">LinkedIn ID</label>
+                  <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input" placeholder="linkedin.com/in/arjun" />
                </div>
-               <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-black/40">Social Credentials (LinkedIn/GitHub)</label>
-                  <div className="flex gap-4">
-                     <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input flex-1" placeholder="LinkedIn" />
-                     <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input flex-1" placeholder="GitHub" />
-                  </div>
+               <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">GitHub ID</label>
+                  <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input" placeholder="github.com/arjun" />
                </div>
+            </div>
+            <div className="space-y-1">
+               <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Location</label>
+               <input value={data.personalInfo.location} onChange={(e) => updatePersonalInfo('location', e.target.value)} className="neo-input" placeholder="Bengaluru, India" />
             </div>
           </section>
 
           {/* Section: Summary */}
-          <section className="space-y-8">
-            <div className="flex items-center justify-between border-b-6 border-black pb-4">
-              <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-4 text-black">
-                <Info className="w-6 h-6 text-[#2563EB]" /> NARRATIVE_
-              </h2>
-            </div>
+          <section className="space-y-6">
+            <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
+              📰 PROFESSIONAL SUMMARY
+            </h2>
             <textarea 
               value={data.summary}
               onChange={(e) => updateSummary(e.target.value)}
-              className="neo-input min-h-[150px] leading-relaxed py-6"
-              placeholder="Structure your professional narrative..."
+              className="neo-input min-h-[120px] leading-relaxed py-4"
+              placeholder="I'm a passionate Full Stack Developer who loves building products..."
             />
           </section>
 
+          {/* Section: Skills */}
+          <section className="space-y-6">
+            <div className="flex justify-between items-center">
+               <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
+                 ⚙️ SKILLS
+               </h2>
+               <button onClick={addSkill} className="text-[#2563EB]"><Plus className="w-5 h-5" /></button>
+            </div>
+            <div className="space-y-4">
+               {data.skills.map((skill, idx) => (
+                 <div key={idx} className="bg-white border-2 border-black p-4 space-y-3 relative group">
+                    <input value={skill.category} onChange={(e) => updateSkill(idx, 'category', e.target.value)} placeholder="Category" className="neo-input text-[10px] font-black" />
+                    <textarea value={skill.items} onChange={(e) => updateSkill(idx, 'items', e.target.value)} placeholder="Items (comma separated)" className="neo-input text-[10px] min-h-[60px]" />
+                    <button onClick={() => removeSkill(idx)} className="absolute -top-2 -right-2 bg-white border-2 border-black p-1 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-4 h-4" /></button>
+                 </div>
+               ))}
+            </div>
+          </section>
+
           {/* Section: Experience */}
-          <section className="space-y-8">
-            <div className="flex items-center justify-between border-b-6 border-black pb-4">
-              <h2 className="text-xl font-black uppercase tracking-tight flex items-center gap-4 text-black">
-                <Briefcase className="w-6 h-6 text-[#2563EB]" /> CHRONOLOGY_
+          <section className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
+                💼 EXPERIENCE
               </h2>
-              <button onClick={addExperience} className="neo-btn-secondary p-2"><Plus className="w-6 h-6" /></button>
+              <button onClick={addExperience} className="text-[#2563EB]"><Plus className="w-5 h-5" /></button>
             </div>
             {data.experience.map((exp, idx) => (
-              <div key={idx} className="neo-box p-8 bg-white relative group space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                   <input value={exp.role} onChange={(e) => updateExperience(idx, 'role', e.target.value)} placeholder="Role" className="neo-input text-sm font-black" />
-                   <input value={exp.company} onChange={(e) => updateExperience(idx, 'company', e.target.value)} placeholder="Company" className="neo-input text-sm font-black" />
+              <div key={idx} className="bg-white border-2 border-black p-6 relative group space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                   <input value={exp.role} onChange={(e) => updateExperience(idx, 'role', e.target.value)} placeholder="Role" className="neo-input text-[10px]" />
+                   <input value={exp.company} onChange={(e) => updateExperience(idx, 'company', e.target.value)} placeholder="Company" className="neo-input text-[10px]" />
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3">
                    {exp.bullets.map((bullet, bIdx) => (
-                     <div key={bIdx} className="flex gap-4">
-                        <textarea 
-                          value={bullet}
-                          onChange={(e) => {
-                             const newBullets = [...exp.bullets];
-                             newBullets[bIdx] = e.target.value;
-                             updateExperience(idx, 'bullets', newBullets);
-                          }}
-                          className="neo-input text-xs min-h-[60px] py-4"
-                          placeholder="Action verb + impact"
-                        />
-                        <button onClick={() => {
-                           const newBullets = exp.bullets.filter((_, i) => i !== bIdx);
-                           updateExperience(idx, 'bullets', newBullets.length ? newBullets : [""]);
-                        }} className="text-red-500"><Trash2 className="w-5 h-5" /></button>
+                     <div key={bIdx} className="flex gap-2">
+                        <textarea value={bullet} onChange={(e) => {
+                          const newBullets = [...exp.bullets];
+                          newBullets[bIdx] = e.target.value;
+                          updateExperience(idx, 'bullets', newBullets);
+                        }} className="neo-input text-[10px] min-h-[50px] py-3" placeholder="Bullet point..." />
                      </div>
                    ))}
-                   <button onClick={() => updateExperience(idx, 'bullets', [...exp.bullets, ""])} className="text-[10px] font-black text-[#2563EB] uppercase">+ Add Detail Node</button>
+                   <button onClick={() => updateExperience(idx, 'bullets', [...exp.bullets, ""])} className="text-[10px] font-black text-[#2563EB] uppercase text-xs hover:underline">+ Add Point</button>
                 </div>
-                <button onClick={() => removeExperience(idx)} className="absolute -top-4 -right-4 bg-red-600 text-white p-2 border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"><Trash2 className="w-5 h-5" /></button>
+                <button onClick={() => removeExperience(idx)} className="absolute -top-3 -right-3 bg-white border-2 border-black p-1 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-4 h-4" /></button>
+              </div>
+            ))}
+          </section>
+
+          {/* Section: Technical Projects */}
+          <section className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
+                📂 TECHNICAL PROJECTS
+              </h2>
+              <button onClick={() => setData(prev => ({ ...prev, projects: [...(prev.projects || []), { name: "", link: "", description: "" }] }))} className="text-[#2563EB]"><Plus className="w-5 h-5" /></button>
+            </div>
+            {(data.projects || []).map((proj, idx) => (
+              <div key={idx} className="bg-white border-2 border-black p-6 relative group space-y-4">
+                 <input value={proj.name} onChange={(e) => updateProjects(idx, 'name', e.target.value)} placeholder="Project Name" className="neo-input text-[10px]" />
+                 <textarea value={proj.description} onChange={(e) => updateProjects(idx, 'description', e.target.value)} placeholder="Description" className="neo-input text-[10px] min-h-[80px]" />
+                 <button onClick={() => setData(prev => ({ ...prev, projects: prev.projects?.filter((_, i) => i !== idx) }))} className="absolute -top-3 -right-3 bg-white border-2 border-black p-1 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-4 h-4" /></button>
               </div>
             ))}
           </section>
@@ -401,6 +432,7 @@ export default function ResumeBuilder() {
 
       {/* Main Preview Region */}
       <main className="flex-1 overflow-y-auto bg-gray-200 p-12 lg:p-20 flex justify-center scrollbar-hide relative">
+
          <div className="absolute top-12 right-12 z-50">
             <AnimatePresence>
                {atsAnalysis && (
@@ -412,9 +444,9 @@ export default function ResumeBuilder() {
                         </div>
                      </div>
                      <div className="space-y-2">
-                        {atsAnalysis.feedback.slice(0, 3).map((f, i) => (
+                        {atsAnalysis.suggestions.slice(0, 3).map((s, i) => (
                            <div key={i} className="flex gap-3 text-[10px] font-bold uppercase transition-all hover:translate-x-1">
-                              <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" /> {f}
+                              <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" /> {s}
                            </div>
                         ))}
                      </div>
@@ -429,7 +461,7 @@ export default function ResumeBuilder() {
          </div>
 
          <div className="w-full max-w-[850px] shadow-[20px_20px_0px_0px_rgba(0,0,0,0.1)]">
-            <ResumePreview data={data} template={template} innerRef={componentRef} />
+            <ResumePreview data={data} template={template} ref={componentRef} />
          </div>
       </main>
     </div>

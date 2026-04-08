@@ -41,122 +41,90 @@ export default function Navbar() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b-4 border-black px-6 md:px-12 py-5">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <nav className="max-w-7xl mx-auto flex items-center justify-between">
         
-        {/* Branding (Historical State) */}
-        <div className="flex items-center gap-12 shrink-0">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-10 w-44">
-               <Image 
-                 src="/DreamSynclogo.png" 
-                 alt="DreamSync Logo" 
-                 fill
-                 className="object-contain object-left"
-               />
-            </div>
-          </Link>
-
-          {/* Desktop Navigation (Neo Typography) */}
-          <div className="hidden lg:flex items-center gap-10">
-            <div className="relative group">
-              <button
-                className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors"
-              >
-                FEATURES <ChevronDown className="w-4 h-4" />
-              </button>
-              
-              <div className="absolute top-full left-0 mt-6 w-64 neo-box p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[60]">
-                 <div className="grid gap-1">
-                    {featureLinks.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`block px-4 py-3 text-xs font-black uppercase tracking-widest transition-all hover:bg-[#2563EB]/10 border-2 border-transparent hover:border-black ${pathname === item.href ? 'text-[#2563EB]' : 'text-black'}`}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                 </div>
-              </div>
-            </div>
-            
-            <Link href="/about" className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">ABOUT</Link>
-            <Link href="/team" className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">TEAM</Link>
-            <Link href="/contact" className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">CONTACT</Link>
+        {/* Branding */}
+        <Link href="/" className="shrink-0 group">
+          <div className="relative h-10 w-40">
+             <Image 
+               src="/DreamSynclogo.png" 
+               alt="DreamSync" 
+               fill
+               className="object-contain object-left"
+             />
           </div>
+        </Link>
+
+        {/* Center Navigation */}
+        <div className="hidden lg:flex items-center gap-10">
+          <div className="relative group">
+            <button className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">
+              FEATURES <ChevronDown className="w-3 h-3" />
+            </button>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-60 neo-box p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[60]">
+               <div className="grid gap-1">
+                  {featureLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block px-4 py-3 text-[10px] font-black uppercase tracking-widest transition-all hover:bg-[#2563EB] hover:text-white border-2 border-transparent"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+               </div>
+            </div>
+          </div>
+          <Link href="/about" className="text-xs font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">ABOUT</Link>
+          <Link href="/team" className="text-xs font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">TEAM</Link>
+          <Link href="/contact" className="text-xs font-black uppercase tracking-widest text-black hover:text-[#2563EB] transition-colors">CONTACT</Link>
         </div>
 
-        {/* Action Group (Historical State) */}
+        {/* Action Group */}
         <div className="flex items-center gap-4">
           <Link 
             href="/donate" 
-            className="hidden sm:flex items-center gap-2 bg-[#FACC15] border-4 border-black px-5 py-2 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
+            className="hidden sm:flex items-center gap-2 bg-[#FACC15] border-4 border-black px-6 py-2 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
           >
             <Coffee className="w-4 h-4 fill-current" /> DONATE
           </Link>
 
           {!user ? (
             <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="text-sm font-black uppercase tracking-widest text-black hover:text-[#2563EB] px-4"
-              >
-                LOGIN
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-black text-white border-4 border-black px-6 py-2 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] hover:bg-[#2563EB] transition-all"
-              >
-                SIGN UP
-              </Link>
+              <Link href="/login" className="text-xs font-black uppercase tracking-widest text-black px-4">LOGIN</Link>
+              <Link href="/signup" className="bg-black text-white border-4 border-black px-6 py-2 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]">SIGN UP</Link>
             </div>
           ) : (
-            <div className="relative group">
-               <button className="neo-box p-1 rounded-none flex items-center gap-3 pr-4">
+            <div className="flex items-center gap-4">
+              <Link href="/dashboard" className="hidden md:flex border-4 border-black px-6 py-2 bg-white font-black text-xs uppercase uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+                DASHBOARD
+              </Link>
+              <div className="relative group">
+                <button className="w-10 h-10 rounded-full border-4 border-black overflow-hidden flex items-center justify-center bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                   {userData?.avatar_url ? (
-                    <div className="w-8 h-8 rounded-none border-2 border-black overflow-hidden relative">
-                      <img src={userData.avatar_url} alt="U" className="w-full h-full object-cover" />
-                    </div>
+                    <img src={userData.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-8 h-8 bg-[#2563EB]/10 flex items-center justify-center">
-                      <UserIcon className="w-4 h-4 text-[#2563EB]" />
-                    </div>
+                    <UserIcon className="w-5 h-5" />
                   )}
-                  <span className="text-[10px] font-black uppercase tracking-widest text-black hidden md:block">{userData?.name?.split(' ')[0]}</span>
-               </button>
-
-               <div className="absolute right-0 mt-4 w-64 neo-box p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[100]">
-                  <div className="flex items-center gap-3 mb-6 pb-6 border-b-2 border-dashed border-black/10">
-                     <div className="w-10 h-10 border-2 border-black overflow-hidden relative shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                       <img src={userData?.avatar_url || ''} alt="P" className="w-full h-full object-cover" />
-                     </div>
-                      <div className="flex flex-col text-left">
-                        <span className="font-black text-xs uppercase tracking-tighter text-black/40">HI,</span>
-                        <span className="font-black text-sm uppercase tracking-tighter text-[#2563EB] truncate w-40">{userData?.name || 'USER_NODE'}</span>
-                        <span className="text-[10px] text-gray-400 font-bold uppercase truncate w-40">{user.email}</span>
-                      </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Link href="/dashboard" className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-black hover:bg-[#2563EB] hover:text-white transition-all border-2 border-black">
-                      <LayoutDashboard className="w-4 h-4" /> DASHBOARD
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-xs font-black uppercase tracking-widest text-[#E11D48] hover:bg-black hover:text-white transition-all border-2 border-black"
-                    >
-                      <LogOut className="w-4 h-4" /> SIGN OUT
+                </button>
+                <div className="absolute right-0 mt-4 w-60 neo-box p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[100]">
+                  <div className="flex flex-col gap-4">
+                    <div className="border-b-2 border-black/10 pb-4">
+                      <p className="font-black text-[10px] text-gray-400 uppercase tracking-widest mb-1">Authenticated Node_</p>
+                      <p className="font-black text-sm uppercase truncate">{userData?.name || 'User'}</p>
+                    </div>
+                    <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-[10px] font-black uppercase tracking-widest text-red-600 border-2 border-red-600 hover:bg-red-600 hover:text-white transition-all">
+                      <LogOut className="w-4 h-4" /> TERMINATE SESSION
                     </button>
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Mobile Menu Icon */}
-          <div className="flex items-center lg:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 border-4 border-black bg-white hover:bg-gray-100 transition-all"
-            >
+          {/* Mobile Shell */}
+          <div className="lg:hidden">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 border-4 border-black bg-white">
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>

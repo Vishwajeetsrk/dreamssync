@@ -311,52 +311,60 @@ export default function CareerAgent() {
           </div>
         </header>
 
-        {/* Chat Area */}
-        <div className="bg-white border-8 border-black min-h-[550px] max-h-[700px] overflow-y-auto p-10 space-y-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] relative">
-          {messages.length === 0 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.1 }} className="absolute inset-0 flex flex-col items-center justify-center p-20 grayscale pointer-events-none">
-              <Sparkles className="w-40 h-40 mb-8" />
-              <h2 className="text-6xl font-black italic uppercase">Initialize Session_</h2>
-            </motion.div>
-          )}
-
-          {messages.map((msg, i) => (
-            <ChatBubble key={i} msg={msg} />
-          ))}
-
-          {loading && (
-            <div className="flex gap-6">
-               <div className="w-12 h-12 bg-[#2563EB] border-4 border-black animate-pulse shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
-                  <Brain className="w-6 h-6 text-white" />
-               </div>
-               <div className="bg-white border-4 border-black p-8 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] flex items-center gap-4">
-                  <Loader2 className="w-6 h-6 animate-spin text-[#2563EB]" />
-                  <p className="text-lg font-black italic uppercase animate-pulse">Syncing with 2026 Job Nodes...</p>
-               </div>
-            </div>
-          )}
-          <div ref={bottomRef} />
+        {/* Main Interface Area */}
+        <div className="bg-white border-8 border-black p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.1)] space-y-12">
+           {messages.length === 0 ? (
+             <div className="flex flex-col items-center justify-center py-20 text-center space-y-8 grayscale">
+                <div className="w-16 h-16 bg-[#A855F7] border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+                   <Sparkles className="w-8 h-8 text-white" />
+                </div>
+                <div className="space-y-4">
+                   <h2 className="text-4xl font-black uppercase tracking-tighter">Ask me anything about your career!</h2>
+                   <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">Salaries, companies, skills, roadmaps — all India-focussed.</p>
+                </div>
+             </div>
+           ) : (
+             <div className="space-y-12 min-h-[400px]">
+                {messages.map((msg, i) => (
+                  <ChatBubble key={i} msg={msg} />
+                ))}
+                {loading && (
+                  <div className="flex gap-6">
+                     <div className="w-12 h-12 bg-[#2563EB] border-4 border-black animate-pulse shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+                        <Brain className="w-6 h-6 text-white" />
+                     </div>
+                     <div className="bg-white border-4 border-black p-8 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] flex items-center gap-4">
+                        <Loader2 className="w-6 h-6 animate-spin text-[#2563EB]" />
+                        <p className="text-lg font-black italic uppercase animate-pulse">Syncing with 2026 Job Nodes...</p>
+                     </div>
+                  </div>
+                )}
+                <div ref={bottomRef} />
+             </div>
+           )}
         </div>
 
-        {/* Quick Suggestions & Featured */}
-        <div className="grid md:grid-cols-5 gap-12">
-           <div className="md:col-span-3 space-y-8">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-black/40 flex items-center gap-3">
-                 <MessageSquare className="w-4 h-4" /> AUTHORIZED QUERIES_
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Quick Suggestions & Featured (Image 9 style) */}
+        <div className="space-y-12">
+           <div className="flex items-center gap-3 text-black/40">
+              <Search className="w-4 h-4" />
+              <p className="text-[10px] font-black uppercase tracking-[0.4em]">FEATURED CAREER PATH — EXPLORE OR ASK A QUESTION ABOVE</p>
+           </div>
+
+           <CareerPathCard path={graphicDesignPath} />
+
+           <div className="space-y-6">
+              <div className="flex items-center gap-3 text-black/40">
+                 <MessageSquare className="w-4 h-4" />
+                 <p className="text-[10px] font-black uppercase tracking-[0.4em]">OR TRY ASKING</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {suggestions.map((s, i) => (
-                  <button key={i} onClick={() => sendMessage(s)} className="p-6 bg-white border-4 border-black text-xs font-black uppercase hover:bg-[#FACC15] transition-all text-left shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] italic">
+                  <button key={i} onClick={() => sendMessage(s)} className="p-4 bg-white border-4 border-black text-[10px] font-black uppercase hover:bg-gray-100 transition-all text-left shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     {s}
                   </button>
                 ))}
               </div>
-           </div>
-           <div className="md:col-span-2 space-y-8">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-black/40 flex items-center gap-3">
-                 <BookOpen className="w-4 h-4" /> FEATURED TRAJECTORY_
-              </p>
-              <CareerPathCard path={graphicDesignPath} />
            </div>
         </div>
 

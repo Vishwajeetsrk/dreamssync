@@ -313,9 +313,9 @@ export default function IkigaiPage() {
               </header>
 
               {/* Progress Bar */}
-              <div className="h-4 bg-gray-100 border-2 border-black overflow-hidden neo-box">
+              <div className="h-2 bg-gray-200 border-2 border-black overflow-hidden mb-12">
                 <motion.div
-                  className="h-full bg-primary"
+                  className="h-full bg-[#2563EB]"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                 />
@@ -388,9 +388,9 @@ export default function IkigaiPage() {
                       (currentStepData.id !== 'incomeGoals' && (form[currentStepData.id as keyof typeof form] as string[]).length === 0) ||
                       (currentStepData.id === 'incomeGoals' && !form.incomeGoals.trim())
                     }
-                    className="flex items-center gap-3 px-10 py-4 bg-primary text-white font-black text-xl border-4 border-black neo-box hover:-translate-y-1 hover:-translate-x-1 active:translate-y-1 transition-all disabled:opacity-50 disabled:grayscale disabled:transform-none"
+                    className="flex items-center gap-3 px-12 py-3 bg-[#A3A3A3] text-white font-black text-sm border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all disabled:opacity-50"
                   >
-                    {isLastStep ? 'Analyze My Ikigai ✨' : 'Continue'} <ArrowRight className="w-6 h-6" />
+                    {isLastStep ? 'Analyze My Ikigai ✨' : 'Continue →'}
                   </button>
                 </div>
               </div>
