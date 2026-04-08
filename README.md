@@ -62,7 +62,7 @@ Emotional support and wellness node providing mental health stabilization and em
 - **Frontend:** Next.js 16 (App Router), Tailwind CSS v4, Framer Motion.
 - **Styling:** CSS Variables with high-contrast light theme tokens.
 - **Icons:** Lucide React (Thin & Bold Variants).
-- **Backend/Auth:** Firebase (Firestore, Storage, Authentication).
+- **Backend/Auth:** Supabase (PostgreSQL, Auth, Storage) & Firebase Hybrid Sync.
 - **Security:** AI Safety Guardrails & Build-Bypass Protocol for stable deployment.
 - **Deployment:** Vercel (Edge Functions enabled).
 
