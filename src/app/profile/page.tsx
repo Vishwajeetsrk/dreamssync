@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { auth, db, storage } from '@/lib/firebase';
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { updatePassword, deleteUser, signOut } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -71,10 +71,10 @@ function ProfileContent() {
     try {
       const currentPhoto = currentUser.photoURL || '';
       if (currentPhoto) {
-        await updateDoc(doc(db, 'users', currentUser.uid), {
+        await setDoc(doc(db, 'users', currentUser.uid), {
           avatar_url: currentPhoto,
           last_sync: new Date().toISOString()
-        });
+        }, { merge: true });
         setAvatarUrl(currentPhoto);
         setMessage({ type: 'success', text: 'IDENTITY SYNCHRONIZATION COMPLETE.' });
       } else {
@@ -93,11 +93,11 @@ function ProfileContent() {
     setMessage(null);
 
     try {
-      await updateDoc(doc(db, 'users', user.uid), {
+      await setDoc(doc(db, 'users', user.uid), {
         name,
         avatar_url: avatarUrl,
         updated_at: new Date().toISOString(),
-      });
+      }, { merge: true });
       setMessage({ type: 'success', text: 'IDENTITY RECORDS COMMITTED SUCCESSFULLY.' });
     } catch (err: any) {
       setMessage({ type: 'error', text: err.message });
@@ -116,7 +116,7 @@ function ProfileContent() {
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
       setAvatarUrl(url);
-      await updateDoc(doc(db, 'users', user.uid), { avatar_url: url });
+      await setDoc(doc(db, 'users', user.uid), { avatar_url: url }, { merge: true });
       setMessage({ type: 'success', text: 'IDENTITY PHOTO SYNCED TO NODES.' });
     } catch (err: any) {
       console.warn('Storage blocked, fallback sync initiated...');
@@ -126,7 +126,7 @@ function ProfileContent() {
         const base64data = reader.result as string;
         try {
           setAvatarUrl(base64data);
-          await updateDoc(doc(db, 'users', user.uid), { avatar_url: base64data });
+          await setDoc(doc(db, 'users', user.uid), { avatar_url: base64data }, { merge: true });
           setMessage({ type: 'success', text: 'IDENTITY SYNCED VIA SOVEREIGN BYPASS.' });
         } catch (dbErr: any) {
           setMessage({ type: 'error', text: 'SYNC FAILED. FILE SIZE EXCEEDS BUFFER.' });
@@ -382,10 +382,10 @@ function ProfileContent() {
               initial={{ opacity: 0, x: 50 }} 
               animate={{ opacity: 1, x: 0 }} 
               exit={{ opacity: 0, x: 50 }}
-              className={`fixed bottom-12 right-12 p-10 neo-box z-[100] flex flex-col gap-4 max-w-sm ${message.type === 'success' ? 'bg-[#2563EB] text-white' : 'bg-red-600 text-white'}`}
+              className={`fixed bottom-12 right-12 p-10 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-[100] flex flex-col gap-4 max-w-sm ${message.type === 'success' ? 'bg-[#2563EB] text-white' : 'bg-black text-red-500'}`}
             >
               <div className="flex items-center gap-6">
-                {message.type === 'success' ? <CheckCircle2 className="w-10 h-10" /> : <ShieldAlert className="w-10 h-10" />}
+                {message.type === 'success' ? <CheckCircle2 className="w-10 h-10" /> : <ShieldAlert className="w-10 h-10 animate-pulse" />}
                 <p className="text-lg font-black uppercase tracking-tight leading-tighter w-48">{message.text}</p>
               </div>
               <div className="w-full h-3 bg-white/20 border-2 border-black/10 overflow-hidden">
