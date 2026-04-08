@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Target, Heart, Zap, Globe, TrendingUp, Briefcase, FileText, HeartHandshake, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
