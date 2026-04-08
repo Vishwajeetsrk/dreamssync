@@ -49,20 +49,9 @@ export default function Dashboard() {
         {/* Dashboard Architecture (Audit Recap State) */}
         <div className="flex flex-col md:flex-row justify-between items-end gap-12 border-b-8 border-black pb-12">
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-black text-white shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]">
-                <LayoutDashboard className="w-8 h-8" />
-              </div>
-              <span className="text-sm font-black uppercase tracking-[0.4em] text-black/40">Command Center v4.0</span>
-            </div>
             <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-none text-[#111827] uppercase">
               Welcome, <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic">{userName}</span>
             </h1>
-          </div>
-          
-          <div className="neo-box bg-[#FFFFFF] px-8 py-4 flex items-center gap-4">
-             <div className="w-3 h-3 bg-green-500 animate-pulse border-2 border-black" />
-             <span className="text-xs font-black uppercase tracking-widest">Global Protocol: Operational</span>
           </div>
         </div>
 
