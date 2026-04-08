@@ -116,10 +116,6 @@ export default function Signup() {
           </form>
 
           <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-8">
-
-            <p className="text-center text-xs text-gray-400 font-bold tracking-widest">
-              Already integrated? <Link href="/login" className="text-[#2563EB] hover:underline">Sign In Hub</Link>
-            </p>
           </div>
         </div>
 

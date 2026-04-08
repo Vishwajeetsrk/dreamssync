@@ -94,16 +94,12 @@ export default function Login() {
               {loading ? (
                  <div className="w-8 h-8 border-4 border-white/30 border-t-white animate-spin" />
               ) : (
-                <>Sign In <ArrowRight className="w-6 h-6" /></>
+                <>AUTHENTICATE NODE <ArrowRight className="w-6 h-6" /></>
               )}
             </button>
           </form>
 
           <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-8">
-
-            <p className="text-center text-xs text-gray-400 font-bold tracking-widest">
-              Don't have an account? <Link href="/signup" className="text-[#2563EB] hover:underline">Create one for free!</Link>
-            </p>
           </div>
         </div>
 
