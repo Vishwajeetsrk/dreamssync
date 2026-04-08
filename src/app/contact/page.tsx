@@ -107,12 +107,12 @@ export default function Contact() {
             <button 
               type="submit" 
               disabled={status === 'loading' || status === 'success'}
-              className="w-full py-4 bg-primary text-white font-bold text-xl border-4 border-black neo-box hover:-translate-y-1 hover:shadow-neo-hover active:translate-y-1 transition-all flex justify-center items-center gap-2 disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+              className="w-full py-4 bg-black text-white font-black text-xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex justify-center items-center gap-3 disabled:opacity-70 uppercase tracking-tighter"
             >
               {status === 'loading' ? (
-                <><Loader2 className="w-5 h-5 animate-spin" /> Sending...</>
+                <><Loader2 className="w-5 h-5 animate-spin" /> SYNCHRONIZING...</>
               ) : status === 'success' ? (
-                <><CheckCircle2 className="w-5 h-5" /> Sent!</>
+                <><CheckCircle2 className="w-5 h-5" /> SENT!</>
               ) : (
                 <><Send className="w-5 h-5" /> Send Message</>
               )}

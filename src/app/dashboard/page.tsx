@@ -40,7 +40,7 @@ export default function Dashboard() {
     );
   }
 
-  const userName = userData?.name?.split(' ')[0] || user.email?.split('@')[0] || "Dreamer";
+  const userName = userData?.name?.replace(/[._-]/g, ' ').toUpperCase() || user.email?.split('@')[0].replace(/[._-]/g, ' ').toUpperCase() || "DREAMER";
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] pt-40 pb-20 px-6 md:px-12 text-black selection:bg-[#FACC15]/40">
@@ -107,16 +107,6 @@ export default function Dashboard() {
             ))}
           </div>
         </section>
-
-        {/* Global Security Footer Indicator */}
-        <div className="mt-40 pt-20 border-t-8 border-black flex flex-col md:flex-row justify-between items-center gap-10 opacity-30 grayscale">
-           <p className="text-xs font-black uppercase tracking-[0.5em] text-black">DreamSync Auth ID: {user.uid.slice(0, 8)}</p>
-           <div className="flex items-center gap-12">
-              <ShieldCheck className="w-8 h-8" />
-              <Zap className="w-8 h-8" />
-              <Globe className="w-8 h-8" />
-           </div>
-        </div>
       </div>
     </div>
   );

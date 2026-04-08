@@ -109,7 +109,7 @@ export default function DonatePage() {
                   <span key="step3" className="flex items-center gap-1">Enter any amount and hit Pay <Sparkles className="w-4 h-4 text-yellow-500" /></span>
                 ].map((step, i) => (
                   <li key={i} className="flex items-center gap-3 text-base font-medium">
-                    <span className="w-7 h-7 bg-primary text-white font-black text-sm flex items-center justify-center shrink-0 border-2 border-black">{i + 1}</span>
+                    <span className="w-7 h-7 bg-white text-black font-black text-sm flex items-center justify-center shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">{i + 1}</span>
                     {step}
                   </li>
                 ))}
@@ -126,21 +126,23 @@ export default function DonatePage() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {amounts.map((item, i) => (
-            <motion.div
+            <motion.button
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5, boxShadow: "8px 8px 0px 0px rgba(0,0,0,1)" }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white border-4 border-black p-8 text-center neo-box relative"
+              className="bg-white border-4 border-black p-8 text-center neo-box relative w-full transition-all group hover:bg-[#FACC15]/10"
+              onClick={() => handleCopy()}
             >
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-accent border-4 border-black flex items-center justify-center text-[var(--foreground)] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-white border-4 border-black flex items-center justify-center text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:bg-[#FACC15]">
                 <item.icon className="w-6 h-6" />
               </div>
               <div className="text-3xl font-black mt-6">{item.amount}</div>
-              <p className="font-bold text-primary mt-1">{item.label}</p>
-              <p className="text-muted-foreground font-medium text-sm mt-1">{item.desc}</p>
-            </motion.div>
+              <p className="font-black text-[#2563EB] mt-1 uppercase tracking-tighter">{item.label}</p>
+              <p className="text-black/40 font-black text-[10px] mt-1 uppercase tracking-widest">{item.desc}</p>
+            </motion.button>
           ))}
         </div>
       </section>
@@ -182,7 +184,7 @@ export default function DonatePage() {
         </p>
         <Link
           href="/dashboard"
-          className="inline-block px-12 py-4 bg-primary text-white font-black text-xl border-4 border-black neo-box hover:-translate-y-2 transition-all"
+          className="inline-block px-12 py-4 bg-[#FACC15] text-black font-black text-xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_rgba(37,99,235,1)] transition-all uppercase tracking-tighter"
         >
           Back to Dashboard →
         </Link>

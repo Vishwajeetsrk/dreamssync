@@ -233,8 +233,8 @@ function ProfileContent() {
             >
               {/* Profile Context Card */}
               <div className="lg:col-span-4 space-y-10">
-                <div className="neo-box p-12 flex flex-col items-center text-center space-y-10 group overflow-hidden">
-                  <div className="relative w-56 h-56 border-8 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] group-hover:scale-105 transition-transform">
+                <div className="neo-box p-12 flex flex-col items-center text-center space-y-10 group overflow-hidden bg-white">
+                  <div className="relative w-56 h-56 border-8 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group-hover:scale-105 transition-transform overflow-hidden">
                     {avatarUrl ? (
                       <img src={avatarUrl} alt="Identity" className="w-full h-full object-cover" />
                     ) : (
@@ -253,12 +253,13 @@ function ProfileContent() {
                     </label>
                   </div>
 
-                  <div className="space-y-2">
-                    <h3 className="text-4xl font-black tracking-tight text-black uppercase">{name || 'DREAMER'}</h3>
-                    <p className="text-xs font-black text-black/30 uppercase tracking-widest">{user?.email}</p>
+                  <div className="space-y-4">
+                    <h3 className="text-4xl font-black tracking-tighter text-black uppercase leading-none">{name || 'DREAMER'}</h3>
+                    <div className="px-5 py-1.5 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] inline-block">DREAMER</div>
+                    <p className="text-xs font-black text-black/30 uppercase tracking-widest block pt-2">{user?.email}</p>
                   </div>
 
-                  <div className="w-full pt-10 border-t-4 border-black/10 grid grid-cols-2 gap-8">
+                  <div className="w-full pt-10 border-t-4 border-black grid grid-cols-2 gap-8">
                     <div className="text-center">
                       <div className="text-[10px] font-black uppercase text-black/20 mb-2 tracking-widest">PROTOCOL</div>
                       <div className="text-xs font-black text-[#2563EB] uppercase">STANDARD</div>
@@ -274,7 +275,7 @@ function ProfileContent() {
 
                 <Link 
                   href="/donate" 
-                  className="w-full neo-btn-secondary p-6 font-black uppercase text-center flex items-center justify-center gap-4"
+                  className="w-full bg-[#FACC15] border-4 border-black p-6 font-black uppercase text-center flex items-center justify-center gap-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all"
                 >
                    <Coffee className="w-6 h-6 fill-current" /> SPONSOR NODES
                 </Link>
@@ -311,8 +312,8 @@ function ProfileContent() {
                   <div className="flex items-start gap-8">
                     <ShieldCheck className="w-12 h-12 shrink-0" strokeWidth={3} />
                     <div className="space-y-4">
-                      <h4 className="text-sm font-black uppercase tracking-widest">Identity Infrastructure Notice</h4>
-                      <p className="text-lg font-bold leading-tight">Your profile data is protected via the DreamSync Sovereign Protocol. Identity updates are synchronized across our neural nodes in milliseconds.</p>
+                       <h4 className="text-sm font-black uppercase tracking-widest">Identity Infrastructure Notice</h4>
+                       <p className="text-lg font-bold leading-tight">Your profile data is protected via the DreamSync Sovereign Protocol. Identity updates are synchronized across our neural nodes in milliseconds.</p>
                     </div>
                   </div>
                 </div>
@@ -337,7 +338,7 @@ function ProfileContent() {
                       type="password" 
                       value={newPassword} 
                       onChange={(e) => setNewPassword(e.target.value)} 
-                      placeholder="••••••••••••"
+                      placeholder="••••••••••••••••••••••••••••••••••••"
                       className="neo-input text-2xl" 
                     />
                   </div>
@@ -348,7 +349,7 @@ function ProfileContent() {
               </div>
 
               {/* Termination Zone Architecture */}
-              <div className="neo-box p-16 bg-red-100 border-red-600 flex flex-col xl:flex-row xl:items-center justify-between gap-16">
+              <div className="neo-box p-16 bg-red-50 border-red-600 flex flex-col xl:flex-row xl:items-center justify-between gap-16">
                 <div className="space-y-6">
                   <h3 className="text-4xl font-black uppercase tracking-tighter text-red-600">CRITICAL TERMINATION_</h3>
                   <p className="text-lg font-bold text-red-600/60 max-w-xl leading-snug uppercase">
@@ -358,13 +359,13 @@ function ProfileContent() {
                 <div className="flex flex-col sm:flex-row gap-8">
                   <button 
                     onClick={handleSignOut}
-                    className="px-12 py-6 bg-white border-4 border-black text-black font-black uppercase text-sm tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white transition-all"
+                    className="px-12 py-6 bg-black text-white border-4 border-black font-black uppercase text-sm tracking-widest shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                   >
                     END SESSION
                   </button>
                   <button 
                     onClick={handleDeleteAccount}
-                    className={`px-12 py-6 border-4 border-black font-black uppercase text-sm tracking-widest transition-all shadow-[4px_4px_0px_rgba(0,0,0,1)] ${confirmDelete ? 'bg-red-600 text-white animate-pulse' : 'bg-transparent text-red-600'}`}
+                    className={`px-12 py-6 border-4 border-black font-black uppercase text-sm tracking-widest transition-all shadow-[6px_6px_0px_rgba(0,0,0,1)] ${confirmDelete ? 'bg-red-600 text-white animate-pulse' : 'bg-transparent text-red-600 hover:bg-red-600 hover:text-white'}`}
                   >
                     {confirmDelete ? 'CONFIRM ERASURE?' : 'PURGE NODE'}
                   </button>
