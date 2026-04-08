@@ -49,16 +49,43 @@ export default function Dashboard() {
         {/* Dashboard Architecture (Audit Recap State) */}
         <div className="flex flex-col md:flex-row justify-between items-end gap-12 border-b-8 border-black pb-12">
           <div className="space-y-6">
-            <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-none text-[#111827] uppercase">
-              Welcome, <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic">{userName}</span>
-            </h1>
+            <motion.div 
+              whileHover={{ x: 5 }}
+              className="flex items-center gap-3 cursor-default"
+            >
+              <div className="p-3 bg-black text-white shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]">
+                <LayoutDashboard className="w-8 h-8" />
+              </div>
+              <span className="text-sm font-black uppercase tracking-[0.4em] text-black/40">Command Center v4.0</span>
+            </motion.div>
+            <motion.h1 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-6xl md:text-8xl font-black tracking-tight leading-none text-[#111827] uppercase"
+            >
+              Welcome, <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic selection:bg-black selection:text-[#FACC15] transition-all duration-500 hover:tracking-tighter">{userName}</span>
+            </motion.h1>
           </div>
+          
+          <motion.div 
+            whileHover={{ scale: 1.05, shadow: "6px 6px 0px 0px rgba(0,0,0,1)" }}
+            whileTap={{ scale: 0.95 }}
+            className="neo-box bg-[#FFFFFF] px-8 py-4 flex items-center gap-4 cursor-pointer group"
+          >
+             <div className="w-3 h-3 bg-green-500 animate-pulse border-2 border-black group-hover:bg-blue-500 transition-colors" />
+             <span className="text-xs font-black uppercase tracking-widest">Global Protocol: Operational</span>
+          </motion.div>
         </div>
 
         {/* Intelligence Matrix Grid */}
         <section className="space-y-16">
           <div className="flex items-center justify-between">
-             <h2 className="text-lg font-black uppercase tracking-[0.3em] text-black">Active User Node Toolsets</h2>
+             <motion.h2 
+               whileHover={{ letterSpacing: "0.4em" }}
+               className="text-lg font-black uppercase tracking-[0.3em] text-black transition-all cursor-default"
+             >
+               Active User Node Toolsets
+             </motion.h2>
              <div className="h-2 flex-grow mx-8 bg-black/5" />
           </div>
           
@@ -68,14 +95,25 @@ export default function Dashboard() {
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -8, boxShadow: "12px 12px 0px 0px rgba(0,0,0,1)" }}
                 transition={{ delay: i * 0.05 }}
                 className="neo-box relative overflow-hidden group bg-white hover:bg-white transition-all duration-300 flex flex-col h-full"
               >
                 {/* Tool Header Bar (Restored from Image 4) */}
                 <div className={`h-16 border-b-4 border-black ${tool.color} flex items-center px-6 gap-4`}>
-                   <tool.icon className="w-6 h-6 stroke-[3px]" />
+                   <motion.div whileHover={{ rotate: 15 }}>
+                      <tool.icon className="w-6 h-6 stroke-[3px]" />
+                   </motion.div>
                    <div className="flex-grow" />
-                   {tool.premium && <span className="text-[8px] font-black bg-[#FACC15] text-black px-3 py-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-widest">Sovereign</span>}
+                   {tool.premium && (
+                     <motion.span 
+                       animate={{ opacity: [1, 0.7, 1] }}
+                       transition={{ duration: 2, repeat: Infinity }}
+                       className="text-[8px] font-black bg-[#FACC15] text-black px-3 py-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-widest"
+                     >
+                       Sovereign
+                     </motion.span>
+                   )}
                 </div>
                 
                 <div className="p-8 flex flex-col flex-grow space-y-4">
@@ -87,8 +125,8 @@ export default function Dashboard() {
                    </p>
                    
                    <div className="mt-auto pt-8">
-                     <Link href={tool.href} className="flex items-center justify-between w-full px-5 py-3 bg-white border-4 border-black text-[10px] font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all">
-                        OPEN TOOL <ArrowRight className="w-5 h-5 text-[#2563EB]" />
+                     <Link href={tool.href} className="flex items-center justify-between w-full px-5 py-3 bg-white border-4 border-black text-[10px] font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(37,99,235,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all group/btn">
+                        OPEN TOOL <ArrowRight className="w-5 h-5 text-[#2563EB] group-hover/btn:translate-x-1 transition-transform" />
                      </Link>
                    </div>
                 </div>
