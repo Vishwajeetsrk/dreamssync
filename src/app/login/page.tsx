@@ -5,7 +5,7 @@ import { auth, db } from '@/lib/firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe } from 'lucide-react';
+import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -30,30 +30,6 @@ export default function Login() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (!userDoc.exists()) {
-        await setDoc(doc(db, 'users', user.uid), {
-          uid: user.uid,
-          name: user.displayName,
-          email: user.email,
-          avatar_url: user.photoURL,
-          created_at: new Date().toISOString(),
-        });
-      }
-      router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center px-6 selection:bg-[#FACC15]/40 font-bold uppercase">
@@ -66,7 +42,7 @@ export default function Login() {
         <div className="neo-box p-12 bg-white space-y-10">
           <div className="text-center space-y-4">
             <div className="inline-block p-4 bg-[#2563EB] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
-               <ShieldCheck className="w-10 h-10" />
+               <Fingerprint className="w-10 h-10" />
             </div>
             <h1 className="text-4xl font-black tracking-tighter text-black">Hub Authentication_</h1>
             <p className="text-gray-400 text-xs tracking-[0.2em]">Secure Access Required</p>
@@ -124,12 +100,6 @@ export default function Login() {
           </form>
 
           <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-8">
-            <button 
-              onClick={handleGoogleLogin} 
-              className="w-full flex items-center justify-center gap-4 bg-white border-4 border-black py-4 font-black text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FACC15] transition-all"
-            >
-              <Mail className="w-5 h-5" /> <span>SYNC WITH GOOGLE</span>
-            </button>
 
             <p className="text-center text-xs text-gray-400 font-bold tracking-widest">
               Don't have an account? <Link href="/signup" className="text-[#2563EB] hover:underline">Create one for free!</Link>
