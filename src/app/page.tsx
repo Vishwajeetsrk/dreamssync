@@ -50,13 +50,6 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center gap-4 mb-8"
           >
-            <div className="w-16 h-16 rounded-full border-4 border-black overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-               {userData?.avatar_url ? (
-                 <img src={userData.avatar_url} alt="Profile" className="w-full h-full object-cover" />
-               ) : (
-                 <User className="w-full h-full p-4" />
-               )}
-            </div>
             <p className="font-black text-xs uppercase tracking-[0.3em]">Welcome Back, {userData?.name?.split(' ')[0] || 'User'}!</p>
             <div className="px-4 py-1 bg-[#FACC15] border-2 border-black text-[10px] font-black uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                ⚡ AI-Powered Career Growth
