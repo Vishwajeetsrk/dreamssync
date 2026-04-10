@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Coffee, Globe, Shield, Zap, Sparkles } from 'lucide-react';
+import { Coffee, Globe, Shield, Zap, Sparkles, Linkedin, Instagram, Twitter, Mail } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Footer() {
