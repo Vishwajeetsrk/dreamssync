@@ -65,7 +65,7 @@ export default function Footer() {
             <li><a href="#" className="hover:text-black">LinkedIn</a></li>
             <li><a href="#" className="hover:text-black">Instagram</a></li>
             <li><a href="#" className="hover:text-black">Twitter / X</a></li>
-            <li><a href="mailto:support@dreamsync.ai" className="hover:text-black">Email Us</a></li>
+            <li><a href="mailto:dreamsyncbangalore@gmail.com" className="hover:text-black">Email Us</a></li>
           </ul>
         </div>
       </div>
