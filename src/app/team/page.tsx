@@ -52,7 +52,7 @@ export default function Team() {
               rel="noopener noreferrer"
               className="mt-auto flex items-center gap-2 p-2 border-2 border-black font-bold bg-white hover:bg-[#0A66C2] hover:text-white transition-colors"
             >
-              <ExternalLink className="w-5 h-5" /> Connect
+              <ExternalLink className="w-5 h-5" /> Connect Node
             </a>
           </motion.div>
         ))}

@@ -9,7 +9,7 @@ export default function About() {
     <div className="flex flex-col bg-[#F3F4F6] selection:bg-[#FACC15]/40 min-h-screen">
       
       {/* Black Marquee Ticker (Consistency) */}
-      <div className="marquee-neo mt-[108px]">
+      <div className="marquee-neo mt-[88px]">
         <motion.div 
           animate={{ x: [0, -1200] }}
           transition={{ repeat: Infinity, duration: 25, ease: "linear" }}

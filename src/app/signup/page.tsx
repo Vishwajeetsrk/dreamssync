@@ -43,7 +43,7 @@ export default function Signup() {
 
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center px-6 selection:bg-[#FACC15]/40 font-bold uppercase">
+    <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center px-6 selection:bg-[#FACC15]/40 font-bold">
       
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
