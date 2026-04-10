@@ -32,11 +32,11 @@ export default function Home() {
           transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
           className="flex whitespace-nowrap gap-20 font-black text-xs uppercase tracking-[0.3em] items-center"
         >
-          <div className="flex items-center gap-3"><TrendingUp className="w-5 h-5 text-[#2563EB]" /> AI CAREER AGENT LIVE WITH 2026 INSIGHTS</div>
-          <div className="flex items-center gap-3"><Brain className="w-5 h-5 text-[#FACC15]" /> PREMIUM "IKIGAI" CAREER FINDER NOW ACTIVE</div>
-          <div className="flex items-center gap-3"><FileText className="w-5 h-5 text-emerald-400" /> AI RESUME BUILDER: 100% FREE FOR STUDENTS</div>
+          <Link href="/career-agent" className="flex items-center gap-3 hover:text-[#FACC15] transition-colors"><TrendingUp className="w-5 h-5 text-[#2563EB]" /> AI CAREER AGENT LIVE WITH 2026 INSIGHTS</Link>
+          <Link href="/ikigai" className="flex items-center gap-3 hover:text-[#2563EB] transition-colors"><Brain className="w-5 h-5 text-[#FACC15]" /> PREMIUM "IKIGAI" CAREER FINDER NOW ACTIVE</Link>
+          <Link href="/resume-builder" className="flex items-center gap-3 hover:text-[#FACC15] transition-colors"><FileText className="w-5 h-5 text-emerald-400" /> AI RESUME BUILDER: 100% FREE FOR STUDENTS</Link>
           
-          <div className="flex items-center gap-3"><TrendingUp className="w-5 h-5 text-[#2563EB]" /> AI CAREER AGENT LIVE WITH 2026 INSIGHTS</div>
+          <Link href="/career-agent" className="flex items-center gap-3 hover:text-[#FACC15] transition-colors"><TrendingUp className="w-5 h-5 text-[#2563EB]" /> AI CAREER AGENT LIVE WITH 2026 INSIGHTS</Link>
         </motion.div>
       </div>
 
