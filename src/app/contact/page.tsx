@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MessageCircle, Send, MapPin, Globe, CheckCircle2, Loader2 } from 'lucide-react';
+import { Mail, Phone, MessageCircle, ArrowRight, Send, MapPin, Globe, CheckCircle2, Loader2, Linkedin, Instagram, Facebook, Twitter } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
