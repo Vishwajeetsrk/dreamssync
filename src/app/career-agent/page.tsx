@@ -162,7 +162,7 @@ function ChatBubble({ msg }: { msg: Message }) {
             )}
             {msg.data.quickTips?.length > 0 && (
               <div className="bg-[#FACC15] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                <p className="text-xs font-black uppercase tracking-[0.4em] text-black mb-4">⚡ CRITICAL INTELLIGENCE_</p>
+                <p className="text-xs font-black uppercase tracking-[0.4em] text-black mb-4">⚡ CRITICAL INTELLIGENCE</p>
                 <ul className="space-y-3">
                   {msg.data.quickTips.map((tip, i) => (
                     <li key={i} className="text-sm text-black font-black flex gap-4 italic uppercase">
@@ -301,7 +301,7 @@ export default function CareerAgent() {
                <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Market Intelligence Protocol</span>
             </div>
             <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none italic">
-               Career <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)]">Agent_</span>
+               Career <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)]">Agent</span>
             </h1>
           </div>
           <div className="flex flex-wrap gap-3 justify-end max-w-md">

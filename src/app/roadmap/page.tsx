@@ -101,7 +101,7 @@ export default function Roadmap() {
                  <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Career Graph Protocol v4.0</span>
               </div>
               <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none text-black">
-                 Path <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic text-nowrap">Architect_</span>
+                 Path <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic text-nowrap">Architect</span>
               </h1>
            </div>
            
@@ -140,7 +140,7 @@ export default function Roadmap() {
             <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="neo-box bg-red-100 border-red-600 p-16 max-w-3xl mx-auto shadow-[10px_10px_0px_0px_rgba(220,38,38,1)]">
               <div className="flex items-center gap-8 mb-10 border-b-4 border-red-600 pb-8">
                 <ShieldCheck className="w-16 h-16 text-red-600" strokeWidth={3} />
-                <h2 className="text-4xl font-black text-red-600 uppercase italic">Safety violation_</h2>
+                <h2 className="text-4xl font-black text-red-600 uppercase italic">Safety violation</h2>
               </div>
               <p className="text-xl font-bold text-red-900 mb-10 uppercase tracking-tight leading-tight">{safetyError.message}</p>
               
@@ -234,7 +234,7 @@ export default function Roadmap() {
 
                         {step.phasePrerequisites?.length > 0 && (
                           <div className="bg-[#F3F4F6] border-4 border-black p-8 italic shadow-inner">
-                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] mb-4 text-[#2563EB]">GATEWAY REQUIREMENTS_</h4>
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] mb-4 text-[#2563EB]">GATEWAY REQUIREMENTS</h4>
                             <ul className="grid md:grid-cols-2 gap-4">
                               {step.phasePrerequisites.map((p: string) => (
                                 <li key={p} className="flex gap-4 text-xs font-black uppercase italic">

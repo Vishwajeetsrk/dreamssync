@@ -126,7 +126,7 @@ export default function AdvancedATS() {
                  <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Sovereign ATS Engine v4.0</span>
               </div>
               <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none text-black uppercase">
-                 Smart <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Analyzer_</span>
+                 Smart <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Analyzer</span>
               </h1>
            </div>
            <div className="hidden lg:block">
@@ -201,7 +201,7 @@ export default function AdvancedATS() {
             {!result && !loading && (
               <div className="h-full neo-box bg-white/50 border-dashed p-20 flex flex-col items-center justify-center text-center opacity-20 grayscale">
                 <BarChart3 className="w-24 h-24 mb-6" />
-                <p className="text-4xl font-black uppercase tracking-tighter">Results Locked_</p>
+                <p className="text-4xl font-black uppercase tracking-tighter">Results Locked</p>
                 <p className="text-sm font-black mt-4">INITIALIZE SCAN TO DECRYPT ELIGIBILITY NODES</p>
               </div>
             )}
@@ -218,7 +218,7 @@ export default function AdvancedATS() {
                 <div className="mt-12 w-full h-4 bg-[#F3F4F6] border-4 border-black overflow-hidden relative shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                   <motion.div initial={{ x: "-100%" }} animate={{ x: "100%" }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} className="bg-[#2563EB] h-full w-1/2" />
                 </div>
-                <p className="mt-8 font-black text-black/40 text-xs tracking-[0.3em]">SYNCHRONIZING WITH GOOGLE, MICROSOFT, META RECRUITER API_</p>
+                <p className="mt-8 font-black text-black/40 text-xs tracking-[0.3em]">SYNCHRONIZING WITH GOOGLE, MICROSOFT, META RECRUITER API</p>
               </div>
             )}
 
@@ -231,7 +231,7 @@ export default function AdvancedATS() {
                    </div>
                    <div className="relative z-10 flex justify-between items-center">
                       <div className="space-y-4">
-                         <h2 className="text-2xl font-black uppercase tracking-tighter">ATS PROTOCOL SCORE_</h2>
+                         <h2 className="text-2xl font-black uppercase tracking-tighter">ATS PROTOCOL SCORE</h2>
                          <div className="flex gap-4">
                             <div className="bg-white/10 px-6 py-2 border border-white/20 text-xs font-black">MATCH: {result.keyword_match}%</div>
                             <div className="bg-white/10 px-6 py-2 border border-white/20 text-xs font-black">EXPERIENCE: {experienceLevel}</div>
@@ -264,7 +264,7 @@ export default function AdvancedATS() {
                               <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} className="p-10 bg-gray-50 border-t-4 border-black overflow-hidden space-y-8">
                                  <div className="grid md:grid-cols-2 gap-10">
                                     <div className="space-y-4">
-                                       <h4 className="text-xs font-black uppercase text-[#2563EB] tracking-widest border-b-2 border-black pb-2">Analysis Findings_</h4>
+                                       <h4 className="text-xs font-black uppercase text-[#2563EB] tracking-widest border-b-2 border-black pb-2">Analysis Findings</h4>
                                        <ul className="space-y-4">
                                           {comp.reasons.map((r, i) => (
                                              <li key={i} className="flex gap-4 text-xs font-black leading-tight italic">
@@ -274,7 +274,7 @@ export default function AdvancedATS() {
                                        </ul>
                                     </div>
                                     <div className="space-y-4">
-                                       <h4 className="text-xs font-black uppercase text-red-600 tracking-widest border-b-2 border-black pb-2">Missing Capabilities_</h4>
+                                       <h4 className="text-xs font-black uppercase text-red-600 tracking-widest border-b-2 border-black pb-2">Missing Capabilities</h4>
                                        <div className="flex flex-wrap gap-3">
                                           {comp.missing_skills.map((s, i) => (
                                              <span key={i} className="bg-red-600 text-white border-2 border-black px-4 py-1 text-[10px] font-black shadow-[3px_3px_0px_rgba(0,0,0,1)]">

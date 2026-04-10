@@ -427,7 +427,7 @@ export default function ResumeBuilder() {
         
         {/* Template Intelligence */}
         <div className="border-t-8 border-black pt-12 space-y-8">
-           <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">RENDER TEMPLATE_</h3>
+           <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">RENDER TEMPLATE</h3>
            <div className="grid grid-cols-3 gap-6">
               {['minimal', 'professional', 'modern'].map((t) => (
                 <button key={t} onClick={() => setTemplate(t as any)} className={`neo-btn-secondary py-4 text-[10px] uppercase font-black ${template === t ? 'bg-black text-white' : ''}`}>
