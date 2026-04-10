@@ -142,7 +142,7 @@ export default function AdvancedATS() {
           {/* Left: Input Panel */}
           <div className="neo-box bg-white p-12 space-y-12">
             <h2 className="text-3xl font-black mb-10 flex items-center gap-4">
-              <Search className="w-8 h-8 text-[#2563EB]" /> INPUT_PROTOCOL
+              <Search className="w-8 h-8 text-[#2563EB]" /> INPUT PROTOCOL
             </h2>
 
             <div className="space-y-10">
@@ -177,14 +177,14 @@ export default function AdvancedATS() {
                 </div>
                 <div className="flex items-end">
                   <button onClick={analyzeResume} disabled={loading || !file || !jobRole} className="neo-btn-primary w-full py-6 text-xl">
-                    {loading ? <Loader2 className="animate-spin w-8 h-8" /> : 'INITIALIZE_SCAN'}
+                    {loading ? <Loader2 className="animate-spin w-8 h-8" /> : 'INITIALIZE SCAN'}
                   </button>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-black/40">4. JOB DESCRIPTION (OPTIONAL)</label>
-                <textarea value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} placeholder="PASTE JD BUFFER FOR PRECISION_MATCH" rows={6} className="neo-input min-h-[150px] py-6 leading-relaxed" />
+                <textarea value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} placeholder="PASTE JD BUFFER FOR PRECISION MATCH" rows={6} className="neo-input min-h-[150px] py-6 leading-relaxed" />
               </div>
             </div>
 
@@ -246,7 +246,7 @@ export default function AdvancedATS() {
                 {/* Eligibility Matrix */}
                 <div className="neo-box bg-white p-10 space-y-8">
                    <h2 className="text-3xl font-black flex items-center gap-4 border-b-6 border-black pb-6 mb-10 uppercase italic">
-                      <Globe className="w-8 h-8 text-[#2563EB]" /> Eligibility Matrix_
+                      <Globe className="w-8 h-8 text-[#2563EB]" /> Eligibility Matrix
                    </h2>
                    <div className="space-y-6">
                       {result.company_eligibility.map((comp) => (

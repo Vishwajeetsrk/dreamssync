@@ -68,7 +68,7 @@ function Flowchart({ nodes }: { nodes: RoadmapNode[] }) {
   return (
     <div className="bg-white border-4 border-black neo-box p-8 shadow-[8px_8px_0px_0px_rgba(37,99,235,1)]">
       <h3 className="font-black text-xl mb-6 flex items-center gap-3 uppercase italic">
-        <MapPin className="w-6 h-6 text-[#2563EB]" /> Visual Progression_
+        <MapPin className="w-6 h-6 text-[#2563EB]" /> Visual Progression
       </h3>
       <div className="overflow-x-auto pb-4">
         <div className="flex items-start gap-0 min-w-max">
@@ -153,7 +153,7 @@ function ChatBubble({ msg }: { msg: Message }) {
             {msg.data.roles?.length > 0 && (
               <div className="space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-black/40 flex items-center gap-3">
-                  <TrendingUp className="w-4 h-4" /> NODE SUGGESTIONS_
+                  <TrendingUp className="w-4 h-4" /> NODE SUGGESTIONS
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {msg.data.roles.map((r, i) => <RoleCard key={i} role={r} />)}
@@ -175,7 +175,7 @@ function ChatBubble({ msg }: { msg: Message }) {
             {msg.data.jobLinks?.length > 0 && (
               <div className="space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-black/40 flex items-center gap-3">
-                  <Briefcase className="w-4 h-4" /> LIVE PORTALS_
+                  <Briefcase className="w-4 h-4" /> LIVE PORTALS
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {msg.data.jobLinks.map((j, i) => (

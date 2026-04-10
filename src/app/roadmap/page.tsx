@@ -187,7 +187,7 @@ export default function Roadmap() {
               {globalPrerequisites && (
                 <div className="neo-box bg-white p-16 border-black space-y-10 shadow-[12px_12px_0px_0px_rgba(37,99,235,1)]">
                   <h2 className="text-3xl font-black flex items-center gap-6 border-b-6 border-black pb-6 uppercase italic">
-                    <GraduationCap className="w-10 h-10 text-[#2563EB]" /> Core Prerequisites_
+                    <GraduationCap className="w-10 h-10 text-[#2563EB]" /> Core Prerequisites
                   </h2>
                   <div className="grid md:grid-cols-2 gap-16">
                     <div className="space-y-4">
@@ -251,7 +251,7 @@ export default function Roadmap() {
                         {step.studyMaterials && step.studyMaterials.length > 0 && (
                           <div className="space-y-6">
                              <h4 className="text-xs font-black uppercase tracking-[0.4em] text-black/30 flex items-center gap-4">
-                               <Book className="w-5 h-5 text-black" /> LIBRARIES_
+                               <Book className="w-5 h-5 text-black" /> LIBRARIES
                              </h4>
                              <div className="space-y-4">
                                {step.studyMaterials.map((link: any, idx: number) => (
@@ -270,7 +270,7 @@ export default function Roadmap() {
                         {step.videoLectures && step.videoLectures.length > 0 && (
                           <div className="space-y-6">
                              <h4 className="text-xs font-black uppercase tracking-[0.4em] text-red-600 flex items-center gap-4">
-                               <Video className="w-5 h-5" /> BROADCASTS_
+                               <Video className="w-5 h-5" /> BROADCASTS
                              </h4>
                              <div className="space-y-4">
                                {step.videoLectures.map((link: any, idx: number) => (
