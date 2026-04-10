@@ -287,7 +287,7 @@ export default function ResumeBuilder() {
            
            <div className="pt-2">
               <label className="w-full border-4 border-white/20 hover:border-[#2563EB] py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-4 cursor-pointer transition-all">
-                 <Upload className="w-5 h-5 text-[#2563EB]" /> {isParsing ? 'SYNCHRONIZING...' : 'IMPORT SOURCE PDF'}
+                 <Upload className="w-5 h-5 text-[#2563EB]" /> {isParsing ? 'SYNCHRONIZING...' : '<span className="text-[#2563EB]">IMPORT SOURCE PDF</span>'}
                  <input type="file" hidden accept=".pdf" onChange={handleImportPdf} />
               </label>
            </div>
