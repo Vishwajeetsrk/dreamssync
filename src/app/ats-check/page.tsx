@@ -54,7 +54,7 @@ export default function AdvancedATS() {
 
   const analyzeResume = async () => {
     if (!file || !jobRole) {
-      setError('PROTOCOL REQUIRE RESUME UPLOAD AND TARGET ROLE.');
+      setError('PROCESS REQUIRE RESUME UPLOAD AND TARGET ROLE.');
       return;
     }
 
@@ -75,7 +75,7 @@ export default function AdvancedATS() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.details || data.error || 'ANALYSIS PROTOCOL FAILED');
+      if (!res.ok) throw new Error(data.details || data.error || 'ANALYSIS PROCESS FAILED');
       
       setResult(data);
     } catch (err: any) {
@@ -104,12 +104,12 @@ export default function AdvancedATS() {
           transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
           className="flex whitespace-nowrap gap-20 font-black text-xs uppercase tracking-[0.3em] items-center"
         >
-          <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#FACC15] fill-current" /> NODE: SCANNING FOR GOOGLE RECRUITER PATTERNS</div>
+          <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#FACC15] fill-current" /> SCANNING FOR MODERN RECRUITER PATTERNS</div>
           <div className="flex items-center gap-3"><Globe className="w-5 h-5 text-[#2563EB]" /> GLOBAL SYNC: 1400+ COMPANY ELIGIBILITY PROFILES LOADED</div>
           <div className="flex items-center gap-3"><TrendingUp className="w-5 h-5 text-emerald-600" /> ATS v4.0: 99.8% PRECISION IN FAANG KEYWORD DETECTION</div>
           
           {/* Duplicates for loop */}
-          <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#FACC15] fill-current" /> NODE: SCANNING FOR GOOGLE RECRUITER PATTERNS</div>
+          <div className="flex items-center gap-3"><Zap className="w-5 h-5 text-[#FACC15] fill-current" /> SCANNING FOR MODERN RECRUITER PATTERNS</div>
           <div className="flex items-center gap-3"><Globe className="w-5 h-5 text-[#2563EB]" /> GLOBAL SYNC: 1400+ COMPANY ELIGIBILITY PROFILES LOADED</div>
         </motion.div>
       </div>
@@ -142,7 +142,7 @@ export default function AdvancedATS() {
           {/* Left: Input Panel */}
           <div className="neo-box bg-white p-12 space-y-12">
             <h2 className="text-3xl font-black mb-10 flex items-center gap-4">
-              <Search className="w-8 h-8 text-[#2563EB]" /> INPUT PROTOCOL
+              <Search className="w-8 h-8 text-[#2563EB]" /> INPUT PROCESS
             </h2>
 
             <div className="space-y-10">
@@ -231,7 +231,7 @@ export default function AdvancedATS() {
                    </div>
                    <div className="relative z-10 flex justify-between items-center">
                       <div className="space-y-4">
-                         <h2 className="text-2xl font-black uppercase tracking-tighter">ATS PROTOCOL SCORE</h2>
+                         <h2 className="text-2xl font-black uppercase tracking-tighter">ATS PROCESS SCORE</h2>
                          <div className="flex gap-4">
                             <div className="bg-white/10 px-6 py-2 border border-white/20 text-xs font-black">MATCH: {result.keyword_match}%</div>
                             <div className="bg-white/10 px-6 py-2 border border-white/20 text-xs font-black">EXPERIENCE: {experienceLevel}</div>
