@@ -1,13 +1,13 @@
 ﻿'use client';
 
 import { useState } from 'react';
-import { auth } from '@/lib/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '@/lib/firebase';
+import { signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, AlertCircle, Eye, EyeOff, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { signIn } from "next-auth/react";
 
 const GoogleIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -32,16 +32,57 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const createFirestoreUser = async (user: any) => {
+    const docRef = doc(db, 'users', user.uid);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      await setDoc(docRef, {
+        uid: user.uid,
+        name: user.displayName || 'Dreamer',
+        email: user.email,
+        avatar_url: user.photoURL || '',
+        created_at: new Date().toISOString(),
+      });
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      await createFirestoreUser(result.user);
+      window.location.href = '/dashboard';
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  const handleGithubLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const provider = new GithubAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      await createFirestoreUser(result.user);
+      window.location.href = '/dashboard';
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -71,13 +112,15 @@ export default function Login() {
           {/* OAuth Buttons */}
           <div className="grid grid-cols-2 gap-4">
             <button
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              onClick={handleGoogleLogin}
+              type="button"
               className="flex items-center justify-center gap-2 h-12 bg-white border-4 border-black font-black text-xs text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             >
               <GoogleIcon /> Continue with Google
             </button>
             <button
-              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+              onClick={handleGithubLogin}
+              type="button"
               className="flex items-center justify-center gap-2 h-12 bg-[#24292F] border-4 border-black font-black text-xs text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             >
               <GitHubIcon /> Continue with GitHub
@@ -149,3 +192,4 @@ export default function Login() {
     </div>
   );
 }
+
