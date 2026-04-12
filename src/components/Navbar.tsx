@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -86,7 +86,7 @@ export default function Navbar() {
             href="/donate" 
             className="hidden sm:flex items-center gap-2 bg-[#FACC15] border-4 border-black px-6 py-2 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
           >
-            <Coffee className="w-4 h-4 fill-current" /> DONATE
+            <Coffee className="w-4 h-4 fill-current" /> SPONSOR
           </Link>
 
           {!user ? (
@@ -160,7 +160,7 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full py-5 bg-[#FACC15] border-4 border-black text-black text-center font-black uppercase text-sm"
                 >
-                  DONATE HUB
+                  SPONSOR NODES
                 </Link>
               </div>
             </div>
@@ -170,3 +170,4 @@ export default function Navbar() {
     </div>
   );
 }
+
