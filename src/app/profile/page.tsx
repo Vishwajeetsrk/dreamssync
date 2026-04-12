@@ -280,7 +280,7 @@ function ProfileContent() {
                   href="/donate" 
                   className="w-full bg-[#FACC15] border-4 border-black p-6 font-black uppercase text-center flex items-center justify-center gap-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all"
                 >
-                   <Coffee className="w-6 h-6 fill-current" /> SPONSOR NODES
+                   <Coffee className="w-6 h-6 fill-current" /> SPONSOR
                 </Link>
               </div>
 
@@ -418,6 +418,7 @@ export default function Profile() {
     </Suspense>
   );
 }
+
 
 
 
