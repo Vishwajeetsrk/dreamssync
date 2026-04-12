@@ -45,7 +45,7 @@ export default function ForgotPassword() {
           
           <Link 
             href="/login" 
-            className="w-full py-4 bg-primary text-white font-black text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 bg-[#2563EB] text-white font-black text-lg border-4 border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all flex items-center justify-center gap-2"
           >
             <ArrowLeft className="w-5 h-5" /> BACK TO LOGIN
           </Link>
@@ -94,7 +94,7 @@ export default function ForgotPassword() {
         </form>
 
         <div className="mt-8 text-center border-t-4 border-black border-dashed pt-6">
-          <Link href="/login" className="text-primary font-black hover:underline flex items-center justify-center gap-2 uppercase text-sm">
+          <Link href="/login" className="text-[#2563EB] font-black hover:underline flex items-center justify-center gap-2 uppercase text-sm">
             <ArrowLeft className="w-4 h-4" /> BACK TO SIGN IN
           </Link>
         </div>
