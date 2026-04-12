@@ -5,7 +5,7 @@ import { auth, db } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint, Github } from 'lucide-react';
+import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { signIn } from "next-auth/react";
@@ -112,7 +112,7 @@ export default function Login() {
                  onClick={() => signIn("github")}
                  className="neo-btn-secondary flex items-center justify-center gap-2 h-14 text-xs font-black"
                >
-                 <Github className="w-5 h-5" /> GITHUB_NODE
+                 <Binary className="w-5 h-5" /> GITHUB_NODE
                </button>
              </div>
           </div>
