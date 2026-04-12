@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { auth, db, storage } from '@/lib/firebase';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { updatePassword, deleteUser, signOut, EmailAuthProvider, reauthenticateWithCredential, GoogleAuthProvider, GithubAuthProvider, linkWithPopup } from 'firebase/auth';
+import { updateProfile, updatePassword, deleteUser, signOut, EmailAuthProvider, reauthenticateWithCredential, GoogleAuthProvider, GithubAuthProvider, linkWithPopup } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   User as UserIcon, 
@@ -418,6 +418,7 @@ export default function Profile() {
     </Suspense>
   );
 }
+
 
 
 
