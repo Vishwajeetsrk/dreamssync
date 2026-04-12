@@ -334,7 +334,25 @@ function ProfileContent() {
                 <h2 className="text-3xl font-black uppercase mb-16 flex items-center gap-6 tracking-tighter">
                   <Lock className="w-10 h-10 text-[#2563EB]" /> Change Password
                 </h2>
-                <form onSubmit={handleChangePassword} className="space-y-12 max-w-2xl">
+                                <form onSubmit={handleChangePassword} className="space-y-12 max-w-2xl">
+                  <div className="space-y-6">
+                    <label className="text-xs font-black uppercase tracking-widest text-[#2563EB] flex items-center justify-between">
+                      <span>Current Password</span>
+                      <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)} className="text-gray-500 hover:text-black lowercase text-[10px] tracking-normal flex items-center gap-1 font-bold">
+                         {showCurrentPassword ? <EyeOff className="w-4 h-4"/> : <Eye className="w-4 h-4"/>}
+                         (view the password)
+                      </button>
+                    </label>
+                    <div className="relative">
+                      <input 
+                        type={showCurrentPassword ? "text" : "password"} 
+                        value={currentPassword} 
+                        onChange={(e) => setCurrentPassword(e.target.value)} 
+                        placeholder="••••••••••••••••••••••••••••••••••••"
+                        className="neo-input text-2xl w-full" 
+                      />
+                    </div>
+                  </div>
                   <div className="space-y-6">
                     <label className="text-xs font-black uppercase tracking-widest text-[#2563EB] block">New Password</label>
                     <input 
@@ -439,6 +457,7 @@ export default function Profile() {
     </Suspense>
   );
 }
+
 
 
 
