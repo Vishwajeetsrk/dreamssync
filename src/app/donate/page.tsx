@@ -72,7 +72,7 @@ export default function DonatePage() {
               <img
                 src="/qr-code.jpeg"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=4&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=DreamSync&cu=INR`)}`;
+                  (e.target as HTMLImageElement).src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=4&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=<span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span>&cu=INR`)}`;
                 }}
                 alt={`UPI QR Code — ${upiId}`}
                 className="w-full h-full object-contain"
