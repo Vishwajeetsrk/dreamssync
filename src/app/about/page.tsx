@@ -31,7 +31,7 @@ export default function About() {
              Who We Are
           </div>
           <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none uppercase text-black">
-            About <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic">DreamSync</span>
+            About <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic"><span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span></span>
           </h1>
           <p className="text-xl md:text-3xl text-gray-400 font-black max-w-3xl mx-auto leading-relaxed uppercase border-t-4 border-black pt-10">
             We are a community-driven initiative dedicated to leveling the playing field for Indian students entering the global workforce.

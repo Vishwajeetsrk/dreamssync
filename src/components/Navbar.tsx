@@ -33,7 +33,7 @@ export default function Navbar() {
     { name: 'RESUME BUILDER', href: '/resume-builder' },
     { name: 'ATS CHECK', href: '/ats-check' },
     { name: 'IKIGAI FINDER', href: '/ikigai' },
-    { name: 'PORTFOLIO GEN', href: '/portfolio' },
+    { name: 'PORTFOLIO BUILDER', href: '/portfolio' },
     { name: 'LINKEDIN OPTIMIZER', href: '/linkedin' },
     { name: 'SERENITY AI', href: '/mental-health' },
     { name: 'DOCS & SKILLS', href: '/documents' },
@@ -160,7 +160,7 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full py-5 bg-[#FACC15] border-4 border-black text-black text-center font-black uppercase text-sm"
                 >
-                  SPONSOR NODES
+                  SPONSOR US
                 </Link>
               </div>
             </div>
