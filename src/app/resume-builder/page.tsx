@@ -37,7 +37,7 @@ const DEFAULT_RESUME: ResumeData = {
       company: "Rapid Rocket",
       role: "Frontend Developer (Freelance)",
       location: "Remote",
-      date: "Sep 2025 â€“ Present",
+      date: "Sep 2025 – Present",
       bullets: [
         "Built scalable frontend features using React.js and Next.js, driving significant UX improvements across the platform.",
         "Improved web performance through advanced frontend optimization and efficient rendering strategies, resulting in faster load times.",
@@ -48,10 +48,10 @@ const DEFAULT_RESUME: ResumeData = {
       company: "Aiseberg - AiseDiscovery",
       role: "Senior Frontend Engineer",
       location: "Bengaluru, India",
-      date: "Jan 2025 â€“ Jul 2025",
+      date: "Jan 2025 – Jul 2025",
       bullets: [
         "Developed a real-time chat interface in React TSX, significantly enhancing user engagement metrics.",
-        "Optimized list virtualization with TanStack Virtual and Redux Toolkit, contributing to a 40â€“50% activation rate among demo users.",
+        "Optimized list virtualization with TanStack Virtual and Redux Toolkit, contributing to a 40–50% activation rate among demo users.",
         "Integrated D3 tree chart with custom SCSS styling, reducing UI development time by 30% for data visualization components."
       ]
     },
@@ -59,7 +59,7 @@ const DEFAULT_RESUME: ResumeData = {
       company: "PropVR 3D Squareyards",
       role: "Frontend Developer (SDE-1)",
       location: "Bengaluru, India",
-      date: "Nov 2022 â€“ Dec 2024",
+      date: "Nov 2022 – Dec 2024",
       bullets: [
         "Collaborated with a 12-member team on the PropVR metaverse project, boosting project delivery efficiency by 20%.",
         "Led full-stack development of propvr.ai, achieving significant improvements in SEO rankings and user retention.",
@@ -72,7 +72,7 @@ const DEFAULT_RESUME: ResumeData = {
       school: "Delhi University",
       degree: "B.A Hons Political Science",
       location: "New Delhi",
-      date: "2019 â€“ 2022"
+      date: "2019 – 2022"
     }
   ],
   projects: [
@@ -255,7 +255,7 @@ export default function ResumeBuilder() {
              <div className="p-2 bg-[#2563EB] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <FileText className="w-8 h-8" />
              </div>
-             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Blueprint Architect v2.0</span>
+             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Resume Builder v2.0</span>
           </div>
           <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">
              Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder</span>
@@ -460,6 +460,7 @@ export default function ResumeBuilder() {
     </div>
   );
 }
+
 
 
 

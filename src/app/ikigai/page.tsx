@@ -11,7 +11,7 @@ import { IkigaiDiagram } from '@/components/IkigaiDiagram';
 import { validateCareerInput } from '@/lib/aiGuard';
 import Link from 'next/link';
 
-// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// —— Types —————————————————————————————————————————————————————————
 interface IkigaiResult {
   ikigaiSummary: string;
   primaryPath: {
@@ -44,7 +44,7 @@ const steps = [
   },
   { 
     id: 'skills', 
-    title: 'ðŸ’ª What You Are Good At', 
+    title: '💪 What You Are Good At', 
     desc: 'List your technical skills, soft skills, and natural talents.',
     icon: Zap,
     color: 'bg-emerald-500',
@@ -60,7 +60,7 @@ const steps = [
   },
   { 
     id: 'incomeGoals', 
-    title: 'ðŸ’° What You Can Be Paid For', 
+    title: '💰 What You Can Be Paid For', 
     desc: 'Mention your salary expectations and career goals.',
     icon: DollarSign,
     color: 'bg-amber-500',
@@ -162,9 +162,9 @@ export default function IkigaiPage() {
               <IkigaiDiagram activeZone={hoveredZone as any} />
               <div className="mt-8 grid grid-cols-2 gap-4 text-center">
                 <div onMouseEnter={() => setHoveredZone('passion')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-rose-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(244,63,94,1)]">â¤ï¸ Passion Zone</div>
-                <div onMouseEnter={() => setHoveredZone('profession')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-emerald-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(16,185,129,1)]">ðŸ’ª Profession Zone</div>
+                <div onMouseEnter={() => setHoveredZone('profession')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-emerald-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(16,185,129,1)]">💪 Profession Zone</div>
                 <div onMouseEnter={() => setHoveredZone('mission')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-indigo-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(79,70,229,1)]">ðŸŒ Mission Zone</div>
-                <div onMouseEnter={() => setHoveredZone('vocation')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-amber-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(245,158,11,1)]">ðŸ’° Vocation Zone</div>
+                <div onMouseEnter={() => setHoveredZone('vocation')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-amber-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(245,158,11,1)]">💰 Vocation Zone</div>
               </div>
             </div>
           </div>
@@ -201,7 +201,7 @@ export default function IkigaiPage() {
                 <ul className="space-y-3">
                   {result.strengths.map((s, i) => (
                     <li key={i} className="text-sm font-bold flex items-start gap-2">
-                      <span className="w-5 h-5 bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">âœ“</span>
+                      <span className="w-5 h-5 bg-emerald-100 flex items-center justify-center text-emerald-700 text-xs shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">✓</span>
                       {s}
                     </li>
                   ))}
@@ -247,7 +247,7 @@ export default function IkigaiPage() {
                 ))}
               </div>
               <div className="mt-4 p-4 bg-amber-50 border-2 border-black font-bold text-sm">
-                ðŸŽ¯ <span className="uppercase text-[10px] text-amber-800">Critical Next Action:</span><br/>
+                🎯 <span className="uppercase text-[10px] text-amber-800">Critical Next Action:</span><br/>
                 {result.nextAction}
               </div>
             </div>
@@ -390,7 +390,7 @@ export default function IkigaiPage() {
                     }
                     className="flex items-center gap-3 px-12 py-3 bg-[#2563EB] text-white font-black text-sm border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all disabled:opacity-50"
                   >
-                    {isLastStep ? 'Analyze My Ikigai âœ¨' : 'Continue â†’'}
+                    {isLastStep ? 'Analyze My Ikigai ✨' : 'Continue →'}
                   </button>
                 </div>
               </div>
