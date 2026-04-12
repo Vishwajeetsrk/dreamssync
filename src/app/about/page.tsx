@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { motion } from 'framer-motion';
 import { Target, Heart, Zap, Globe, TrendingUp, Briefcase, FileText, HeartHandshake, ArrowRight } from 'lucide-react';
@@ -16,8 +16,8 @@ export default function About() {
           className="flex whitespace-nowrap gap-20 font-black text-xs uppercase tracking-[0.3em] items-center"
         >
           <div className="flex items-center gap-3"><TrendingUp className="w-5 h-5 text-[#2563EB]" /> CORE MISSION: ACCESSIBILITY THROUGH AI</div>
-          <div className="flex items-center gap-3"><Briefcase className="w-5 h-5 text-[#FACC15]" /> SOVEREIGN CAREER ENGINEERING</div>
-          <div className="flex items-center gap-3"><FileText className="w-5 h-5 text-emerald-400" /> 100% FREE FOR STUDENT NODES</div>
+          <Link href="/" className="flex items-center gap-3 hover:text-[#FACC15] transition-colors"><Briefcase className="w-5 h-5 text-[#FACC15]" /> SOVEREIGN CAREER PLATFORM</Link>
+          <div className="flex items-center gap-3"><FileText className="w-5 h-5 text-emerald-400" /> 100% FREE FOR STUDENTS</div>
           <div className="flex items-center gap-3"><HeartHandshake className="w-5 h-5 text-rose-400" /> COMMUNITY-DRIVEN GROWTH</div>
           
           <div className="flex items-center gap-3"><TrendingUp className="w-5 h-5 text-[#2563EB]" /> CORE MISSION: ACCESSIBILITY THROUGH AI</div>
@@ -28,7 +28,7 @@ export default function About() {
         {/* Hero */}
         <section className="text-center space-y-10 group">
           <div className="inline-block px-8 py-2 border-4 border-black bg-white text-black font-black text-[10px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] uppercase tracking-[0.4em]">
-             Our Identity Protocol
+             Who We Are
           </div>
           <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none uppercase text-black">
             About <br /> <span className="text-[#2563EB] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] italic">DreamSync</span>
@@ -57,13 +57,13 @@ export default function About() {
         {/* Core Values Matrix */}
         <section className="space-y-20">
           <div className="flex items-center justify-between">
-             <h2 className="text-lg font-black uppercase tracking-[0.4em] text-black">Core Structural Values</h2>
+             <h2 className="text-lg font-black uppercase tracking-[0.4em] text-black">Core Values</h2>
              <div className="h-2 flex-grow mx-8 bg-black/5" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { title: "Accessibility", desc: "Top-tier career guidance should be affordable and accessible to every node in the network.", icon: Globe, color: "bg-blue-100 text-blue-700" },
+              { title: "Accessibility", desc: "Top-tier career guidance should be affordable and accessible to every student.", icon: Globe, color: "bg-blue-100 text-blue-700" },
               { title: "AI-Driven", desc: "We leverage synthetic intelligence to provide personalized, high-precision career feedback.", icon: Zap, color: "bg-yellow-100 text-yellow-700" },
               { title: "Community First", desc: "Built by care-experienced individuals for the next generation of Indian professionals.", icon: Heart, color: "bg-pink-100 text-pink-700" },
             ].map((value, i) => (
@@ -90,7 +90,7 @@ export default function About() {
           <div className="neo-box p-20 bg-white text-center space-y-12 relative overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-2 bg-[#2563EB]" />
              <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-tight">Ready to sync your dreams?</h2>
-             <p className="text-xl text-gray-400 font-bold max-w-2xl mx-auto uppercase">Initialize your professional trajectory with our sovereign AI toolkit today.</p>
+             <p className="text-xl text-gray-400 font-bold max-w-2xl mx-auto uppercase">Start your professional journey with our AI toolkit today.</p>
              <Link href="/dashboard" className="neo-btn-primary inline-flex px-16 py-6 text-xl items-center gap-4">
                Join the Platform Today <ArrowRight className="w-6 h-6" />
              </Link>
@@ -100,3 +100,4 @@ export default function About() {
     </div>
   );
 }
+
