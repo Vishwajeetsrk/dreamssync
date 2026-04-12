@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AIAssistant from "@/components/AIAssistant";
 import { AuthProvider } from "@/context/AuthContext";
 import { LanguageProvider } from "@/context/LanguageContext";
+import NextAuthProvider from "@/providers/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-sans' });
 
@@ -25,16 +26,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-[var(--background)] flex flex-col font-sans text-[var(--foreground)] antialiased" suppressHydrationWarning>
-        <AuthProvider>
-          <LanguageProvider>
-            <Navbar />
-            <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-24">
-              {children}
-            </main>
-            <Footer />
-            <AIAssistant />
-          </LanguageProvider>
-        </AuthProvider>
+        <NextAuthProvider>
+          <AuthProvider>
+            <LanguageProvider>
+              <Navbar />
+              <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-24">
+                {children}
+              </main>
+              <Footer />
+              <AIAssistant />
+            </LanguageProvider>
+          </AuthProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

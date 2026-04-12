@@ -1,13 +1,14 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { auth, db } from '@/lib/firebase';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint } from 'lucide-react';
+import { Mail, Lock, LogIn, Binary, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint, Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -99,7 +100,21 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-8">
+          <div className="pt-10 border-t-4 border-dashed border-black/10 space-y-4">
+             <div className="grid grid-cols-2 gap-4">
+               <button 
+                 onClick={() => signIn("google")}
+                 className="neo-btn-secondary flex items-center justify-center gap-2 h-14 text-xs font-black"
+               >
+                 <Globe className="w-5 h-5" /> GOOGLE_ID
+               </button>
+               <button 
+                 onClick={() => signIn("github")}
+                 className="neo-btn-secondary flex items-center justify-center gap-2 h-14 text-xs font-black"
+               >
+                 <Github className="w-5 h-5" /> GITHUB_NODE
+               </button>
+             </div>
           </div>
         </div>
 
