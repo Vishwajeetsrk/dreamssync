@@ -313,7 +313,7 @@ function ProfileContent() {
 
                 <div className="neo-box p-12 bg-[#FACC15] text-black">
                   <div className="flex items-start gap-8">
-                    <ShieldCheck, Eye, EyeOff className="w-12 h-12 shrink-0" strokeWidth={3} />
+                    <ShieldCheck className="w-12 h-12 shrink-0" strokeWidth={3} />
                     <div className="space-y-4">
                        <h4 className="text-sm font-black uppercase tracking-widest">Your data is secure</h4>
                        <p className="text-lg font-bold leading-tight">Your profile information is protected and encrypted. Updates are saved instantly and securely.</p>
@@ -439,6 +439,7 @@ export default function Profile() {
     </Suspense>
   );
 }
+
 
 
 
