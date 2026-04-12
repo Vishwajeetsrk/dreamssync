@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, Suspense } from 'react';
 import { auth, db, storage } from '@/lib/firebase';
@@ -76,9 +76,9 @@ function ProfileContent() {
           last_sync: new Date().toISOString()
         }, { merge: true });
         setAvatarUrl(currentPhoto);
-        setMessage({ type: 'success', text: 'IDENTITY SYNCHRONIZATION COMPLETE.' });
+        setMessage({ type: 'success', text: 'Profile photo updated successfully.' });
       } else {
-        setMessage({ type: 'error', text: 'NO SOURCE PHOTO DETECTED. MANUAL UPDATE REQUIRED.' });
+        setMessage({ type: 'error', text: 'No photo found. Please upload one manually.' });
       }
     } catch (err) {
       console.error('Headless sync failed');
@@ -98,7 +98,7 @@ function ProfileContent() {
         avatar_url: avatarUrl,
         updated_at: new Date().toISOString(),
       }, { merge: true });
-      setMessage({ type: 'success', text: 'IDENTITY RECORDS COMMITTED SUCCESSFULLY.' });
+      setMessage({ type: 'success', text: 'Profile updated successfully.' });
     } catch (err: any) {
       setMessage({ type: 'error', text: err.message });
     } finally {
@@ -117,7 +117,7 @@ function ProfileContent() {
       const url = await getDownloadURL(storageRef);
       setAvatarUrl(url);
       await setDoc(doc(db, 'users', user.uid), { avatar_url: url }, { merge: true });
-      setMessage({ type: 'success', text: 'IDENTITY PHOTO SYNCED TO NODES.' });
+      setMessage({ type: 'success', text: 'Profile photo updated.' });
     } catch (err: any) {
       console.warn('Storage blocked, fallback sync initiated...');
       const reader = new FileReader();
@@ -127,9 +127,9 @@ function ProfileContent() {
         try {
           setAvatarUrl(base64data);
           await setDoc(doc(db, 'users', user.uid), { avatar_url: base64data }, { merge: true });
-          setMessage({ type: 'success', text: 'IDENTITY SYNCED VIA SOVEREIGN BYPASS.' });
+          setMessage({ type: 'success', text: 'Profile photo saved.' });
         } catch (dbErr: any) {
-          setMessage({ type: 'error', text: 'SYNC FAILED. FILE SIZE EXCEEDS BUFFER.' });
+          setMessage({ type: 'error', text: 'Upload failed. File size too large.' });
         } finally {
           setUploading(false);
         }
@@ -145,7 +145,7 @@ function ProfileContent() {
     setLoading(true);
     try {
       await updatePassword(auth.currentUser!, newPassword);
-      setMessage({ type: 'success', text: 'SECURITY CREDENTIALS HARDENED.' });
+      setMessage({ type: 'success', text: 'Password updated successfully.' });
       setNewPassword('');
     } catch (err: any) {
       setMessage({ type: 'error', text: err.message });
@@ -166,7 +166,7 @@ function ProfileContent() {
       await deleteUser(auth.currentUser!);
       router.push('/signup');
     } catch (err: any) {
-      setMessage({ type: 'error', text: 'PROTOCOL REQUIRE FRESH RE-AUTH FOR ERASURE.' });
+      setMessage({ type: 'error', text: 'Please sign out and sign back in before deleting your account.' });
     } finally {
       setLoading(false);
     }
@@ -199,10 +199,10 @@ function ProfileContent() {
               <div className="p-2 bg-black text-white shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]">
                 <Fingerprint className="w-8 h-8" />
               </div>
-              <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Identity Node Protocol</span>
+              <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Account Settings</span>
             </div>
             <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none text-black uppercase">
-              Sovereign <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Profile</span>
+              Your <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Profile</span>
             </h1>
           </div>
           
@@ -261,8 +261,8 @@ function ProfileContent() {
 
                   <div className="w-full pt-10 border-t-4 border-black grid grid-cols-2 gap-8">
                     <div className="text-center">
-                      <div className="text-[10px] font-black uppercase text-black/20 mb-2 tracking-widest">PROTOCOL</div>
-                      <div className="text-xs font-black text-[#2563EB] uppercase">STANDARD</div>
+                      <div className="text-[10px] font-black uppercase text-black/20 mb-2 tracking-widest">PLAN</div>
+                      <div className="text-xs font-black text-[#2563EB] uppercase">FREE</div>
                     </div>
                     <div className="text-center">
                       <div className="text-[10px] font-black uppercase text-black/20 mb-2 tracking-widest">STATUS</div>
@@ -285,24 +285,24 @@ function ProfileContent() {
               <div className="lg:col-span-8 space-y-12">
                 <div className="neo-box p-16 bg-white">
                   <h3 className="text-sm font-black uppercase tracking-[0.4em] text-black/30 mb-12 flex items-center gap-4">
-                    <Settings className="w-6 h-6 text-black" /> PERSONNEL PROTOCOL
+                    <Settings className="w-6 h-6 text-black" /> Personal Information
                   </h3>
                   
                   <form onSubmit={handleUpdateProfile} className="space-y-12">
                     <div className="space-y-6">
-                      <label className="text-xs font-black uppercase tracking-widest text-[#2563EB] block">OFFICIAL IDENTITY NAME</label>
+                      <label className="text-xs font-black uppercase tracking-widest text-[#2563EB] block">Full Name</label>
                       <input 
                         type="text" 
                         value={name} 
                         onChange={(e) => setName(e.target.value)} 
                         className="neo-input text-2xl" 
-                        placeholder="ENTER IDENTITY"
+                        placeholder="Your full name"
                       />
                     </div>
 
                     <div className="pt-8">
                        <button type="submit" className="neo-btn-primary w-full md:w-auto px-16 py-6 text-xl flex items-center justify-center gap-6 group">
-                         <Save className="w-8 h-8 group-hover:rotate-12 transition-transform" /> COMMIT CONFIGURATION
+                         <Save className="w-8 h-8 group-hover:rotate-12 transition-transform" /> Save Changes
                        </button>
                     </div>
                   </form>
@@ -312,8 +312,8 @@ function ProfileContent() {
                   <div className="flex items-start gap-8">
                     <ShieldCheck className="w-12 h-12 shrink-0" strokeWidth={3} />
                     <div className="space-y-4">
-                       <h4 className="text-sm font-black uppercase tracking-widest">Identity Infrastructure Notice</h4>
-                       <p className="text-lg font-bold leading-tight">Your profile data is protected via the DreamSync Sovereign Protocol. Identity updates are synchronized across our neural nodes in milliseconds.</p>
+                       <h4 className="text-sm font-black uppercase tracking-widest">Your data is secure</h4>
+                       <p className="text-lg font-bold leading-tight">Your profile information is protected and encrypted. Updates are saved instantly and securely.</p>
                     </div>
                   </div>
                 </div>
@@ -329,11 +329,11 @@ function ProfileContent() {
             >
               <div className="neo-box p-16 bg-white">
                 <h2 className="text-3xl font-black uppercase mb-16 flex items-center gap-6 tracking-tighter">
-                  <Lock className="w-10 h-10 text-[#2563EB]" /> SECURITY HARDENING
+                  <Lock className="w-10 h-10 text-[#2563EB]" /> Change Password
                 </h2>
                 <form onSubmit={handleChangePassword} className="space-y-12 max-w-2xl">
                   <div className="space-y-6">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#2563EB] block">NEW ACCESS PROTOCOL KEY</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#2563EB] block">New Password</label>
                     <input 
                       type="password" 
                       value={newPassword} 
@@ -343,7 +343,7 @@ function ProfileContent() {
                     />
                   </div>
                   <button type="submit" className="neo-btn-primary px-16 py-6 text-xl flex items-center gap-6 group">
-                    <Shield className="w-8 h-8 group-hover:scale-110 transition-transform" /> AUTHORIZE HARDENING
+                    <Shield className="w-8 h-8 group-hover:scale-110 transition-transform" /> Update Password
                   </button>
                 </form>
               </div>
@@ -351,9 +351,9 @@ function ProfileContent() {
               {/* Termination Zone Architecture */}
               <div className="neo-box p-16 bg-red-50 border-red-600 flex flex-col xl:flex-row xl:items-center justify-between gap-16">
                 <div className="space-y-6">
-                  <h3 className="text-4xl font-black uppercase tracking-tighter text-red-600">CRITICAL TERMINATION</h3>
+                  <h3 className="text-4xl font-black uppercase tracking-tighter text-red-600">Danger Zone</h3>
                   <p className="text-lg font-bold text-red-600/60 max-w-xl leading-snug uppercase">
-                    WARNING: Full de-authorization of identity node and permanent erasure of all career synchronization logs within the infrastructure.
+                    Signing out will end your current session. Deleting your account is permanent and will remove all your data and career progress.
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-8">
@@ -367,7 +367,7 @@ function ProfileContent() {
                     onClick={handleDeleteAccount}
                     className={`px-12 py-6 border-4 border-black font-black uppercase text-sm tracking-widest transition-all shadow-[6px_6px_0px_rgba(0,0,0,1)] ${confirmDelete ? 'bg-red-600 text-white animate-pulse' : 'bg-transparent text-red-600 hover:bg-red-600 hover:text-white'}`}
                   >
-                    {confirmDelete ? 'CONFIRM ERASURE?' : 'PURGE NODE'}
+                    {confirmDelete ? 'Confirm Delete?' : 'Delete Account'}
                   </button>
                 </div>
               </div>
@@ -415,3 +415,4 @@ export default function Profile() {
     </Suspense>
   );
 }
+

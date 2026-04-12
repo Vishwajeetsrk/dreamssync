@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -56,7 +56,7 @@ export default function Dashboard() {
               <div className="p-3 bg-black text-white shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]">
                 <LayoutDashboard className="w-8 h-8" />
               </div>
-              <span className="text-sm font-black uppercase tracking-[0.4em] text-black/40">Command Center v4.0</span>
+              <span className="text-sm font-black uppercase tracking-[0.4em] text-black/40">Career Dashboard</span>
             </motion.div>
             <motion.h1 
               initial={{ opacity: 0, x: -20 }}
@@ -138,3 +138,4 @@ export default function Dashboard() {
     </div>
   );
 }
+
