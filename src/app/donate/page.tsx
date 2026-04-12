@@ -35,10 +35,10 @@ export default function DonatePage() {
       {/* Hero — matches About page */}
       <section className="text-center space-y-6">
         <h1 className="text-5xl md:text-7xl font-black">
-          Support <span className="text-primary underline decoration-8 underline-offset-4">DreamSync</span>
+          Support <span className="text-primary underline decoration-8 underline-offset-4"><span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span></span>
         </h1>
         <p className="text-2xl text-muted-foreground font-medium max-w-3xl mx-auto">
-          DreamSync is 100% free for students. If it helped your career journey, consider buying us a chai — every rupee keeps the servers running!
+          <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> is 100% free for students. If it helped your career journey, consider buying us a chai — every rupee keeps the servers running!
         </p>
       </section>
 
@@ -51,7 +51,7 @@ export default function DonatePage() {
           <div>
             <h2 className="text-4xl font-black mb-4">Why We Need You</h2>
             <p className="text-xl font-medium leading-relaxed">
-              We don't charge subscriptions. We don't have investors. DreamSync runs on passion and community support.
+              We don't charge subscriptions. We don't have investors. <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> runs on passion and community support.
               Every donation — big or small — directly funds the AI that powers your career growth.
             </p>
           </div>
@@ -179,7 +179,7 @@ export default function DonatePage() {
         </div>
         <h2 className="text-3xl font-black">Thank You for Being Here!</h2>
         <p className="text-xl text-muted-foreground font-medium max-w-xl mx-auto flex flex-col sm:flex-row flex-wrap justify-center items-center gap-x-1">
-          <span>Even if you can't donate, just using DreamSync and sharing it with friends means the world to us.</span>
+          <span>Even if you can't donate, just using <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> and sharing it with friends means the world to us.</span>
           <span className="flex items-center gap-2 mt-2 sm:mt-0">Built with <Heart className="w-5 h-5 text-red-500 fill-current" /> for Indian students.</span>
         </p>
         <Link

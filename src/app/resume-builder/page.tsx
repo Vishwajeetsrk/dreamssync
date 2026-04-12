@@ -303,41 +303,41 @@ export default function ResumeBuilder() {
             </h2>
             <div className="grid grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Full Identity Name</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Full Name</label>
                   <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" placeholder="Vashnavi Chauhan" />
                </div>
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Occupational Node</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Job Title</label>
                   <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" placeholder="Frontend Developer" />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Email Protocol</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Email Address</label>
                   <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" placeholder="vashnavichauhan1@gmail.com" />
                </div>
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Direct Signal Line</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Phone Number</label>
                   <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" placeholder="+91 9174403667" />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">LinkedIn Node</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">LinkedIn URL</label>
                   <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input" placeholder="vashnavichauhan18" />
                </div>
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">GitHub Manifest</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">GitHub URL</label>
                   <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input" placeholder="vashnavichauhan18" />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Portfolio Signal</label>
+                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Portfolio URL</label>
                 <input value={data.personalInfo.portfolio || ''} onChange={(e) => updatePersonalInfo('portfolio', e.target.value)} className="neo-input" placeholder="vashnavi.dev" />
               </div>
               <div className="space-y-2">
-                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Physical Node Location</label>
+                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Location</label>
                 <input value={data.personalInfo.location} onChange={(e) => updatePersonalInfo('location', e.target.value)} className="neo-input" placeholder="Bengaluru, India" />
               </div>
             </div>
@@ -444,7 +444,7 @@ export default function ResumeBuilder() {
         >
            <ShieldCheck className="w-10 h-10 text-black shrink-0" strokeWidth={3} />
            <p className="text-xs font-black uppercase leading-relaxed tracking-tight">
-             ATS COMPLIANCE MODE: ACTIVE. Templates are pre-hardened for sovereign recruitment systems. Verified 2026 Protocols.
+             ATS COMPLIANCE ACTIVE. Templates are optimized for modern recruitment systems and parsers.
            </p>
         </motion.div>
       </aside>
@@ -460,6 +460,7 @@ export default function ResumeBuilder() {
     </div>
   );
 }
+
 
 
 

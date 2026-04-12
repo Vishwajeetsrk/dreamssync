@@ -100,7 +100,7 @@ export default function Login() {
               <Lock className="w-10 h-10" />
             </div>
             <h1 className="text-4xl font-black tracking-tighter text-black">Welcome Back</h1>
-            <p className="text-gray-500 text-sm font-semibold">Sign in to your DreamSync account</p>
+            <p className="text-gray-500 text-sm font-semibold">Sign in to your <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> account</p>
           </div>
 
           {error && (

@@ -102,7 +102,7 @@ export default function Signup() {
               <UserPlus className="w-10 h-10" />
             </div>
             <h1 className="text-4xl font-black tracking-tighter text-black">Create Account</h1>
-            <p className="text-gray-500 text-sm font-semibold">Join DreamSync and start your career journey</p>
+            <p className="text-gray-500 text-sm font-semibold">Join <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> and start your career journey</p>
           </div>
 
           {error && (

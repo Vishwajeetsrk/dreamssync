@@ -113,9 +113,9 @@ export default function Home() {
       <section className="px-6 pb-40">
         <div className="max-w-xl mx-auto border-4 border-black p-12 bg-white text-center space-y-8 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.05)]">
            <Coffee className="w-12 h-12 mx-auto text-black" strokeWidth={3} />
-           <h2 className="text-3xl font-black uppercase tracking-tighter">Enjoying DreamSync?</h2>
+           <h2 className="text-3xl font-black uppercase tracking-tighter">Enjoying <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span>?</h2>
            <p className="text-sm text-gray-500 font-bold leading-relaxed uppercase">
-              DreamSync is 100% free for students. If it helped your career journey, consider buying us a chai — every rupee keeps the servers running!
+              <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> is 100% free for students. If it helped your career journey, consider buying us a chai — every rupee keeps the servers running!
            </p>
            <Link href="/donate" className="inline-block bg-[#2563EB] text-white border-4 border-black px-12 py-4 font-black text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
               ❤️ Support Us via UPI!

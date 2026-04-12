@@ -18,7 +18,7 @@ export default function Team() {
     <div className="space-y-12 max-w-7xl mx-auto py-8">
       <header className="border-b-4 border-black pb-8 text-center">
         <h1 className="text-4xl md:text-5xl font-black mb-4 flex items-center justify-center gap-4">
-          <Users className="w-12 h-12" /> DreamSync Team
+          <Users className="w-12 h-12" /> <span className="text-[#2563EB]">Dream</span><span className="text-black">Sync</span> Team
         </h1>
         <p className="text-xl text-muted-foreground font-medium">The passionate individuals driving career success for Indian youth.</p>
       </header>
