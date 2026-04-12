@@ -1,13 +1,12 @@
 ﻿'use client';
 
 import { useState } from 'react';
-import { auth, db } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, AlertCircle, Zap, Globe, Fingerprint } from 'lucide-react';
+import { ArrowRight, AlertCircle, Eye, EyeOff, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { signIn } from "next-auth/react";
 
 const GoogleIcon = () => (
@@ -28,6 +27,7 @@ const GitHubIcon = () => (
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -48,24 +48,23 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center px-6 selection:bg-[#FACC15]/40 font-bold">
-      
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-lg"
       >
-        <div className="neo-box p-12 bg-white space-y-10">
-          <div className="text-center space-y-4">
-            <div className="inline-block p-4 bg-[#2563EB] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
-               <Fingerprint className="w-10 h-10" />
+        <div className="neo-box p-12 bg-white space-y-8">
+          <div className="text-center space-y-3">
+            <div className="inline-block p-4 bg-[#2563EB] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-2">
+              <Lock className="w-10 h-10" />
             </div>
-            <h1 className="text-4xl font-black tracking-tighter text-black">Hub Authentication</h1>
-            <p className="text-gray-400 text-xs tracking-[0.2em]">Secure Access Required</p>
+            <h1 className="text-4xl font-black tracking-tighter text-black">Welcome Back</h1>
+            <p className="text-gray-500 text-sm font-semibold">Sign in to your DreamSync account</p>
           </div>
 
           {error && (
-            <div className="p-5 bg-red-100 border-4 border-black text-red-600 text-xs font-black flex items-center gap-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <AlertCircle className="w-6 h-6 flex-shrink-0" /> {error}
+            <div className="p-4 bg-red-100 border-4 border-black text-red-600 text-xs font-black flex items-center gap-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <AlertCircle className="w-5 h-5 flex-shrink-0" /> {error}
             </div>
           )}
 
@@ -73,74 +72,78 @@ export default function Login() {
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-              className="flex items-center justify-center gap-2.5 h-12 bg-white border-4 border-black font-black text-xs text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
+              className="flex items-center justify-center gap-2 h-12 bg-white border-4 border-black font-black text-xs text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             >
               <GoogleIcon /> Continue with Google
             </button>
             <button
               onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
-              className="flex items-center justify-center gap-2.5 h-12 bg-[#24292F] border-4 border-black font-black text-xs text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
+              className="flex items-center justify-center gap-2 h-12 bg-[#24292F] border-4 border-black font-black text-xs text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             >
               <GitHubIcon /> Continue with GitHub
             </button>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex-1 h-1 bg-black/10 border-t-2 border-dashed border-black/20" />
-            <span className="text-xs font-black text-gray-400 tracking-widest">OR EMAIL</span>
-            <div className="flex-1 h-1 bg-black/10 border-t-2 border-dashed border-black/20" />
+          <div className="flex items-center gap-3">
+            <div className="flex-1 border-t-2 border-dashed border-black/20" />
+            <span className="text-xs font-black text-gray-400 tracking-widest">OR</span>
+            <div className="flex-1 border-t-2 border-dashed border-black/20" />
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-8 text-black">
-            <div className="space-y-4">
-              <label className="text-xs font-black tracking-widest ml-1">IDENTITY_MAIL</label>
-              <div className="relative group">
-                <input 
-                  type="email" 
-                  required 
-                  className="neo-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="NAME@EMAIL.COM"
-                />
-              </div>
+          <form onSubmit={handleLogin} className="space-y-6 text-black">
+            <div className="space-y-2">
+              <label className="text-sm font-black tracking-wide">Email</label>
+              <input 
+                type="email" 
+                required 
+                className="neo-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+              />
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center ml-1">
-                <label className="text-xs font-black tracking-widest">SECRET_PROTOCOL</label>
-                <Link href="/forgot-password" title="Forgot Password" className="text-[10px] text-[#2563EB] hover:underline">RECOVER ACCESS?</Link>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="text-sm font-black tracking-wide">Password</label>
+                <Link href="/forgot-password" className="text-xs text-[#2563EB] font-bold hover:underline">Forgot password?</Link>
               </div>
-              <div className="relative group">
+              <div className="relative">
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"}
                   required 
-                  className="neo-input"
+                  className="neo-input pr-12"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
               </div>
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className="neo-btn-primary w-full h-16 text-lg flex items-center justify-center gap-4"
+              className="neo-btn-primary w-full h-14 text-lg flex items-center justify-center gap-3"
             >
               {loading ? (
-                 <div className="w-8 h-8 border-4 border-white/30 border-t-white animate-spin" />
+                <div className="w-6 h-6 border-4 border-white/30 border-t-white animate-spin" />
               ) : (
-                <>AUTHENTICATE NODE <ArrowRight className="w-6 h-6" /></>
+                <>Log In <ArrowRight className="w-5 h-5" /></>
               )}
             </button>
           </form>
-        </div>
 
-        <div className="mt-12 flex justify-center items-center gap-4 opacity-30 grayscale">
-           <Zap className="w-5 h-5" />
-           <span className="text-[10px] font-black tracking-[0.6em]">SOVEREIGN ACCESS TERMINAL v4.0</span>
-           <Globe className="w-5 h-5" />
+          <p className="text-center text-sm font-bold text-gray-500">
+            Don&apos;t have an account?{' '}
+            <Link href="/signup" className="text-[#2563EB] font-black hover:underline">Sign up</Link>
+          </p>
         </div>
       </motion.div>
     </div>
