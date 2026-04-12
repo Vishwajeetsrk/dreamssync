@@ -306,7 +306,7 @@ export default function IkigaiPage() {
             <div className="space-y-8">
               <header className="text-center md:text-left">
                 <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
-                   <span className="px-3 py-1 bg-primary text-white font-black text-xs border-2 border-black neo-box">PREMIUM FEATURE</span>
+                   <span className="px-3 py-1 bg-[#FACC15] text-black font-black text-xs border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase">PREMIUM FEATURE</span>
                 </div>
                 <h1 className="text-5xl font-black mb-4">Discover Your Purpose.</h1>
                 <p className="text-xl text-gray-600 font-medium">Use the Japanese IKIGAI framework to find your dream life.</p>
@@ -408,4 +408,5 @@ export default function IkigaiPage() {
     </div>
   );
 }
+
 

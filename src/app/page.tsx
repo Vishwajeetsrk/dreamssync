@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -77,7 +77,7 @@ export default function Home() {
           <Link href="/signup" className="bg-[#2563EB] text-white border-4 border-black px-12 py-5 font-black text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
              Get Started For Free →
           </Link>
-          <Link href="/about" className="bg-white text-black border-4 border-black px-12 py-5 font-black text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+          <Link href="/dashboard" className="bg-white text-black border-4 border-black px-12 py-5 font-black text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
              See How It Works
           </Link>
         </div>
@@ -126,3 +126,4 @@ export default function Home() {
     </div>
   );
 }
+

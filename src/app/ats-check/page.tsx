@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -123,7 +123,7 @@ export default function AdvancedATS() {
                  <div className="p-2 bg-black text-white shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]">
                     <BarChart3 className="w-8 h-8" />
                  </div>
-                 <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Sovereign ATS Engine v4.0</span>
+                 <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">ATS Score Checker</span>
               </div>
               <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none text-black uppercase">
                  Smart <br /> <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)] italic">Analyzer</span>
@@ -301,3 +301,4 @@ export default function AdvancedATS() {
     </div>
   );
 }
+
