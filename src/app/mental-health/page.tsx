@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -310,7 +310,7 @@ export default function MentalHealthAgent() {
       const res = await fetch('/api/mental-health', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history, mood: mood || 'not specified' }),
+        body: JSON.stringify({ messages: history, mood: mood || 'not specified', language: selectedLang.name }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed');
@@ -709,3 +709,4 @@ export default function MentalHealthAgent() {
     </div>
   );
 }
+

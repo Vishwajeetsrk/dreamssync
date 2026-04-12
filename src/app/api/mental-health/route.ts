@@ -1,4 +1,4 @@
-/**
+﻿/**
  * /api/mental-health
  * Serenity — Empathetic Mental Health Support Agent
  * Stack: Groq → OpenRouter → Gemini fallback
@@ -19,6 +19,7 @@ const MessageSchema = z.object({
 const BodySchema = z.object({
   messages: z.array(MessageSchema).min(1).max(30),
   mood: z.string().max(50).optional(),
+  language: z.string().optional(),
 });
 
 // ── System Prompt ─────────────────────────────────────────────────
@@ -87,10 +88,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const { messages, mood = 'not specified' } = body;
+  const { messages, mood = 'not specified', language = 'English (India)' } = body;
 
   // 4. Build AI messages
-  const systemWithMood = `${SYSTEM_PROMPT}\n\nCurrent user mood: ${mood}`;
+  const systemWithMood = `${SYSTEM_PROMPT}\n\nCurrent user mood: ${mood}\n\nCRITICAL LANGUAGE OVERRIDE: The user has selected the language: ${language}. You MUST reply ONLY in ${language}. DO NOT output Hindi if the requested language is English. DO NOT output English if the requested language is Hindi.`;
 
   const aiMessages: { role: 'system' | 'user' | 'assistant'; content: string }[] = [
     { role: 'system', content: systemWithMood },
@@ -118,3 +119,4 @@ export async function POST(req: NextRequest) {
     }, { status: 200 });
   }
 }
+
