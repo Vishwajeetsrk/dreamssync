@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { auth, db, storage } from '@/lib/firebase';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { updatePassword, deleteUser, signOut } from 'firebase/auth';
+import { updatePassword, deleteUser, signOut, EmailAuthProvider, reauthenticateWithCredential, GoogleAuthProvider, GithubAuthProvider, linkWithPopup } from 'firebase/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   User as UserIcon, 
@@ -36,7 +36,10 @@ function ProfileContent() {
   const [avatarUrl, setAvatarUrl] = useState('');
   const [activeTab, setActiveTab] = useState('profile');
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -415,6 +418,7 @@ export default function Profile() {
     </Suspense>
   );
 }
+
 
 
 
