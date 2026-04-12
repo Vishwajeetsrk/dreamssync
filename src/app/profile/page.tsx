@@ -23,7 +23,7 @@ import {
   Fingerprint,
   Zap,
   Coffee,
-  ShieldCheck, Eye, EyeOff
+  ShieldCheck, Eye, EyeOff, Globe
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -349,6 +349,27 @@ function ProfileContent() {
                     <Shield className="w-8 h-8 group-hover:scale-110 transition-transform" /> Update Password
                   </button>
                 </form>
+              </div>
+
+              <div className="neo-box p-16 bg-white space-y-10">
+                 <h3 className="text-3xl font-black uppercase tracking-tighter flex items-center gap-6">
+                    <Globe className="w-10 h-10 text-[#2563EB]" /> Connected Accounts
+                 </h3>
+                 <p className="text-sm font-bold text-gray-500">Link your external accounts for easier sign-in. If you created your account with Google/GitHub, you can map it here.</p>
+                 <div className="flex gap-4">
+                    <button 
+                      onClick={() => handleLinkAccount('google')}
+                      className="px-8 py-4 bg-white border-4 border-black flex items-center gap-3 font-black text-sm uppercase hover:bg-gray-100 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                    >
+                       Link Google
+                    </button>
+                    <button 
+                      onClick={() => handleLinkAccount('github')}
+                      className="px-8 py-4 bg-white border-4 border-black flex items-center gap-3 font-black text-sm uppercase hover:bg-gray-100 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                    >
+                       Link GitHub
+                    </button>
+                 </div>
               </div>
 
               {/* Termination Zone Architecture */}
