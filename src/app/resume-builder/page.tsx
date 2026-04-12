@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { 
   Plus, Trash2, Download, Printer, User, Briefcase, 
   GraduationCap, Palette, Layout, Save, Sparkles, Send, FileText, Award,
-  Fingerprint, Zap, Coffee, ArrowRight, CheckCircle2, AlertCircle, BarChart3, Info, Upload, ShieldCheck
+  Fingerprint, Zap, Coffee, ArrowRight, CheckCircle2, AlertCircle, BarChart3, Info, Upload, ShieldCheck, Loader2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReactToPrint } from 'react-to-print';
@@ -255,14 +255,14 @@ export default function ResumeBuilder() {
              <div className="p-2 bg-[#2563EB] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <FileText className="w-8 h-8" />
              </div>
-             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Resume Builder v2.0</span>
+             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Resume Builder</span>
           </div>
           <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">
              Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder</span>
           </h1>
         </div>
 
-        {/* Action Protocol Panel */}
+        {/* Action Panel */}
         <motion.div 
           whileHover={{ y: -2 }}
           className="neo-box p-8 bg-black text-white space-y-6 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)]"
@@ -460,6 +460,8 @@ export default function ResumeBuilder() {
     </div>
   );
 }
+
+
 
 
 
