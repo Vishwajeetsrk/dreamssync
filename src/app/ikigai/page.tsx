@@ -36,7 +36,7 @@ interface IkigaiResult {
 const steps = [
   { 
     id: 'passions', 
-    title: '❤️  What You Love', 
+    title: 'What You Love', 
     desc: 'List your passions, interests, and things that make you lose track of time.',
     icon: Heart,
     color: 'bg-rose-500',
@@ -44,7 +44,7 @@ const steps = [
   },
   { 
     id: 'skills', 
-    title: '💪 What You Are Good At', 
+    title: 'What You Are Good At', 
     desc: 'List your technical skills, soft skills, and natural talents.',
     icon: Zap,
     color: 'bg-emerald-500',
@@ -52,7 +52,7 @@ const steps = [
   },
   { 
     id: 'marketNeeds', 
-    title: '🌍 What The World Needs', 
+    title: 'What The World Needs', 
     desc: 'Think about current problems, trends, and demands in the 2026 market.',
     icon: Globe,
     color: 'bg-indigo-500',
@@ -60,7 +60,7 @@ const steps = [
   },
   { 
     id: 'incomeGoals', 
-    title: '💰 What You Can Be Paid For', 
+    title: 'What You Can Be Paid For', 
     desc: 'Mention your salary expectations and career goals.',
     icon: DollarSign,
     color: 'bg-amber-500',
@@ -161,10 +161,10 @@ export default function IkigaiPage() {
             <div className="bg-white border-4 border-black p-8 neo-box">
               <IkigaiDiagram activeZone={hoveredZone as any} />
               <div className="mt-8 grid grid-cols-2 gap-4 text-center">
-                <div onMouseEnter={() => setHoveredZone('passion')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-rose-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(244,63,94,1)]">❤️ Passion Zone</div>
-                <div onMouseEnter={() => setHoveredZone('profession')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-emerald-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(16,185,129,1)]">💪 Profession Zone</div>
-                <div onMouseEnter={() => setHoveredZone('mission')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-indigo-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(79,70,229,1)]">🌍  Mission Zone</div>
-                <div onMouseEnter={() => setHoveredZone('vocation')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-amber-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(245,158,11,1)]">💰 Vocation Zone</div>
+                <div onMouseEnter={() =>Passion Zone</div>
+                <div onMouseEnter={() =>Profession Zone</div>
+                <div onMouseEnter={() =>Mission Zone</div>
+                <div onMouseEnter={() =>Vocation Zone</div>
               </div>
             </div>
           </div>
@@ -328,7 +328,13 @@ export default function IkigaiPage() {
                     <currentStepData.icon className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-black leading-none">{currentStepData.title}</h2>
+                    <h2 className="text-3xl font-black leading-none flex items-center gap-3">
+       {currentStep === 0 && '❤️'}
+       {currentStep === 1 && '💪'}
+       {currentStep === 2 && '🌍'}
+       {currentStep === 3 && '💰'}
+       {currentStepData.title}
+     </h2>
                     <p className="text-gray-500 font-medium mt-2">{currentStepData.desc}</p>
                   </div>
                 </div>
