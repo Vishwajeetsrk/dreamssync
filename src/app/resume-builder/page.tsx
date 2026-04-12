@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useRef } from 'react';
 import { 
@@ -37,7 +37,7 @@ const DEFAULT_RESUME: ResumeData = {
       company: "Rapid Rocket",
       role: "Frontend Developer (Freelance)",
       location: "Remote",
-      date: "Sep 2025 – Present",
+      date: "Sep 2025 â€“ Present",
       bullets: [
         "Built scalable frontend features using React.js and Next.js, driving significant UX improvements across the platform.",
         "Improved web performance through advanced frontend optimization and efficient rendering strategies, resulting in faster load times.",
@@ -48,10 +48,10 @@ const DEFAULT_RESUME: ResumeData = {
       company: "Aiseberg - AiseDiscovery",
       role: "Senior Frontend Engineer",
       location: "Bengaluru, India",
-      date: "Jan 2025 – Jul 2025",
+      date: "Jan 2025 â€“ Jul 2025",
       bullets: [
         "Developed a real-time chat interface in React TSX, significantly enhancing user engagement metrics.",
-        "Optimized list virtualization with TanStack Virtual and Redux Toolkit, contributing to a 40–50% activation rate among demo users.",
+        "Optimized list virtualization with TanStack Virtual and Redux Toolkit, contributing to a 40â€“50% activation rate among demo users.",
         "Integrated D3 tree chart with custom SCSS styling, reducing UI development time by 30% for data visualization components."
       ]
     },
@@ -59,7 +59,7 @@ const DEFAULT_RESUME: ResumeData = {
       company: "PropVR 3D Squareyards",
       role: "Frontend Developer (SDE-1)",
       location: "Bengaluru, India",
-      date: "Nov 2022 – Dec 2024",
+      date: "Nov 2022 â€“ Dec 2024",
       bullets: [
         "Collaborated with a 12-member team on the PropVR metaverse project, boosting project delivery efficiency by 20%.",
         "Led full-stack development of propvr.ai, achieving significant improvements in SEO rankings and user retention.",
@@ -72,7 +72,7 @@ const DEFAULT_RESUME: ResumeData = {
       school: "Delhi University",
       degree: "B.A Hons Political Science",
       location: "New Delhi",
-      date: "2019 – 2022"
+      date: "2019 â€“ 2022"
     }
   ],
   projects: [
@@ -268,7 +268,7 @@ export default function ResumeBuilder() {
           className="neo-box p-8 bg-black text-white space-y-6 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)]"
         >
            <h3 className="text-xs font-black uppercase tracking-widest text-[#FACC15] flex items-center gap-3">
-              <Zap className="w-4 h-4 fill-current animate-pulse" /> EXECUTION_PROTOCOLS
+              <Zap className="w-4 h-4 fill-current animate-pulse" /> Action Panel
            </h3>
            <div className="grid grid-cols-2 gap-6">
               <button 
@@ -410,7 +410,7 @@ export default function ResumeBuilder() {
           <section className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-sm font-black uppercase tracking-widest flex items-center gap-2 text-black">
-                📂 TECHNICAL PROJECTS
+                ðŸ“‚ TECHNICAL PROJECTS
               </h2>
               <button onClick={() => setData(prev => ({ ...prev, projects: [...(prev.projects || []), { name: "", link: "", description: "" }] }))} className="text-[#2563EB]"><Plus className="w-5 h-5" /></button>
             </div>
@@ -460,3 +460,4 @@ export default function ResumeBuilder() {
     </div>
   );
 }
+
