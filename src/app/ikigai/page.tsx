@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,7 +36,7 @@ interface IkigaiResult {
 const steps = [
   { 
     id: 'passions', 
-    title: 'â¤ï¸ What You Love', 
+    title: '❤️  What You Love', 
     desc: 'List your passions, interests, and things that make you lose track of time.',
     icon: Heart,
     color: 'bg-rose-500',
@@ -52,7 +52,7 @@ const steps = [
   },
   { 
     id: 'marketNeeds', 
-    title: 'ðŸŒ What The World Needs', 
+    title: '🌍 What The World Needs', 
     desc: 'Think about current problems, trends, and demands in the 2026 market.',
     icon: Globe,
     color: 'bg-indigo-500',
@@ -161,9 +161,9 @@ export default function IkigaiPage() {
             <div className="bg-white border-4 border-black p-8 neo-box">
               <IkigaiDiagram activeZone={hoveredZone as any} />
               <div className="mt-8 grid grid-cols-2 gap-4 text-center">
-                <div onMouseEnter={() => setHoveredZone('passion')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-rose-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(244,63,94,1)]">â¤ï¸ Passion Zone</div>
+                <div onMouseEnter={() => setHoveredZone('passion')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-rose-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(244,63,94,1)]">❤️ Passion Zone</div>
                 <div onMouseEnter={() => setHoveredZone('profession')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-emerald-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(16,185,129,1)]">💪 Profession Zone</div>
-                <div onMouseEnter={() => setHoveredZone('mission')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-indigo-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(79,70,229,1)]">ðŸŒ Mission Zone</div>
+                <div onMouseEnter={() => setHoveredZone('mission')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-indigo-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(79,70,229,1)]">🌍  Mission Zone</div>
                 <div onMouseEnter={() => setHoveredZone('vocation')} onMouseLeave={() => setHoveredZone(null)} className="p-3 border-2 border-black bg-amber-50 font-bold text-xs uppercase cursor-help shadow-[2px_2px_0px_0px_rgba(245,158,11,1)]">💰 Vocation Zone</div>
               </div>
             </div>
@@ -352,7 +352,7 @@ export default function IkigaiPage() {
                         placeholder={currentStepData.placeholder}
                         className="flex-1 p-4 text-lg font-bold border-4 border-black focus:outline-none focus:bg-accent/5"
                       />
-                      <button onClick={handleAddItem} className="px-8 py-4 bg-black text-white font-black uppercase hover:bg-primary transition-colors border-4 border-black neo-box">
+                      <button onClick={handleAddItem} className="px-8 py-4 bg-[#FACC15] text-black font-black uppercase hover:bg-black hover:text-white transition-all border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5">
                         Add
                       </button>
                     </div>
@@ -366,7 +366,7 @@ export default function IkigaiPage() {
                           className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-black font-bold text-sm shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
                         >
                           {item}
-                          <button onClick={() => handleRemoveItem(i)} className="text-gray-400 hover:text-rose-500">Ã—</button>
+                          <button onClick={() => handleRemoveItem(i)} className="text-gray-400 hover:text-rose-500">×</button>
                         </motion.div>
                       ))}
                     </div>
