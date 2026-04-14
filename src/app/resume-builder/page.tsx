@@ -255,7 +255,7 @@ export default function ResumeBuilder() {
              <div className="p-2 bg-[#2563EB] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <FileText className="w-8 h-8" />
              </div>
-             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Blueprint Architect v2.0</span>
+             <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Resume Builder</span>
           </div>
           <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">
              Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder</span>
@@ -268,7 +268,7 @@ export default function ResumeBuilder() {
           className="neo-box p-8 bg-black text-white space-y-6 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)]"
         >
            <h3 className="text-xs font-black uppercase tracking-widest text-[#FACC15] flex items-center gap-3">
-              <Zap className="w-4 h-4 fill-current animate-pulse" /> EXECUTION_PROTOCOLS
+              <Zap className="w-4 h-4 fill-current animate-pulse" /> EXPORT & IMPORT
            </h3>
            <div className="grid grid-cols-2 gap-6">
               <button 
@@ -287,7 +287,7 @@ export default function ResumeBuilder() {
            
            <div className="pt-2">
               <label className="w-full border-4 border-white/20 hover:border-[#2563EB] py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-4 cursor-pointer transition-all">
-                 <Upload className="w-5 h-5 text-[#2563EB]" /> {isParsing ? 'SYNCHRONIZING...' : 'IMPORT SOURCE PDF'}
+                 <Upload className="w-5 h-5 text-[#2563EB]" /> {isParsing ? 'PARSING...' : 'IMPORT RESUME PDF'}
                  <input type="file" hidden accept=".pdf" onChange={handleImportPdf} />
               </label>
            </div>
@@ -303,21 +303,21 @@ export default function ResumeBuilder() {
             </h2>
             <div className="grid grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Full Identity Name</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Full Name</label>
                   <input value={data.personalInfo.fullName} onChange={(e) => updatePersonalInfo('fullName', e.target.value)} className="neo-input" placeholder="Vashnavi Chauhan" />
                </div>
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Occupational Role</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Target Role</label>
                   <input value={data.personalInfo.role} onChange={(e) => updatePersonalInfo('role', e.target.value)} className="neo-input" placeholder="Frontend Developer" />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Email Protocol</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Email Address</label>
                   <input type="email" value={data.personalInfo.email} onChange={(e) => updatePersonalInfo('email', e.target.value)} className="neo-input" placeholder="vashnavichauhan1@gmail.com" />
                </div>
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Direct Signal Line</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Phone Number</label>
                   <input value={data.personalInfo.phone} onChange={(e) => updatePersonalInfo('phone', e.target.value)} className="neo-input" placeholder="+91 9174403667" />
                </div>
             </div>
@@ -327,13 +327,13 @@ export default function ResumeBuilder() {
                   <input value={data.personalInfo.linkedin} onChange={(e) => updatePersonalInfo('linkedin', e.target.value)} className="neo-input" placeholder="vashnavichauhan18" />
                </div>
                <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">GitHub Manifest</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-black/40">GitHub</label>
                   <input value={data.personalInfo.github} onChange={(e) => updatePersonalInfo('github', e.target.value)} className="neo-input" placeholder="vashnavichauhan18" />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Portfolio Signal</label>
+                <label className="text-[9px] font-black uppercase tracking-widest text-black/40">Portfolio Website</label>
                 <input value={data.personalInfo.portfolio || ''} onChange={(e) => updatePersonalInfo('portfolio', e.target.value)} className="neo-input" placeholder="vashnavi.dev" />
               </div>
               <div className="space-y-2">
@@ -427,7 +427,7 @@ export default function ResumeBuilder() {
         
         {/* Template Intelligence */}
         <div className="border-t-8 border-black pt-12 space-y-8">
-           <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">RENDER TEMPLATE_</h3>
+           <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">SELECT TEMPLATE</h3>
            <div className="grid grid-cols-3 gap-6">
               {['minimal', 'professional', 'modern'].map((t) => (
                 <button key={t} onClick={() => setTemplate(t as any)} className={`neo-btn-secondary py-4 text-[10px] uppercase font-black ${template === t ? 'bg-black text-white' : ''}`}>
