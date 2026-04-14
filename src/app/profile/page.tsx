@@ -373,13 +373,13 @@ function ProfileContent() {
                     onClick={handleSignOut}
                     className="px-12 py-6 bg-black text-white border-4 border-black font-black uppercase text-sm tracking-widest shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                   >
-                    END SESSION
+                    Logout
                   </button>
                   <button 
                     onClick={handleDeleteAccount}
                     className={`px-12 py-6 border-4 border-black font-black uppercase text-sm tracking-widest transition-all shadow-[6px_6px_0px_rgba(0,0,0,1)] ${confirmDelete ? 'bg-red-600 text-white animate-pulse' : 'bg-transparent text-red-600 hover:bg-red-600 hover:text-white'}`}
                   >
-                    {confirmDelete ? 'ERASE IDENTITY?' : 'PURGE ACCOUNT'}
+                    {confirmDelete ? 'CONFIRM DELETE?' : 'Delete Account'}
                   </button>
                 </div>
               </div>
