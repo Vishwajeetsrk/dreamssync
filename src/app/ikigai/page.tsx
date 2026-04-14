@@ -358,7 +358,7 @@ export default function IkigaiPage() {
                         placeholder={currentStepData.placeholder}
                         className="flex-1 p-4 text-lg font-bold border-4 border-black focus:outline-none focus:bg-accent/5"
                       />
-                      <button onClick={handleAddItem} className="px-8 py-4 bg-black text-white font-black uppercase hover:bg-primary transition-colors border-4 border-black neo-box">
+                      <button onClick={handleAddItem} className="px-8 py-4 bg-[#2563EB] text-white font-black uppercase hover:bg-blue-700 transition-colors border-4 border-black neo-box">
                         Add
                       </button>
                     </div>
