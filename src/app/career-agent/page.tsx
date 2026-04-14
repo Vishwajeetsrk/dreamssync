@@ -281,12 +281,14 @@ export default function CareerAgent() {
                <div className="p-2 bg-black text-white shadow-[3px_3px_0px_0px_rgba(37,99,235,1)]">
                   <Brain className="w-8 h-8" />
                </div>
-               <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Active Career Sync</span>
+               <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">AI Agent (Chatbot)</span>
             </div>
-            <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-none italic uppercase">
-               <span className="text-[#2563EB] drop-shadow-[5px_5px_0px_rgba(0,0,0,1)]">DreamSync</span> <br /> 
-               <span className="text-black">Strategist v2 <span className="text-2xl md:text-5xl text-black/40 block mt-4">(AI Guide For Career)</span></span>
+            <h1 className="text-6xl md:text-[80px] font-black tracking-tighter leading-none text-black">
+               DreamSync Strategist v2
             </h1>
+            <p className="text-xl md:text-3xl text-black/40 font-black tracking-tighter uppercase mt-2">
+               Active Career Sync
+            </p>
           </div>
           <div className="flex flex-wrap gap-3 justify-end max-w-md">
             {['Salary Benchmarks', 'Role Suggestions', 'Visual Roadmap', 'India Market'].map(t => (
