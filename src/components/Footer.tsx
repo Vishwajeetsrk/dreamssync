@@ -14,13 +14,9 @@ export default function Footer() {
         {/* Brand Identity */}
         <div className="space-y-8">
           <Link href="/" className="inline-block">
-            <div className="relative h-10 w-44">
-              <Image 
-                src="/DreamSynclogo.png" 
-                alt="DreamSync" 
-                fill
-                className="object-contain object-left"
-              />
+            <div className="flex items-center text-3xl font-black italic tracking-tighter">
+              <span className="text-[#2563EB]">Dream</span>
+              <span className="text-black">Sync</span>
             </div>
           </Link>
           <p className="text-xs font-bold leading-relaxed text-gray-400 max-w-xs uppercase">

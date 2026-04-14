@@ -187,7 +187,7 @@ function ProfileContent() {
      </div>
   );
 
-  const userName = name?.split(' ')[0] || "Dreamer";
+  const userName = name?.split(' ')[0] || "Vishwajeet Srk";
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] pt-40 pb-20 px-6 md:px-12 text-black selection:bg-[#FACC15]/40 relative overflow-hidden">
@@ -256,8 +256,8 @@ function ProfileContent() {
                   </div>
 
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black tracking-tighter text-black uppercase leading-none">{name || 'DREAMER'}</h3>
-                    <div className="px-5 py-1.5 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] inline-block">DREAMER</div>
+                    <h3 className="text-4xl font-black tracking-tighter text-black uppercase leading-none">{name || 'Vishwajeet Srk'}</h3>
+                    <div className="px-5 py-1.5 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] inline-block">AUTHENTICATED</div>
                     <p className="text-xs font-black text-black/30 uppercase tracking-widest block pt-2">{user?.email}</p>
                   </div>
 
@@ -298,7 +298,7 @@ function ProfileContent() {
                         value={name} 
                         onChange={(e) => setName(e.target.value)} 
                         className="neo-input text-2xl" 
-                        placeholder="ENTER IDENTITY"
+                        placeholder="e.g. VISHWAJEET SRK"
                       />
                     </div>
 

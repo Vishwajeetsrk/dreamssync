@@ -45,13 +45,9 @@ export default function Navbar() {
         
         {/* Branding */}
         <Link href="/" className="shrink-0 inline-block group">
-          <div className="relative h-10 w-44">
-             <Image 
-               src="/DreamSynclogo.png" 
-               alt="DreamSync" 
-               fill
-               className="object-contain object-left"
-             />
+          <div className="flex items-center text-3xl font-black italic tracking-tighter">
+            <span className="text-[#2563EB]">Dream</span>
+            <span className="text-black">Sync</span>
           </div>
         </Link>
 
