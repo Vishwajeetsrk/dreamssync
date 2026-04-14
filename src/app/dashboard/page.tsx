@@ -16,7 +16,7 @@ const tools = [
   { name: 'DOCS & SKILLS', href: '/documents', icon: BookOpen, color: 'bg-blue-100 text-blue-700', desc: 'Sovereign guides & free resources.' },
   { name: 'LINKEDIN PRO', href: '/linkedin', icon: Link2, color: 'bg-[#0A66C2]/10 text-blue-600', desc: 'AI headlines & keyword optimization.' },
   { name: 'CAREER AGENT', href: '/career-agent', icon: Brain, color: 'bg-violet-100 text-violet-700', desc: 'AI guidance & real-time jobs.' },
-  { name: 'MENTAL WELLNESS', href: '/mental-health', icon: HeartHandshake, color: 'bg-rose-100 text-rose-700', desc: 'Support & emotional equilibrium.' },
+  { name: 'MENTAL HEALTH AI', href: '/mental-health', icon: HeartHandshake, color: 'bg-rose-100 text-rose-700', desc: 'Support & emotional equilibrium.' },
 ];
 
 export default function Dashboard() {

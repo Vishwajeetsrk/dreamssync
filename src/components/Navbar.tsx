@@ -35,7 +35,7 @@ export default function Navbar() {
     { name: 'IKIGAI FINDER', href: '/ikigai' },
     { name: 'PORTFOLIO GEN', href: '/portfolio' },
     { name: 'LINKEDIN OPTIMIZER', href: '/linkedin' },
-    { name: 'SERENITY AI', href: '/mental-health' },
+    { name: 'MENTAL HEALTH AI', href: '/mental-health' },
     { name: 'DOCS & SKILLS', href: '/documents' },
   ];
 
