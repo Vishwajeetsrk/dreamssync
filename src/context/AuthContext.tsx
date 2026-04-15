@@ -59,15 +59,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } else if (sessionStatus !== 'loading') {
         // If no Firebase user, check for NextAuth session
         if (session) {
-          setUser(session.user);
           setProvider('next-auth');
-          setUserData({
-            name: session.user?.name,
-            email: session.user?.email,
-            avatar_url: session.user?.image,
-            plan: 'free'
-          });
-          setLoading(false);
+          
+          // Check if this NextAuth user already has a Firebase record
+          const nextAuthEmail = session.user?.email;
+          if (nextAuthEmail) {
+            // We use the email as a key or lookup to find/create the user in Firestore
+            // Note: Ideally you'd use a stable ID, but session.user.email is available
+            const docRef = doc(db, 'users', (session.user as any).id || nextAuthEmail.replace(/\./g, '_'));
+            
+            getDoc(docRef).then(async (docSnap) => {
+              if (docSnap.exists()) {
+                setUserData(docSnap.data());
+              } else {
+                // Create the user record in Firestore if it doesn't exist
+                const newUserData = {
+                  name: session.user?.name,
+                  email: session.user?.email,
+                  avatar_url: session.user?.image,
+                  plan: 'free',
+                  created_at: new Date().toISOString(),
+                  provider: 'next-auth'
+                };
+                await setDoc(docRef, newUserData);
+                setUserData(newUserData);
+              }
+              setUser(session.user);
+              setLoading(false);
+            });
+          } else {
+            setUser(session.user);
+            setUserData({
+              name: session.user?.name,
+              avatar_url: session.user?.image,
+              plan: 'free'
+            });
+            setLoading(false);
+          }
         } else {
           setUser(null);
           setUserData(null);

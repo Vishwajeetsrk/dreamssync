@@ -4,7 +4,8 @@ import { useState, useEffect, Suspense } from 'react';
 import { auth, db, storage } from '@/lib/firebase';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { updatePassword, deleteUser, signOut } from 'firebase/auth';
+import { updatePassword, deleteUser, signOut as firebaseSignOut } from 'firebase/auth';
+import { signOut as nextAuthSignOut } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { 
   User as UserIcon, 
@@ -175,7 +176,8 @@ function ProfileContent() {
   };
 
   const handleSignOut = async () => {
-    await signOut(auth);
+    await firebaseSignOut(auth);
+    await nextAuthSignOut({ redirect: false });
     router.push('/');
   };
 

@@ -5,11 +5,11 @@ import { auth, db } from '@/lib/firebase';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { Mail, Lock, User, Database, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import Image from 'next/image';
-import { supabase } from '@/lib/supabase';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -56,13 +56,8 @@ export default function Signup() {
     setLoading(true);
     setError('');
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: provider as any,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (error) throw error;
+      // Use NextAuth for Social Sign Up to match Login logic
+      await signIn(provider, { callbackUrl: '/dashboard' });
     } catch (err: any) {
       console.error(`${provider} signup error:`, err);
       setError(err.message || `Failed to sign up with ${provider}`);

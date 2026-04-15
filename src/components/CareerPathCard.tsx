@@ -74,7 +74,7 @@ function RoleCard({ role }: { role: CareerPath['roleGroups'][0]['roles'][0] }) {
 // ── Roadmap Flowchart ─────────────────────────────────────────────
 function Roadmap({ nodes }: { nodes: CareerPath['roadmap'] }) {
   const colors = [
-    'bg-violet-500', 'bg-blue-500', 'bg-primary',
+    'bg-violet-500', 'bg-blue-500', 'bg-[#FACC15]',
     'bg-green-500', 'bg-amber-500',
   ];
 
@@ -95,7 +95,7 @@ function Roadmap({ nodes }: { nodes: CareerPath['roadmap'] }) {
                 {i + 1}
               </div>
               {/* Card */}
-              <div className="mt-2 bg-white border-2 border-black p-2 text-center w-full shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <div className={`mt-2 ${i === 2 ? 'bg-[#FACC15]' : 'bg-white'} border-2 border-black p-2 text-center w-full shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]`}>
                 <p className="text-[11px] font-black leading-tight">{node.title}</p>
                 <p className="text-[10px] text-primary font-bold mt-0.5">{node.timeline}</p>
                 <p className="text-[10px] text-muted-foreground mt-1 leading-tight">{node.desc}</p>
@@ -139,13 +139,13 @@ function PortfolioSection({ platforms }: { platforms: CareerPath['portfolioPlatf
           href={p.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-white border-2 border-black p-3 neo-box hover:bg-primary hover:text-white transition-colors group"
+          className="bg-[#2563EB] text-white border-2 border-black p-3 neo-box hover:bg-black transition-colors group"
         >
           <div className="flex items-center justify-between mb-1">
             <p className="font-black text-sm">{p.name}</p>
             <ExternalLink className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
-          <p className="text-[11px] text-muted-foreground group-hover:text-white/80 transition-colors">{p.desc}</p>
+          <p className="text-[11px] text-white/80 transition-colors">{p.desc}</p>
         </a>
       ))}
     </div>

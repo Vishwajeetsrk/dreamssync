@@ -8,7 +8,8 @@ import { ChevronDown, Coffee, LogOut, ShieldCheck, User as UserIcon, Menu, X, Sp
 import { useAuth } from '@/context/AuthContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
+import { signOut as firebaseSignOut } from 'firebase/auth';
+import { signOut as nextAuthSignOut } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -20,10 +21,14 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      // Sign out from both Firebase and NextAuth
+      await firebaseSignOut(auth);
+      await nextAuthSignOut({ redirect: false });
       window.location.href = '/';
     } catch (error) {
       console.error('Logout failed:', error);
+      // Fallback redirect
+      window.location.href = '/';
     }
   };
 

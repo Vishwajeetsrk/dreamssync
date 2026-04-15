@@ -32,7 +32,7 @@
 
 @layer utilities {
   .neo-box {
-    @apply bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
+    @apply border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
   }
 
   .neo-btn-primary {
