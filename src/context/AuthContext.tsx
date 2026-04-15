@@ -24,7 +24,10 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status: sessionStatus } = useSession();
+  const sessionContext = useSession();
+  const session = sessionContext?.data;
+  const sessionStatus = sessionContext?.status || 'unauthenticated';
+  
   const [user, setUser] = useState<any | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);

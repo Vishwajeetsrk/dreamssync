@@ -27,6 +27,11 @@ const handler = NextAuth({
           image: profile.picture,
         }
       },
+      authorization: {
+        params: {
+          scope: 'openid profile email',
+        },
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
