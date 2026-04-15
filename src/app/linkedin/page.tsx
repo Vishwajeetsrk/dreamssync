@@ -16,6 +16,12 @@ import { validateCareerInput } from '@/lib/aiGuard';
 interface HeadlineOption { text: string; focus: string; }
 interface ConnectionMessage { occasion: string; message: string; }
 interface Improvement { area: string; priority: 'high' | 'medium' | 'low'; action: string; }
+interface LinkedInResult {
+  profileScore: number;
+  scoreBreakdown: { headline: number; about: number; skills: number; experience: number; completeness: number; };
+  headlines: HeadlineOption[];
+  about: { optimized: string; tips: string[]; };
+  skills: { recommended: string[]; toRemove: string[]; reason: string; };
   connectionMessages: ConnectionMessage[];
   keyImprovements: Improvement[];
   seoKeywords: string[];
@@ -485,8 +491,6 @@ export default function LinkedInOptimizer() {
                </div>
             </div>
           </Section>
-        </motion.div>
-
         </motion.div>
       )}
     </div>
