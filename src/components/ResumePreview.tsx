@@ -62,77 +62,60 @@ const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({ da
   const isMicrosoft = template === 'microsoft_sde';
   
   const sectionTitleClass = isGoogle 
-    ? "text-[15px] font-semibold text-blue-800 uppercase tracking-wide border-b-2 border-blue-800 pb-1 mb-2 mt-4" 
+    ? "text-[14px] font-bold text-gray-900 uppercase tracking-tight border-b-2 border-gray-900 pb-0.5 mb-2 mt-4" 
     : isMicrosoft 
-      ? "text-[14px] font-bold text-gray-800 uppercase tracking-widest border-b border-gray-400 pb-1 mb-3 mt-5"
-      : "text-sm font-bold uppercase tracking-widest border-b border-gray-300 pb-1 mb-3 mt-6";
+      ? "text-[13px] font-bold text-[#2b5797] uppercase tracking-widest border-b border-gray-300 pb-1 mb-2 mt-4"
+      : "text-[14px] font-black uppercase tracking-[0.2em] border-b-2 border-black pb-1 mb-3 mt-6";
 
-  const bulletClass = "text-[13px] text-gray-800 leading-snug mb-1 list-disc ml-5 pl-1";
-  const subTitleClass = "text-[14px] font-bold text-gray-900";
-  const dateClass = isGoogle ? "text-[13px] font-semibold text-blue-700" : "text-[13px] font-medium text-gray-600";
-  const textClass = "text-[13px] text-gray-800 leading-relaxed";
-  const containerClass = `bg-white text-black px-10 py-12 shadow-lg mx-auto w-full max-w-[800px] min-h-[1123px] ${isGoogle ? 'font-sans' : isMicrosoft ? 'font-serif' : 'font-sans'}`;
+  const bulletClass = "text-[12px] text-gray-900 leading-[1.5] mb-1 list-disc ml-4 pl-1";
+  const subTitleClass = "text-[13px] font-bold text-black";
+  const dateClass = "text-[12px] font-bold text-gray-700 italic";
+  const textClass = "text-[12px] text-gray-900 leading-[1.6]";
+  
+  // A4 Layout Consistency
+  const containerClass = `bg-white text-black px-12 py-12 mx-auto w-full max-w-[800px] min-h-[1123px] shadow-none ${isGoogle ? 'font-sans' : isMicrosoft ? 'font-serif' : 'font-sans'}`;
 
   return (
     <div 
       ref={ref}
       className={containerClass}
       id="resume-content"
+      style={{ 
+        pageBreakBefore: 'always', 
+        WebkitPrintColorAdjust: 'exact',
+        margin: '0 auto',
+        boxSizing: 'border-box'
+      }}
     >
       {/* Header */}
       <header className={`text-center ${isGoogle ? 'mb-4' : 'mb-6'}`}>
-        <h1 className={`text-3xl uppercase tracking-tight mb-1 ${isGoogle ? 'font-bold text-blue-900' : 'font-extrabold text-gray-900'}`}>{personalInfo.fullName || 'YOUR NAME'}</h1>
-        <p className={`text-sm mb-2 ${isGoogle ? 'font-medium text-gray-700' : 'font-semibold text-gray-700 tracking-wide'}`}>{personalInfo.role || 'Professional Role'}</p>
+        <h1 className={`text-4xl uppercase tracking-tighter mb-1 font-black ${isGoogle ? 'text-black' : isMicrosoft ? 'text-[#2b5797]' : 'text-black'}`}>{personalInfo.fullName || 'YOUR NAME'}</h1>
+        <p className={`text-lg mb-3 ${isGoogle ? 'font-bold text-gray-800' : 'font-bold text-gray-600 italic tracking-wide'}`}>{personalInfo.role?.toUpperCase() || 'PROFESSIONAL ROLE'}</p>
         
-        <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 text-[12px] font-medium text-gray-700">
-          {personalInfo.phone && (
-            <span className="flex items-center gap-1">
-              <Phone className="w-3.5 h-3.5" /> {personalInfo.phone}
-            </span>
-          )}
-          {personalInfo.email && (
-            <span className="flex items-center gap-1">
-              <Mail className="w-3.5 h-3.5" /> {personalInfo.email}
-            </span>
-          )}
-          {personalInfo.linkedin && (
-            <span className="flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5" /> LinkedIn: {personalInfo.linkedin.replace('linkedin.com/in/', '')}
-            </span>
-          )}
-          {personalInfo.github && (
-            <span className="flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5" /> GitHub: {personalInfo.github.replace('github.com/', '')}
-            </span>
-          )}
-          {personalInfo.location && (
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5" /> {personalInfo.location}
-            </span>
-          )}
-          {personalInfo.portfolio && (
-            <span className="flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5" /> Portfolio: {personalInfo.portfolio.replace(/https?:\/\//, '')}
-            </span>
-          )}
+        <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-[11px] font-bold text-gray-800">
+          {personalInfo.phone && <span>{personalInfo.phone}</span>}
+          {personalInfo.email && <span className="underline">{personalInfo.email}</span>}
+          {personalInfo.location && <span>{personalInfo.location?.toUpperCase()}</span>}
+          {personalInfo.linkedin && <span className="underline">LINKEDIN.COM/IN/{personalInfo.linkedin.replace(/.*\/in\//, '').replace(/\/$/, '').toUpperCase()}</span>}
+          {personalInfo.github && <span className="underline">GITHUB.COM/{personalInfo.github.replace(/.*github.com\//, '').replace(/\/$/, '').toUpperCase()}</span>}
         </div>
       </header>
 
       {/* Summary */}
       {summary && (
         <section>
-          <h2 className={sectionTitleClass}>Professional Summary</h2>
+          <h2 className={sectionTitleClass}>Professional Profile</h2>
           <p className={textClass}>{summary}</p>
         </section>
       )}
 
       {/* Skills */}
       <section>
-        <h2 className={sectionTitleClass}>Technical Skills</h2>
-        <div className="space-y-2">
+        <h2 className={sectionTitleClass}>Technical Core</h2>
+        <div className="space-y-1.5">
           {skills.map((skill, idx) => (
-            <div key={idx} className="flex gap-2">
-              <span className="text-sm font-bold w-32 shrink-0">{skill.category}:</span>
+            <div key={idx} className="flex gap-2 items-start">
+              <span className="text-[12px] font-black w-40 shrink-0 uppercase tracking-tighter">{skill.category}:</span>
               <span className={textClass}>{skill.items}</span>
             </div>
           ))}
@@ -141,19 +124,19 @@ const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({ da
 
       {/* Experience */}
       <section>
-        <h2 className={sectionTitleClass}>Work Experience</h2>
-        <div className="space-y-6">
+        <h2 className={sectionTitleClass}>Professional Experience</h2>
+        <div className="space-y-5">
           {experience.map((exp, idx) => (
-            <div key={idx}>
-              <div className="flex justify-between items-baseline mb-1">
-                <h3 className={subTitleClass}>{exp.role}</h3>
-                <span className={dateClass}>{exp.date}</span>
+            <div key={idx} className="break-inside-avoid">
+              <div className="flex justify-between items-baseline mb-0.5">
+                <h3 className={subTitleClass}>{exp.role?.toUpperCase()}</h3>
+                <span className={dateClass}>{exp.date?.toUpperCase()}</span>
               </div>
-              <div className="flex justify-between items-baseline mb-2">
-                <span className="text-sm font-semibold text-gray-800">{exp.company}</span>
-                <span className="text-xs text-gray-500 uppercase">{exp.location}</span>
+              <div className="flex justify-between items-baseline mb-1.5">
+                <span className="text-[12px] font-black italic text-gray-800">{exp.company?.toUpperCase()}</span>
+                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{exp.location}</span>
               </div>
-              <ul className="mt-2">
+              <ul className="mt-1 space-y-1">
                 {exp.bullets.map((bullet, bIdx) => (
                   <li key={bIdx} className={bulletClass}>
                     {bullet}
@@ -168,13 +151,13 @@ const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({ da
       {/* Projects */}
       {projects && projects.length > 0 && (
         <section>
-          <h2 className={sectionTitleClass}>Technical Projects</h2>
-          <div className="space-y-5">
+          <h2 className={sectionTitleClass}>Technical Engineering Projects</h2>
+          <div className="space-y-4">
             {projects.map((proj, idx) => (
-              <div key={idx}>
+              <div key={idx} className="break-inside-avoid">
                 <div className="flex justify-between items-baseline mb-1">
-                  <h3 className={subTitleClass}>{proj.name}</h3>
-                  {proj.link && <span className="text-xs text-blue-600 font-medium underline">{proj.link}</span>}
+                  <h3 className={subTitleClass}>{proj.name?.toUpperCase()}</h3>
+                  {proj.link && <span className="text-[10px] text-gray-600 font-bold underline italic">{proj.link}</span>}
                 </div>
                 <p className={textClass}>{proj.description}</p>
               </div>
@@ -185,52 +168,29 @@ const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({ da
 
       {/* Education */}
       <section>
-        <h2 className={sectionTitleClass}>Education</h2>
-        <div className="space-y-4">
+        <h2 className={sectionTitleClass}>Academic Qualifications</h2>
+        <div className="space-y-3">
           {education.map((edu, idx) => (
-            <div key={idx} className="flex justify-between items-baseline">
+            <div key={idx} className="flex justify-between items-baseline break-inside-avoid">
               <div>
-                <h3 className={subTitleClass}>{edu.school}</h3>
-                <p className="text-sm text-gray-700">{edu.degree}</p>
+                <h3 className={subTitleClass}>{edu.school?.toUpperCase()}</h3>
+                <p className="text-[11px] font-bold text-gray-700">{edu.degree?.toUpperCase()}</p>
               </div>
               <div className="text-right">
                 <span className={dateClass}>{edu.date}</span>
-                <p className="text-xs text-gray-500 uppercase">{edu.location}</p>
+                <p className="text-[10px] font-bold text-gray-500 uppercase">{edu.location}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Certifications */}
-      {certifications && certifications.length > 0 && (
-        <section>
-          <h2 className={sectionTitleClass}>Certifications</h2>
-          <div className="space-y-2">
-            {certifications.map((cert, idx) => (
-              <div key={idx} className="flex justify-between items-baseline">
-                <div>
-                  <span className="text-sm font-bold">{cert.name}</span>
-                  <span className="text-xs text-gray-600 ml-2">— {cert.issuer}</span>
-                  {cert.link && (
-                    <span className="text-xs text-blue-600 ml-2 underline hidden print:hidden">
-                      (Link)
-                    </span>
-                  )}
-                </div>
-                <span className={dateClass}>{cert.date}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* Languages & Achievements Grid */}
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-10 mt-2">
         {/* Achievements */}
         {achievements && achievements.length > 0 && (
           <section>
-            <h2 className={sectionTitleClass}>Achievements</h2>
+            <h2 className={sectionTitleClass}>Key Honors</h2>
             <ul className="space-y-1">
               {achievements.map((ach, idx) => (
                 <li key={idx} className={bulletClass}>{ach}</li>
@@ -243,18 +203,10 @@ const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({ da
         {languages && languages.length > 0 && (
           <section>
             <h2 className={sectionTitleClass}>Languages</h2>
-            <p className={textClass}>{languages.join(", ")}</p>
+            <p className={textClass + " font-bold italic"}>{languages.join(", ")?.toUpperCase()}</p>
           </section>
         )}
       </div>
-
-      {/* Extra */}
-      {extra && (
-        <section>
-          <h2 className={sectionTitleClass}>Additional Information</h2>
-          <p className={textClass}>{extra}</p>
-        </section>
-      )}
     </div>
   );
 });

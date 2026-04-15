@@ -96,16 +96,25 @@ export default function ResumeBuilder() {
   const [data, setData] = useState<ResumeData>(DEFAULT_RESUME);
   const [template, setTemplate] = useState<'google_swe' | 'microsoft_sde' | 'faang_standard'>('faang_standard');
   const [atsAnalysis, setAtsAnalysis] = useState<ATSAnalysis | null>(null);
+  const [scanStatus, setScanStatus] = useState<'idle' | 'scanning' | 'complete'>('idle');
   const [isParsing, setIsParsing] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
+  const startAnalysis = () => {
+    setScanStatus('scanning');
+    setTimeout(() => {
+      const result = calculateATSScore(data);
+      setAtsAnalysis(result);
+      setScanStatus('complete');
+    }, 2000);
+  };
+
   // Debounced ATS Calculation
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      const analysis = calculateATSScore(data);
-      setAtsAnalysis(analysis);
-    }, 500);
-    return () => clearTimeout(timer);
+    if (scanStatus === 'complete') {
+        const result = calculateATSScore(data);
+        setAtsAnalysis(result);
+    }
   }, [data]);
 
   const handlePrint = useReactToPrint({
@@ -245,19 +254,19 @@ export default function ResumeBuilder() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen bg-[#F3F4F6] text-black overflow-hidden selection:bg-[#FACC15]/40">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-[#F3F4F6] text-black selection:bg-[#FACC15]/40 overflow-x-hidden">
       
       {/* Sidebar - Neo-Brutalist Form Editor */}
-      <aside className="w-full lg:w-[500px] bg-white border-r-8 border-black overflow-y-auto p-10 space-y-12 scrollbar-hide shadow-[8px_0px_0px_0px_rgba(0,0,0,0.05)]">
+      <aside className="w-full lg:w-[500px] bg-white border-b-8 lg:border-r-8 lg:border-b-0 border-black p-6 md:p-10 space-y-12 shadow-[8px_0px_0px_0px_rgba(0,0,0,0.05)] lg:h-screen lg:overflow-y-auto">
         
-        <div className="flex flex-col gap-6 mb-12">
+        <div className="max-w-5xl mx-auto text-center flex flex-col items-center gap-6 mb-12">
           <div className="flex items-center gap-3">
              <div className="p-2 bg-[#2563EB] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <FileText className="w-8 h-8" />
              </div>
              <span className="text-xs font-black uppercase tracking-[0.4em] text-black/40">Resume Builder</span>
           </div>
-          <h1 className="text-5xl font-black tracking-tighter uppercase leading-none">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">
              Resume <br /> <span className="text-[#2563EB] drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] italic">Builder</span>
           </h1>
         </div>
@@ -265,28 +274,28 @@ export default function ResumeBuilder() {
         {/* Action Protocol Panel */}
         <motion.div 
           whileHover={{ y: -2 }}
-          className="neo-box p-8 bg-black text-white space-y-6 shadow-[6px_6px_0px_0px_rgba(37,99,235,1)]"
+          className="neo-box p-6 md:p-8 bg-gray-100 text-black space-y-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
         >
-           <h3 className="text-xs font-black uppercase tracking-widest text-[#FACC15] flex items-center gap-3">
-              <Zap className="w-4 h-4 fill-current animate-pulse" /> EXPORT & IMPORT
+           <h3 className="text-[10px] font-black uppercase tracking-widest text-[#2563EB] flex items-center gap-3">
+              <Zap className="w-4 h-4 fill-current animate-pulse" /> EXPORT & IMPORT PROTOCOL
            </h3>
-           <div className="grid grid-cols-2 gap-6">
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               <button 
                 onClick={handlePrint} 
-                className="w-full bg-white text-black border-4 border-black py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#FACC15] transition-all"
+                className="w-full bg-white text-black border-2 border-black py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#FACC15] hover:scale-[1.03] active:bg-[#2563EB] active:text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
               >
                  <Printer className="w-5 h-5" /> PDF
               </button>
               <button 
                 onClick={generateWordDoc} 
-                className="w-full bg-white text-black border-4 border-black py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#FACC15] transition-all"
+                className="w-full bg-white text-black border-2 border-black py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#FACC15] hover:scale-[1.03] active:bg-[#2563EB] active:text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
               >
                  <FileText className="w-5 h-5" /> DOCX
               </button>
            </div>
            
            <div className="pt-2">
-              <label className="w-full border-4 border-white/20 hover:border-[#2563EB] py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-4 cursor-pointer transition-all">
+              <label className="w-full bg-white border-2 border-black hover:border-[#2563EB] py-4 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-4 cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FACC15] transition-all">
                  <Upload className="w-5 h-5 text-[#2563EB]" /> {isParsing ? 'PARSING...' : 'IMPORT RESUME PDF'}
                  <input type="file" hidden accept=".pdf" onChange={handleImportPdf} />
               </label>
@@ -428,32 +437,136 @@ export default function ResumeBuilder() {
         {/* Template Intelligence */}
         <div className="border-t-8 border-black pt-12 space-y-8">
            <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">SELECT TEMPLATE</h3>
-           <div className="grid grid-cols-3 gap-6">
-              {['google_swe', 'microsoft_sde', 'faang_standard'].map((t) => (
-                <button key={t} onClick={() => setTemplate(t as any)} className={`neo-btn-secondary py-4 text-[10px] uppercase font-black ${template === t ? 'bg-black text-white' : ''}`}>
-                   {t.replace('_', ' ')}
-                </button>
+           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[
+                { id: 'google_swe', name: 'Google SWE', desc: 'Optimized for product companies, impact-driven bullets.' },
+                { id: 'microsoft_sde', name: 'Microsoft SDE', desc: 'Balanced format focusing on projects and scalability.' },
+                { id: 'faang_standard', name: 'FAANG Standard', desc: 'High-density metrics, system design, and ATS depth.' }
+              ].map((t) => (
+                <div key={t.id} className="space-y-3">
+                  <button 
+                    onClick={() => setTemplate(t.id as any)} 
+                    className={`w-full py-4 text-[10px] uppercase font-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${template === t.id ? 'bg-[#2563EB] text-white shadow-none translate-x-1 translate-y-1' : 'bg-[#FACC15] hover:bg-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'}`}
+                  >
+                     {t.name}
+                  </button>
+                  <p className="text-[10px] font-bold text-gray-500 leading-tight">{t.desc}</p>
+                </div>
               ))}
            </div>
+        </div>
+
+        {/* NEW: AI Career Intelligence Engine */}
+        <div className="border-t-8 border-black pt-12 space-y-8">
+           <div className="flex items-center justify-between">
+              <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">ATS INTELLIGENCE</h3>
+              {atsAnalysis && <span className="text-[10px] font-black bg-[#FACC15] px-3 py-1 border-2 border-black">SCORE: {atsAnalysis.score}</span>}
+           </div>
+
+           <button 
+             onClick={startAnalysis} 
+             disabled={scanStatus === 'scanning'}
+             className="w-full bg-black text-white p-6 border-4 border-black font-black uppercase tracking-widest hover:bg-[#2563EB] transition-all flex items-center justify-center gap-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 active:scale-95 disabled:opacity-50"
+           >
+             {scanStatus === 'idle' && <><Search className="w-5 h-5" /> ANALYZE RESUME</>}
+             {scanStatus === 'scanning' && <><Loader2 className="w-5 h-5 animate-spin" /> SCANNING ENGINE...</>}
+             {scanStatus === 'complete' && <><CheckCircle2 className="w-5 h-5" /> RE-ANALYZE</>}
+           </button>
+
+           <AnimatePresence>
+             {atsAnalysis && scanStatus === 'complete' && (
+               <motion.div 
+                 initial={{ opacity: 0, height: 0 }} 
+                 animate={{ opacity: 1, height: 'auto' }}
+                 className="space-y-8 pt-4"
+               >
+                 {/* Score Breakdown */}
+                 <div className="grid grid-cols-2 gap-3">
+                    {Object.entries(atsAnalysis.breakdown).map(([k, v]) => (
+                      <div key={k} className="bg-white border-2 border-black p-3 relative shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                         <div className="text-[8px] font-black text-gray-400 uppercase">{k}</div>
+                         <div className="text-xs font-black">{v.toFixed(0)}%</div>
+                         <div className="absolute right-2 top-2 w-1.5 h-1.5 bg-[#2563EB] rounded-full" />
+                      </div>
+                    ))}
+                 </div>
+
+                 {/* Eligibility Matrix */}
+                 <div className="space-y-3">
+                    <p className="text-[9px] font-black text-gray-400 uppercase italic tracking-widest">Eligibility Matrix</p>
+                    {atsAnalysis.eligibility.map(e => (
+                      <div key={e.company} className="flex items-center justify-between p-3 bg-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                         <span className="text-[10px] font-black">{e.company}</span>
+                         <span className={`text-[9px] font-black px-2 py-0.5 border-2 border-black ${e.status.includes('✅') ? 'bg-green-100 text-green-700' : 'bg-red-50 text-red-700'}`}>{e.status}</span>
+                      </div>
+                    ))}
+                 </div>
+
+                 {/* Missing Capabilities (Tags) */}
+                 <div className="space-y-3">
+                    <p className="text-[9px] font-black text-gray-400 uppercase italic tracking-widest">Missing Capabilities</p>
+                    <div className="flex flex-wrap gap-2">
+                       {atsAnalysis.missingCapabilities.map(sk => (
+                         <span key={sk} className="px-3 py-1 bg-gray-100 border-2 border-black text-[9px] font-black uppercase text-gray-600">{sk}</span>
+                       ))}
+                    </div>
+                 </div>
+
+                 {/* Strategy & Bullet Reform */}
+                 <div className="space-y-4">
+                    <p className="text-[9px] font-black text-gray-400 uppercase italic tracking-widest">AI Strategy Node</p>
+                    {atsAnalysis.improvements.map((imp, idx) => (
+                      <div key={idx} className="bg-[#2563EB] text-white p-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-2">
+                         <p className="text-[9px] font-black italic opacity-60">REWRITE SUGGESTION:</p>
+                         <p className="text-[11px] font-bold leading-tight">"{imp.suggestion}"</p>
+                         <div className="bg-black/20 p-2 text-[8px] font-black uppercase tracking-widest">💡 {imp.tip}</div>
+                      </div>
+                    ))}
+                    <div className="bg-white border-2 border-dashed border-black p-4">
+                       <ul className="space-y-2">
+                          {atsAnalysis.strategy.map((s, i) => (
+                            <li key={i} className="text-[10px] font-bold flex gap-2">
+                               <ArrowRight className="w-3 h-3 text-[#2563EB] shrink-0 mt-0.5" /> {s}
+                            </li>
+                          ))}
+                       </ul>
+                    </div>
+                 </div>
+
+                 {/* Free Resources */}
+                 <div className="space-y-3 pb-8">
+                    <p className="text-[9px] font-black text-gray-400 uppercase italic tracking-widest">Skill Forge (Free Resources)</p>
+                    {atsAnalysis.freeResources.map((res, i) => (
+                      <div key={i} className="bg-[#FACC15] border-2 border-black p-3 space-y-2">
+                         <p className="text-[10px] font-black">{res.label}</p>
+                         {res.links.map((l, li) => (
+                           <Link key={li} href={l.url} target="_blank" className="flex items-center justify-between bg-white px-2 py-1.5 border border-black text-[9px] font-bold hover:translate-x-0.5 hover:translate-y-0.5 transition-all">
+                              {l.title} <span>{l.platform}</span>
+                           </Link>
+                         ))}
+                      </div>
+                    ))}
+                 </div>
+               </motion.div>
+             )}
+           </AnimatePresence>
         </div>
 
         {/* Global Security Disclaimer */}
         <motion.div 
           whileHover={{ scale: 1.02 }}
-          className="bg-[#FACC15] neo-box p-8 flex gap-6 items-start border-4 border-black"
+          className="bg-gray-100 neo-box p-8 flex gap-6 items-center border-4 border-black"
         >
-           <ShieldCheck className="w-10 h-10 text-black shrink-0" strokeWidth={3} />
-           <p className="text-xs font-black uppercase leading-relaxed tracking-tight">
-             ATS COMPLIANCE MODE: ACTIVE. Templates are optimized for modern recruitment systems. Verified 2026 Standards.
+           <ShieldCheck className="w-12 h-12 text-[#2563EB] shrink-0" strokeWidth={3} />
+           <p className="text-[10px] font-black uppercase leading-relaxed tracking-tighter">
+             ATS COMPLIANCE MODE: ACTIVE. Templates are optimized for modern recruitment systems (2026 standard verified).
            </p>
         </motion.div>
       </aside>
 
       {/* Main Preview Region */}
-      <main className="flex-1 overflow-y-auto bg-gray-200 p-12 lg:p-20 flex justify-center scrollbar-hide relative">
-
-
-         <div className="w-full max-w-[850px] shadow-[20px_20px_0px_0px_rgba(0,0,0,0.1)]">
+      <main className="flex-1 bg-gray-200 p-6 md:p-12 lg:p-20 flex justify-center relative overflow-y-auto lg:h-screen">
+         <div className="w-full max-w-[850px] shadow-[20px_20px_0px_0px_rgba(0,0,0,0.1)] h-fit mb-20 md:mb-0">
             <ResumePreview data={data} template={template} ref={componentRef} />
          </div>
       </main>

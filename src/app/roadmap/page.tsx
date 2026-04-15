@@ -8,11 +8,17 @@ import {
   Star, Download, Printer, Wrench, Zap, Globe, TrendingUp, Search, Loader2
 } from 'lucide-react';
 import { validateCareerInput } from '@/lib/aiGuard';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, Link, AlignmentType } from 'docx';
+import { saveAs } from 'file-saver';
 
 export default function Roadmap() {
   const [steps, setSteps] = useState<any[]>([]);
   const [totalTimeline, setTotalTimeline] = useState<string>('');
   const [globalPrerequisites, setGlobalPrerequisites] = useState<any>(null);
+  const [marketInsights, setMarketInsights] = useState<any>(null);
+  const [realJobRoles, setRealJobRoles] = useState<any[]>([]);
+  const [criticalIntelligence, setCriticalIntelligence] = useState<any>(null);
+  const [targetRole, setTargetRole] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState({ role: 'Frontend Developer', experience: 'Beginner', goal: '' });
   const [safetyError, setSafetyError] = useState<{ message: string, alternatives: string[] } | null>(null);
@@ -60,6 +66,10 @@ export default function Roadmap() {
       setSteps(data.timeline || []);
       setTotalTimeline(data.totalTimeline || '');
       setGlobalPrerequisites(data.globalPrerequisites || null);
+      setMarketInsights(data.marketInsights || null);
+      setRealJobRoles(data.realJobRoles || []);
+      setCriticalIntelligence(data.criticalIntelligence || null);
+      setTargetRole(data.targetRole || '');
     } catch (err: any) {
       alert("CRITICAL ERROR: " + err.message);
     } finally {
@@ -67,7 +77,51 @@ export default function Roadmap() {
     }
   };
 
-  const handleDownload = () => window.print();
+  const handleDownloadPDF = () => window.print();
+
+  const handleDownloadDocx = async () => {
+    if (steps.length === 0) return;
+
+    const doc = new Document({
+      sections: [{
+        properties: {},
+        children: [
+          new Paragraph({ text: "DREAMSYNC CAREER ROADMAP", heading: HeadingLevel.TITLE, alignment: AlignmentType.CENTER }),
+          new Paragraph({ text: `Target Role: ${targetRole || query.role}`, heading: HeadingLevel.HEADING_1 }),
+          new Paragraph({ text: `Estimated Duration: ${totalTimeline}`, heading: HeadingLevel.HEADING_3 }),
+          
+          new Paragraph({ text: "CORE PREREQUISITES", heading: HeadingLevel.HEADING_2, spacing: { before: 400 } }),
+          new Paragraph({ text: `Education: ${globalPrerequisites?.education || 'N/A'}` }),
+          new Paragraph({ text: `Technical Skills: ${globalPrerequisites?.technicalSkills?.join(', ') || 'N/A'}` }),
+          new Paragraph({ text: `Core Knowledge: ${globalPrerequisites?.requiredKnowledge?.join(', ') || 'N/A'}` }),
+
+          ...steps.flatMap((step, i) => [
+            new Paragraph({ text: `${step.title} (${step.time})`, heading: HeadingLevel.HEADING_2, spacing: { before: 400 } }),
+            new Paragraph({ text: step.desc }),
+            new Paragraph({ text: "PROJECT MISSION:", heading: HeadingLevel.HEADING_4 }),
+            new Paragraph({ text: step.build || 'N/A' }),
+            new Paragraph({ text: "RESOURCES:", heading: HeadingLevel.HEADING_4 }),
+            ...(step.studyMaterials || []).map((m: any) => new Paragraph({ text: `• ${m.label}: ${m.url}`, bullet: { level: 0 } })),
+            ...(step.videoLectures || []).map((v: any) => new Paragraph({ text: `• [VIDEO] ${v.label}: ${v.url}`, bullet: { level: 0 } }))
+          ]),
+
+          new Paragraph({ text: "MARKET INSIGHTS", heading: HeadingLevel.HEADING_2, spacing: { before: 600 } }),
+          new Paragraph({ text: `India Avg Salary: ${marketInsights?.salaryIndia}` }),
+          new Paragraph({ text: `Global Ceiling: ${marketInsights?.salaryGlobal}` }),
+          new Paragraph({ text: `Market Demand: ${marketInsights?.demandLevel}` }),
+          
+          new Paragraph({ text: "CRITICAL INTELLIGENCE", heading: HeadingLevel.HEADING_2, spacing: { before: 400 } }),
+          new Paragraph({ text: "What Actually Matters:", heading: HeadingLevel.HEADING_4 }),
+          new Paragraph({ text: criticalIntelligence?.whatMatters || 'N/A' }),
+          new Paragraph({ text: "Mistakes to Avoid:", heading: HeadingLevel.HEADING_4 }),
+          new Paragraph({ text: criticalIntelligence?.mistakesToAvoid || 'N/A' }),
+        ],
+      }],
+    });
+
+    const blob = await Packer.toBlob(doc);
+    saveAs(blob, `DreamSync_Roadmap_${(targetRole || query.role).replace(/\s+/g, '_')}.docx`);
+  };
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] text-black selection:bg-[#FACC15]/40 font-bold uppercase overflow-x-hidden">
@@ -163,9 +217,14 @@ export default function Roadmap() {
                       <h2 className="text-3xl font-black uppercase italic">{totalTimeline}</h2>
                    </div>
                 </div>
-                <button onClick={handleDownload} className="neo-btn-secondary px-12 py-6 text-xl flex items-center gap-4 no-print shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
-                   <Download className="w-8 h-8" /> DOWNLOAD ARCHIVE (PDF)
-                </button>
+                 <div className="flex flex-wrap gap-4 no-print shrink-0">
+                    <button onClick={handleDownloadPDF} className="neo-btn-secondary px-8 py-4 text-xs flex items-center gap-3 shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]">
+                       <Download className="w-5 h-5" /> EXPORT PDF
+                    </button>
+                    <button onClick={handleDownloadDocx} className="neo-btn-secondary px-8 py-4 text-xs flex items-center gap-3 bg-white border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-gray-100">
+                       <FileText className="w-5 h-5" /> EXPORT WORD
+                    </button>
+                 </div>
               </div>
 
               {/* Global Prerequisites (Audit Recap State) */}
@@ -174,12 +233,24 @@ export default function Roadmap() {
                   <h2 className="text-3xl font-black flex items-center gap-6 border-b-6 border-black pb-6 uppercase italic">
                     <GraduationCap className="w-10 h-10 text-[#2563EB]" /> Core Prerequisites
                   </h2>
-                  <div className="grid md:grid-cols-2 gap-16">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-16">
                     <div className="space-y-4">
                       <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#2563EB]">Academic Baseline</h3>
                       <p className="text-xl font-bold leading-tight">{globalPrerequisites.education}</p>
                     </div>
-                    <div className="space-y-6 text-nowrap">
+                    {globalPrerequisites.requiredKnowledge && (
+                      <div className="space-y-4">
+                        <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#2563EB]">Core Knowledge</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {globalPrerequisites.requiredKnowledge.map((k: string) => (
+                            <span key={k} className="text-xs font-bold uppercase tracking-tight text-black flex items-center gap-2">
+                              <Box className="w-3 h-3" /> {k}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="space-y-6">
                       <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#2563EB]">Technical Requirements</h3>
                       <div className="flex flex-wrap gap-4">
                         {globalPrerequisites.technicalSkills?.map((s: string) => (
@@ -227,6 +298,16 @@ export default function Roadmap() {
                                 </li>
                               ))}
                             </ul>
+                          </div>
+                        )}
+
+                        {step.build && (
+                          <div className="bg-[#FACC15]/20 border-4 border-black p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] mb-4 text-black">PROJECT MISSION</h4>
+                            <div className="flex items-start gap-4">
+                              <div className="p-2 bg-black text-white"><CheckCircle className="w-5 h-5" /></div>
+                              <p className="text-sm font-black uppercase italic tracking-tight">{step.build}</p>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -312,6 +393,67 @@ export default function Roadmap() {
                   </motion.div>
                 ))}
               </div>
+
+              {/* POST-JOURNEY INTELLIGENCE */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-20">
+                 {/* Market Stats */}
+                 {marketInsights && (
+                   <div className="neo-box bg-[#F3F4F6] p-10 space-y-8 shadow-[8px_8px_0px_0px_rgba(37,99,235,1)]">
+                      <h4 className="text-xl font-black uppercase italic border-b-4 border-black pb-4">Market Stats</h4>
+                      <div className="space-y-6">
+                         <div>
+                            <p className="text-[10px] font-black text-black/40 uppercase">India Avg Salary</p>
+                            <p className="text-2xl font-black">{marketInsights.salaryIndia}</p>
+                         </div>
+                         <div>
+                            <p className="text-[10px] font-black text-black/40 uppercase">Global Ceiling</p>
+                            <p className="text-2xl font-black">{marketInsights.salaryGlobal}</p>
+                         </div>
+                         <div className={`px-4 py-2 border-2 border-black inline-block ${marketInsights.demandLevel === 'High' ? 'bg-green-400' : 'bg-yellow-400'}`}>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-black">DEMAND: {marketInsights.demandLevel}</p>
+                         </div>
+                      </div>
+                   </div>
+                 )}
+
+                 {/* Real Job Roles */}
+                 <div className="md:col-span-2 neo-box bg-white p-10 space-y-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                    <h4 className="text-xl font-black uppercase italic border-b-4 border-black pb-4">Industry Roles & Targets</h4>
+                    <div className="grid sm:grid-cols-2 gap-8">
+                       {realJobRoles.map((job, idx) => (
+                         <div key={idx} className="space-y-3">
+                            <h5 className="font-black text-lg uppercase">{job.title}</h5>
+                            <p className="text-xs text-[#2563EB] font-black">@ {job.companies}</p>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase">{job.skills}</p>
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+              </div>
+
+              {/* Critical Intelligence */}
+              {criticalIntelligence && (
+                 <div className="neo-box bg-black text-white p-16 space-y-12 shadow-[12px_12px_0px_0px_rgba(250,204,21,1)]">
+                    <div className="flex items-center gap-6 border-b-4 border-white/20 pb-8">
+                       <ShieldCheck className="w-12 h-12 text-[#FACC15]" />
+                       <h3 className="text-4xl font-black uppercase italic text-[#FACC15]">Critical Intelligence</h3>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-16">
+                       <div className="space-y-4">
+                          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#2563EB]">What Actually Matters</h4>
+                          <p className="text-sm font-bold leading-relaxed">{criticalIntelligence.whatMatters}</p>
+                       </div>
+                       <div className="space-y-4">
+                          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500">Mistakes To Avoid</h4>
+                          <p className="text-sm font-bold leading-relaxed">{criticalIntelligence.mistakesToAvoid}</p>
+                       </div>
+                       <div className="space-y-4">
+                          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-green-500">Hiring Protocol</h4>
+                          <p className="text-sm font-bold leading-relaxed">{criticalIntelligence.hiringTips}</p>
+                       </div>
+                    </div>
+                 </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -319,12 +461,18 @@ export default function Roadmap() {
 
       <style jsx global>{`
         @media print {
-          .no-print, header, .marquee-neo, .journey-box, .neo-btn-secondary { display: none !important; }
-          body { background: white !important; }
-          .neo-box { box-shadow: none !important; border: 2px solid black !important; }
+          .no-print, header, .marquee-neo, .journey-box, .neo-btn-secondary, button { display: none !important; }
+          body { background: white !important; color: black !important; }
+          .neo-box { box-shadow: none !important; border: 1px solid black !important; background: white !important; }
           .min-h-screen { min-height: 0 !important; }
           .py-20 { padding: 40px 0 !important; }
-          .border-l-8 { border-left-width: 4px !important; }
+          .border-l-8 { border-left-width: 2px !important; }
+          * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
+          /* Filter out emojis or complex graphics for clean ATS-friendly look */
+          svg:not(.w-5) { display: none !important; }
+          .bg-black { background-color: #000 !important; color: #fff !important; }
+          .bg-[#FACC15] { background-color: #eee !important; color: #000 !important; }
+          .text-[#2563EB] { color: #000 !important; font-weight: bold !important; text-decoration: underline !important; }
         }
       `}</style>
     </div>
