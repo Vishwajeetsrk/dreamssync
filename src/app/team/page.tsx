@@ -9,8 +9,6 @@ const team = [
   { name: "Vishwajeet", role: "Manager of CE Training", dept: "Training", link: "https://www.linkedin.com/in/vishwajeetsrk/", image: "/vishwajeet.jpeg" },
   { name: "Chaitanya Khaleja", role: "Associate Programme", dept: "Programme", link: "https://www.linkedin.com/in/chaitanya-khaleja-975502255/", image: "/Chaitanya.jpeg" },
   { name: "Nisha Das", role: "Resource Operation", dept: "Resources", link: "https://www.linkedin.com/in/nisha-das-ab9bb5246/", image: "/Nisha.jpg" },
-  { name: "Suraj Kumar", role: "Accountant", dept: "Finance", link: "https://www.linkedin.com/in/suraj-kumar-38b7b527a/", image: "/Suraj.jpeg" },
-  { name: "Ketan Salve", role: "Team Member", dept: "Support", link: "https://www.linkedin.com/in/ketan-salve/", image: "/ketan.png" },
 ];
 
 export default function Team() {
