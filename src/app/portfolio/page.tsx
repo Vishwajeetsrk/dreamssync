@@ -159,8 +159,8 @@ export default function PortfolioGenerator() {
       setSkills(d.skills?.map((s:any) => s.items).join(', ') || '');
       setWorkExp(d.experience?.map((e:any) => ({
         title: e.role, company: e.company, points: e.bullets.join('\n'),
-        startDate: e.date.split('–')[0]?.trim() || '',
-        endDate: e.date.split('–')[1]?.trim() || '',
+        startDate: e.date?.split('–')[0]?.trim() || '',
+        endDate: e.date?.split('–')[1]?.trim() || '',
         isInternship: e.role.toLowerCase().includes('intern')
       })) || []);
       setProjects(d.projects?.map((p:any) => ({ topic: p.name, points: p.description, website: p.link || '' })) || []);
@@ -173,9 +173,9 @@ export default function PortfolioGenerator() {
   const aiEnhanceContent = async () => {
     setIsEnhancing(true);
     // Mimic AI enhancement locally for bio and projects
-    const enhancedSummary = `Accomplished ${targetRole} with expertise in building scalable, high-performance applications. Specialized in ${skills.split(',').slice(0,3).join(', ')} to drive user engagement and engineering excellence.`;
+    const enhancedSummary = `Accomplished ${targetRole} with expertise in building scalable, high-performance applications. Specialized in ${skills?.split(',').slice(0,3).join(', ') || 'innovative solutions'} to drive user engagement and engineering excellence.`;
     setSummary(enhancedSummary);
-    setProjects(p => p.map(px => ({ ...px, points: px.points.includes('Improved') ? px.points : `Spearheaded development of ${px.topic}, achieving 40% improvement in load efficiency using ${skills.split(',')[0]}. ${px.points}` })));
+    setProjects(p => p.map(px => ({ ...px, points: px.points.includes('Improved') ? px.points : `Spearheaded development of ${px.topic}, achieving 40% improvement in load efficiency using ${skills?.split(',')[0] || 'modern tech'}. ${px.points}` })));
     setTimeout(() => setIsEnhancing(false), 1500);
   };
 
@@ -673,7 +673,7 @@ export default function PortfolioGenerator() {
                <div className="space-y-4">
                   <p className="text-xs font-black uppercase tracking-[0.3em] border-b-2 border-black pb-1">Tech Stack</p>
                   <div className="flex flex-wrap gap-2">
-                     {skills.split(',').map((s, i) => s.trim() && (
+                     {skills?.split(',').map((s: string, i: number) => s.trim() && (
                        <span key={i} className="px-3 py-1 bg-gray-100 border-2 border-black text-[10px] font-black uppercase">{s.trim()}</span>
                      ))}
                   </div>
