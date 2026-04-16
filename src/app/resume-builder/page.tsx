@@ -430,9 +430,9 @@ export default function ResumeBuilder() {
            <h3 className="text-xs font-black uppercase tracking-[0.4em] text-black">SELECT TEMPLATE</h3>
            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
-                { id: 'google_swe', name: 'Elite SWE', desc: 'Engineered for product-first excellence. Focus: High-impact metrics.' },
-                { id: 'microsoft_sde', name: 'Strategic SDE', desc: 'Balanced architecture for scalability. Focus: Core system depth.' },
-                { id: 'faang_standard', name: 'Global Pro', desc: 'Modern high-density authority. Focus: Peak ATS performance.' }
+                { id: 'google_swe', name: 'Elite Product Pro', desc: 'Best for top tech companies. Focus: Showing your scores and results.' },
+                { id: 'microsoft_sde', name: 'Strategic Project Pro', desc: 'Great for building your first big projects. Focus: High clarity.' },
+                { id: 'faang_standard', name: 'Modern Job Pro', desc: 'Standard style for all careers. Focus: Passing auto-screening systems.' }
               ].map((t) => (
                 <div key={t.id} className="space-y-3">
                   <button 
