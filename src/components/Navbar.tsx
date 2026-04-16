@@ -189,7 +189,7 @@ export default function Navbar() {
                  <Link
                    href="/donate"
                    onClick={() => setIsMenuOpen(false)}
-                   className="block w-full py-5 bg-[#FACC15] border-4 border-black text-black text-center font-black uppercase text-sm"
+                   className="block w-full py-3 bg-[#FACC15] border-2 md:border-4 border-black text-black text-center font-black uppercase text-[10px]"
                  >
                    SUPPORT US
                  </Link>
