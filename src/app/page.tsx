@@ -6,6 +6,28 @@ import { ArrowRight, BookOpen, Brain, Briefcase, CheckCircle, FileText, HeartHan
 import { useLanguage } from '@/context/LanguageContext';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
+import { useEffect, useState, useRef } from 'react';
+import { useMotionValue, useTransform, animate, useInView } from 'framer-motion';
+
+const StatCounter = ({ value }: { value: string }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [display, setDisplay] = useState("0");
+  
+  useEffect(() => {
+    if (isInView) {
+      const num = parseInt(value);
+      const suffix = value.replace(/[0-9]/g, '');
+      const controls = animate(0, num, {
+        duration: 2,
+        onUpdate: (latest) => setDisplay(Math.floor(latest) + suffix)
+      });
+      return () => controls.stop();
+    }
+  }, [value, isInView]);
+
+  return <span ref={ref}>{display}</span>;
+};
 
 export default function Home() {
   const { user, userData } = useAuth();
@@ -102,32 +124,31 @@ export default function Home() {
       <section className="py-20 px-4 md:px-6 max-w-7xl mx-auto w-full">
          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {[
-              { val: '1+', label: 'Working Locations', icon: Globe, color: 'text-blue-600', bg: 'bg-blue-50' },
-              { val: '50+', label: 'Documents Created', icon: FileText, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-              { val: '6+', label: 'Well-being Sessions', icon: Coffee, color: 'text-purple-600', bg: 'bg-purple-50' },
-              { val: '30+', label: 'Members Connected', icon: User, color: 'text-amber-600', bg: 'bg-amber-50' },
+              { val: '1+', label: 'Working Locations', icon: Building2, color: 'text-[#2563EB]', bg: 'bg-blue-50' },
+              { val: '50+', label: 'Verified Documents', icon: ShieldCheck, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+              { val: '6+', label: 'Well-being Sessions', icon: HeartHandshake, color: 'text-rose-600', bg: 'bg-rose-50' },
+              { val: '30+', label: 'Community Members', icon: User, color: 'text-amber-600', bg: 'bg-amber-50' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white border-4 border-black p-6 md:p-10 neo-box flex flex-col items-center text-center gap-4 hover:translate-y-[-8px] transition-all relative group"
+                transition={{ delay: i * 0.1, type: 'spring' }}
+                className="bg-white border-4 border-black p-6 md:p-10 neo-box flex flex-col items-center text-center gap-6 hover:translate-y-[-8px] transition-all relative group overflow-hidden"
               >
-                  <div className={`p-4 ${stat.bg} border-4 border-black rounded-full group-hover:rotate-12 transition-transform`}>
+                  {/* Visual Background Decoration */}
+                  <div className={`absolute -top-10 -right-10 w-24 h-24 ${stat.bg} rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform`} />
+                  
+                  <div className={`p-5 ${stat.bg} border-4 border-black group-hover:rotate-[15deg] transition-transform relative z-10`}>
                      <stat.icon className={`w-8 h-8 ${stat.color} stroke-[3px]`} />
                   </div>
-                  <div className="space-y-1">
-                     <motion.h2 
-                       initial={{ scale: 0.5 }}
-                       whileInView={{ scale: 1 }}
-                       transition={{ type: 'spring', stiffness: 200 }}
-                       className="text-4xl md:text-5xl font-black tracking-tighter italic"
-                     >
-                       {stat.val}
-                     </motion.h2>
-                     <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-gray-500 leading-tight">
+                  
+                  <div className="space-y-2 relative z-10">
+                     <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic">
+                       <StatCounter value={stat.val} />
+                     </h2>
+                     <p className="text-[10px] md:text-sm font-black uppercase tracking-widest text-gray-500 leading-tight">
                         {stat.label}
                      </p>
                   </div>
