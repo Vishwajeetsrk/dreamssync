@@ -6,7 +6,7 @@ import {
   Globe, Plus, Trash2, Download, ChevronRight, ChevronLeft,
   Sparkles, Monitor, Eye, Code2, Check, ArrowRight, Palette,
   User, Briefcase, BookOpen, FolderKanban, Award,
-  Upload, Loader2
+  Upload, Loader2, Linkedin, Github, ExternalLink
 } from 'lucide-react';
 import { validateCareerInput } from '@/lib/aiGuard';
 
@@ -415,33 +415,37 @@ export default function PortfolioGenerator() {
                   <motion.div
                     key={theme.id}
                     onClick={() => setSelectedTheme(theme.id)}
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.02, y: -4 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`relative cursor-pointer border-4 overflow-hidden transition-all ${selectedTheme === theme.id ? `${theme.border} shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]` : 'border-gray-200 hover:border-gray-400'}`}
+                    className={`relative cursor-pointer border-4 overflow-hidden transition-all duration-300 ${selectedTheme === theme.id ? `${theme.border} shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] ring-4 ring-[#2563EB]/20` : 'border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] bg-white hover:bg-gray-50'}`}
                   >
-                    {/* Preview Window */}
-                    <div className={`h-36 bg-gradient-to-br ${theme.gradient} p-4 flex flex-col justify-between`} style={{ background: theme.preview.bg }}>
-                      <div className="flex justify-between items-center">
-                        <div className="w-8 h-1.5 rounded-full" style={{ background: theme.preview.accent }} />
+                    {/* Compact Preview Window */}
+                    <div className={`h-28 bg-gradient-to-br ${theme.gradient} p-4 flex flex-col justify-between overflow-hidden relative`} style={{ background: theme.preview.bg }}>
+                      <div className="absolute top-0 right-0 p-2 opacity-10">
+                         <Globe className="w-12 h-12" />
+                      </div>
+                      <div className="flex justify-between items-center relative z-10">
+                        <div className="w-6 h-1 rounded-full" style={{ background: theme.preview.accent }} />
                         <div className="flex gap-1">
-                          {[1,2,3].map(i => <div key={i} className="w-4 h-1 rounded-full bg-gray-300" />)}
+                          {[1,2].map(i => <div key={i} className="w-3 h-1 rounded-full bg-gray-400/30" />)}
                         </div>
                       </div>
-                      <div>
-                        <div className="w-20 h-3 rounded mb-1.5" style={{ background: theme.preview.text, opacity: 0.8 }} />
-                        <div className="w-14 h-2 rounded mb-3" style={{ background: theme.preview.accent }} />
-                        <div className="flex gap-1.5">
-                          {[1,2,3].map(i => <div key={i} className="flex-1 h-7 rounded-sm" style={{ background: theme.preview.card, border: `2px solid ${theme.preview.accent}` }} />)}
+                      <div className="relative z-10">
+                        <div className="w-16 h-2 rounded mb-1" style={{ background: theme.preview.text, opacity: 0.8 }} />
+                        <div className="w-10 h-1 rounded mb-2" style={{ background: theme.preview.accent }} />
+                        <div className="flex gap-1 mt-2">
+                           <div className="w-3 h-3 rounded-full" style={{ border: `1px solid ${theme.preview.accent}` }} />
+                           <div className="w-12 h-3 rounded-sm" style={{ background: theme.preview.card, border: `1px solid ${theme.preview.accent}` }} />
                         </div>
                       </div>
                     </div>
 
-                    <div className="p-4">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-black">{theme.name}</h3>
-                        {selectedTheme === theme.id && <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center"><Check className="w-4 h-4 text-white" /></div>}
+                    <div className="p-3 bg-white">
+                      <div className="flex items-center justify-between mb-0.5">
+                        <h3 className="text-xs font-black uppercase tracking-tight">{theme.name}</h3>
+                        {selectedTheme === theme.id && <Check className="w-4 h-4 text-[#2563EB]" />}
                       </div>
-                      <p className="text-xs text-gray-500 font-medium">{theme.desc}</p>
+                      <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest">{theme.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -664,9 +668,15 @@ export default function PortfolioGenerator() {
             <div className="p-8 space-y-12 max-h-[80vh] overflow-y-auto">
                {/* Hero Preview */}
                <div className="space-y-4">
-                  <h1 className="text-5xl font-black uppercase italic leading-none">{fullName || "YOUR NAME"}</h1>
+                  <div className="flex items-center gap-4">
+                     <h1 className="text-5xl font-black uppercase italic leading-none">{fullName || "YOUR NAME"}</h1>
+                     <div className="flex gap-2">
+                        {linkedin && <Linkedin className="w-5 h-5 text-[#2563EB]" />}
+                        {github && <Github className="w-5 h-5 text-black" />}
+                     </div>
+                  </div>
                   <p className="text-xl font-bold text-[#2563EB] uppercase tracking-widest">{targetRole || "PROFESSIONAL ROLE"}</p>
-                  <p className="text-sm text-gray-500 leading-relaxed">{summary || "Your AI-generated bio will appear here after parsing or enhancing..."}</p>
+                  <p className="text-sm text-gray-500 leading-relaxed font-bold uppercase">{summary || "Your AI-generated bio will appear here after parsing or enhancing..."}</p>
                </div>
 
                {/* Skills Review */}
