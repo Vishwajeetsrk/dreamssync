@@ -77,16 +77,20 @@ export default function Login() {
     } catch (err: any) {
       console.error(`${providerName} login error:`, err);
       
-      // Handle common Firebase popup errors gracefully
-      let errorMessage = err.message || `Failed to sign in with ${providerName}`;
-      if (err.code === 'auth/popup-closed-by-user') {
-        errorMessage = "Login window was closed before completion. Please try again.";
-      } else if (err.code === 'auth/cancelled-popup-request') {
-        errorMessage = "Only one login window can be open at a time.";
-      } else if (err.code === 'auth/popup-blocked') {
-        errorMessage = "The login popup was blocked by your browser. Please allow popups for this site.";
-      }
+      let errorMessage = `Failed to sign in with ${providerName}. Please try again.`;
       
+      if (err.code === 'auth/popup-closed-by-user') {
+        errorMessage = "Login cancelled. Please ensure you complete the sign-in process in the popup window.";
+      } else if (err.code === 'auth/cancelled-popup-request') {
+        errorMessage = "Verification in progress. Please check your open login windows.";
+      } else if (err.code === 'auth/popup-blocked') {
+        errorMessage = "Popup blocked! Please allow popups for this site in your browser settings.";
+      } else if (err.code === 'auth/unauthorized-domain') {
+        errorMessage = "This domain is not authorized. Please check your Firebase Authentication settings.";
+      } else if (err.code === 'auth/network-request-failed') {
+        errorMessage = "Connection error. Please check your internet and try again.";
+      }
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -105,8 +109,16 @@ export default function Login() {
         <div className="neo-box p-12 bg-white space-y-10">
           <div className="text-center space-y-4">
             <div className="flex flex-col items-center gap-4 mb-4">
-              <Link href="/" className="inline-block">
-                <Image src="/DreamSynclogo.png" alt="DreamSync Logo" width={160} height={40} className="object-contain" priority />
+              <Link href="/" className="inline-block focus:outline-none">
+                <Image 
+                  src="/DreamSynclogo.png" 
+                  alt="DreamSync Logo" 
+                  width={160} 
+                  height={40} 
+                  style={{ width: '160px', height: 'auto' }}
+                  className="object-contain" 
+                  priority 
+                />
               </Link>
               <div className="inline-block p-4 bg-[#2563EB] text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                 <Fingerprint className="w-10 h-10" />

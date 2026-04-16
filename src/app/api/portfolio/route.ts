@@ -111,6 +111,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
     }
 
+    const themeStyles = buildThemePrompt(theme);
+
+    const sysPrompt = `
+      You are an elite full-stack web designer specializing in high-performance career portfolios.
+      TASK: Generate a COMPLETE, SINGLE-FILE HTML portfolio based on the user's career data and the specified theme.
+      
+      RULES:
+      1. RETURN JSON ONLY: { "html": "..." }
+      2. The HTML MUST be a complete document (<!DOCTYPE html> through </html>).
+      3. Use Tailwind CSS via CDN.
+      4. Use FontAwesome 6.4.0 via CDN for icons.
+      5. Include smooth AOS animations.
+      6. Ensure the design is MOBILE-RESPONSIVE and PREMIUM.
+      7. ${themeStyles}
+    `;
+
+    const userPrompt = `
+      User Data: ${JSON.stringify(data)}
+      Theme requested: ${theme}
+      
+      Instructions:
+      - Create a stunning hero section with their name: ${data?.fullName || 'Professional'}.
+      - List their skills: ${data?.skills || 'Expertise'}.
+      - Present their experience and projects in a professional timeline/grid.
+      - Ensure contact links (LinkedIn: ${data?.linkedin || '#'}, GitHub: ${data?.github || '#'}) are active.
+    `;
+
     // 5. Call AI with multi-provider fallback
     try {
       const { content, provider } = await callAI([
@@ -157,9 +184,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ...result, _provider: provider });
 
     } catch (error: any) {
-      console.error('Portfolio AI error:', error);
+      console.error('Portfolio AI Exhaustion Details:', error.message || error);
       return NextResponse.json({ 
-        error: 'AI is currently overloaded with requests in your region. Please try again in 30 seconds.' 
+        error: 'AI is currently overloaded with requests in your region. Please try again in 30 seconds.',
+        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
       }, { status: 503 });
     }
 

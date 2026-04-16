@@ -7,6 +7,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 import { callAI, parseJSON } from '@/lib/ai';
 import { validateCareerInput } from '@/lib/aiGuard';
+import { searchWeb } from '@/lib/serper';
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'assistant']),
@@ -27,10 +28,11 @@ const SYSTEM_PROMPT = `You are "AI Career Agent" — a high-efficiency career co
    - jobLinks: [{ "platform": "Internal", "url": "/ats-check", "label": "ATS CHECK BUTTON", "summary": "Direct link to score analysis." }]
    - ZERO OTHER SECTIONS.
 
-2. IF USER ASKS "Job" or related:
+2. IF USER ASKS "Job" or "Live Info" or related:
+   - Use the provided Search Results to give the most accurate info.
    - Provide ONLY live job links.
-   - Reply: "Here are the top-verified job portals for your query (Filter: Past 1 week)."
-   - jobLinks: [LinkedIn, Naukri, Glassdoor, Wellfound links]
+   - Reply: "Here are the top-verified job portals and live listings found for your query."
+   - jobLinks: [LinkedIn, Naukri, Glassdoor, Wellfound links found in search]
    - ZERO OTHER SECTIONS.
 
 3. IF USER ASKS "CareerRelated" (Roadmaps, how to become X, skills):
@@ -48,7 +50,7 @@ const SYSTEM_PROMPT = `You are "AI Career Agent" — a high-efficiency career co
 🚨 CORE DIRECTIVES:
 - NO INTROS. NO "Hello". NO "As an AI".
 - BE DIRECT.
-- For Career queries, ensure resources are FREE and ROADMAP is CLEAR.
+- If Search Results are provided, PRIORITIZE them for real-time data.
 
 STRICT JSON FORMAT:
 {
@@ -66,14 +68,27 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
 
     const lastUserMsg = parsed.data.messages.filter(m => m.role === 'user').pop();
+    let searchContext = '';
+
     if (lastUserMsg) {
       const safety = validateCareerInput(lastUserMsg.content);
       if (!safety.allowed) return NextResponse.json({ error: 'Safety Violation', details: safety.message }, { status: 400 });
+
+      // Detect if search is needed (Jobs, Salary, Live data)
+      const query = lastUserMsg.content.toLowerCase();
+      if (query.includes('job') || query.includes('salary') || query.includes('live') || query.includes('hiring')) {
+        const fullQuery = `latest ${lastUserMsg.content} recruitment India 2026`;
+        const results = await searchWeb(fullQuery);
+        if (results.length > 0) {
+          searchContext = `REAL-TIME SEARCH RESULTS:\n${results.map(r => `- ${r.title}: ${r.link}\n  ${r.snippet}`).join('\n')}`;
+        }
+      }
     }
 
     const { messages, context = '' } = parsed.data;
     const { content, provider } = await callAI([
       { role: 'system', content: SYSTEM_PROMPT },
+      ...(searchContext ? [{ role: 'user' as const, content: searchContext }] : []),
       ...(context ? [{ role: 'user' as const, content: `Context: ${context}` }] : []),
       ...messages.map(m => ({ role: m.role, content: m.content }))
     ], { jsonMode: true });
