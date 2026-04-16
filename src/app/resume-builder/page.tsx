@@ -260,17 +260,7 @@ export default function ResumeBuilder() {
       {/* Sidebar - Neo-Brutalist Form Editor */}
       <aside className="w-full lg:w-[500px] bg-white border-b-8 lg:border-r-8 lg:border-b-0 border-black p-6 md:p-10 space-y-12 shadow-[8px_0px_0px_0px_rgba(0,0,0,0.05)] lg:h-screen lg:overflow-y-auto">
         
-        <div className="max-w-5xl mx-auto text-center flex flex-col items-center gap-4 mb-10">
-          <div className="flex items-center gap-3">
-             <div className="p-2 bg-[#2563EB] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-                <FileText className="w-6 h-6" />
-             </div>
-             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-black/40">Sovereign Protocol</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase leading-none">
-             Resume <span className="text-[#2563EB] drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] italic">Builder</span>
-          </h1>
-        </div>
+
 
         {/* Action Protocol Panel */}
         <motion.div 
