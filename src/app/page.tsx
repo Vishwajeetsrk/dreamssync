@@ -98,6 +98,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 📊 IMPACT STATS SECTION */}
+      <section className="py-20 px-4 md:px-6 max-w-7xl mx-auto w-full">
+         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            {[
+              { val: '1+', label: 'Working Locations', icon: Globe, color: 'text-blue-600', bg: 'bg-blue-50' },
+              { val: '50+', label: 'Documents Created', icon: FileText, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+              { val: '6+', label: 'Well-being Sessions', icon: Coffee, color: 'text-purple-600', bg: 'bg-purple-50' },
+              { val: '30+', label: 'Members Connected', icon: User, color: 'text-amber-600', bg: 'bg-amber-50' },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white border-4 border-black p-6 md:p-10 neo-box flex flex-col items-center text-center gap-4 hover:translate-y-[-8px] transition-all relative group"
+              >
+                  <div className={`p-4 ${stat.bg} border-4 border-black rounded-full group-hover:rotate-12 transition-transform`}>
+                     <stat.icon className={`w-8 h-8 ${stat.color} stroke-[3px]`} />
+                  </div>
+                  <div className="space-y-1">
+                     <motion.h2 
+                       initial={{ scale: 0.5 }}
+                       whileInView={{ scale: 1 }}
+                       transition={{ type: 'spring', stiffness: 200 }}
+                       className="text-4xl md:text-5xl font-black tracking-tighter italic"
+                     >
+                       {stat.val}
+                     </motion.h2>
+                     <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-gray-500 leading-tight">
+                        {stat.label}
+                     </p>
+                  </div>
+              </motion.div>
+            ))}
+         </div>
+      </section>
+
       {/* 🧪 EVERYTHING YOU NEED SECTION */}
       <section className="py-20 px-6 max-w-6xl mx-auto w-full space-y-20">
          <div className="text-center">
