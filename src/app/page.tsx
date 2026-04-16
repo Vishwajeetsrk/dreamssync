@@ -140,8 +140,22 @@ export default function Home() {
                   {/* Visual Background Decoration */}
                   <div className={`absolute -top-10 -right-10 w-24 h-24 ${stat.bg} rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform`} />
                   
-                  <div className={`p-5 ${stat.bg} border-4 border-black group-hover:rotate-[15deg] transition-transform relative z-10`}>
-                     <stat.icon className={`w-8 h-8 ${stat.color} stroke-[3px]`} />
+                  <div className={`p-5 ${stat.bg} border-4 border-black group-hover:rotate-[15deg] transition-transform relative z-10 overflow-hidden`}>
+                     <motion.div
+                       animate={
+                         i === 0 ? { rotate: 360 } :
+                         i === 1 ? { scale: [1, 1.2, 1] } :
+                         i === 2 ? { y: [0, -5, 0] } :
+                         { x: [-2, 2, -2] }
+                       }
+                       transition={{
+                         repeat: Infinity,
+                         duration: i === 0 ? 8 : 2,
+                         ease: "linear"
+                       }}
+                     >
+                        <stat.icon className={`w-8 h-8 ${stat.color} stroke-[3px]`} />
+                     </motion.div>
                   </div>
                   
                   <div className="space-y-2 relative z-10">
