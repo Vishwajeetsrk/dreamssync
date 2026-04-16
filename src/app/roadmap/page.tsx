@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Map, Briefcase, ExternalLink, Book, Video, 
   GraduationCap, Box, CheckCircle, ArrowRight, ShieldCheck,
-  Star, Download, Printer, Wrench, Zap, Globe, TrendingUp, Search, Loader2
+  Star, Download, Printer, Wrench, Zap, Globe, TrendingUp, Search, Loader2, FileText
 } from 'lucide-react';
 import { validateCareerInput } from '@/lib/aiGuard';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel, Link, AlignmentType } from 'docx';

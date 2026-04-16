@@ -187,8 +187,14 @@ RULES: ${profileImage ? 'MANDATORY: Use the Profile Photo Data URI in the hero s
         if (rawContent.trim().startsWith('<!DOCTYPE') || rawContent.trim().startsWith('<html')) {
           result = { html: rawContent };
         } else {
-          console.error('Cannot parse AI response:', rawContent.substring(0, 500));
-          return NextResponse.json({ error: 'AI returned malformed content. Please try again.' }, { status: 500 });
+          // THIRD FALLBACK: Global HTML extraction (The "Nuclear" Option)
+          const htmlMatch = rawContent.match(/<html[\s\S]*<\/html>/i);
+          if (htmlMatch) {
+             result = { html: htmlMatch[0] };
+          } else {
+             console.error('Cannot parse AI response:', rawContent.substring(0, 500));
+             return NextResponse.json({ error: 'AI returned malformed content. Please try again.' }, { status: 500 });
+          }
         }
       }
     }
