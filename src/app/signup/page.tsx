@@ -9,6 +9,7 @@ import { Mail, Lock, User, Database, ArrowRight, ShieldCheck, AlertCircle, Spark
 import { motion } from 'framer-motion';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import Image from 'next/image';
+import { signIn as nextAuthSignIn } from 'next-auth/react';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -55,30 +56,8 @@ export default function Signup() {
     setLoading(true);
     setError('');
     try {
-      let authProvider;
-      if (providerName === 'google') {
-        authProvider = new GoogleAuthProvider();
-      } else {
-        authProvider = new GithubAuthProvider();
-      }
-      
-      const result = await signInWithPopup(auth, authProvider);
-      const user = result.user;
-
-      const userRef = doc(db, 'users', user.uid);
-      const snap = await getDoc(userRef);
-      if (!snap.exists()) {
-        await setDoc(userRef, {
-          uid: user.uid,
-          name: user.displayName || 'DreamSync User',
-          email: user.email,
-          avatar_url: user.photoURL || '',
-          provider: providerName,
-          created_at: new Date().toISOString()
-        });
-      }
-
-      router.push('/dashboard');
+      // Use NextAuth for social login to avoid Firebase popup issues on production
+      await nextAuthSignIn(providerName, { callbackUrl: '/dashboard' });
     } catch (err: any) {
       setError(err.message || `Failed to sign up. Please try again.`);
     } finally {

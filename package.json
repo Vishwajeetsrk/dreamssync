@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/Vishwajeetsrk/DreamSync.git"
   },
-  "homepage": "https://dreamsync-ruddy.vercel.app",
+  "homepage": "https://dreamssync.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

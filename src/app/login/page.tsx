@@ -5,10 +5,11 @@ import { auth, db } from '@/lib/firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Mail, Lock, LogIn, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, LogIn, ArrowRight, ShieldCheck, AlertCircle, Sparkles, Zap, Globe, Fingerprint, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Image from 'next/image';
+import { signIn as nextAuthSignIn } from 'next-auth/react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -46,31 +47,10 @@ export default function Login() {
     setLoading(true);
     setError('');
     try {
-      let provider;
-      if (providerName === 'google') {
-        provider = new GoogleAuthProvider();
-      } else {
-        provider = new GithubAuthProvider();
-      }
-      
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      const userRef = doc(db, 'users', user.uid);
-      const snap = await getDoc(userRef);
-      if (!snap.exists()) {
-        await setDoc(userRef, {
-          name: user.displayName || 'DreamSync User',
-          email: user.email,
-          avatar_url: user.photoURL || '',
-          provider: providerName,
-          created_at: new Date().toISOString()
-        });
-      }
-
-      router.push('/dashboard');
+      // Use NextAuth for social login to avoid Firebase popup issues on production
+      await nextAuthSignIn(providerName, { callbackUrl: '/dashboard' });
     } catch (err: any) {
-      setError(err.message || "Failed to sign in. Please try again.");
+      setError(err.message || `Failed to sign in with ${providerName}. Please try again.`);
     } finally {
       setLoading(false);
     }
